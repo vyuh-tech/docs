@@ -11,7 +11,7 @@ complexity can get challenging. Making things more modular and composable is the
 only way forward. Additionally, given that most apps today are _content-driven_,
 you would also need dynamic updates on the App without an App-Store release.
 
-![](../images/business-engineering.png)
+![](images/business-engineering.png)
 
 The Business teams are always looking to add more features to stay competitive
 in the market. No-Code/Low-Code tools are one option that can be used to get
@@ -100,7 +100,7 @@ coming from the CMS.
 
 #### Divide and Conquer
 
-![](../images/framework-flow.png)
+![](images/framework-flow.png)
 
 With this clear separation of responsibilities, we are able to offer a simple,
 intuitive interface to the business, via the CMS.
@@ -137,7 +137,7 @@ pages from a CMS. Here is a much longer list of capabilities:
   - Content handling from a CMS
   - Ads, etc.
 
-![](../images/framework.png)
+![](images/framework.png)
 
 #### We are just getting started
 

@@ -28,7 +28,7 @@ controlled by factors such as your subscription tier, login status, past order
 history, etc. These Apps are very dynamic and will morph as per external
 factors, customer profile and availability of new features.
 
-![](../images/apps.png)
+![](images/apps.png)
 
 #### Need of the hour
 
@@ -64,7 +64,7 @@ apps should be put together. The **Vyuh Framework** takes a holistic view of
 this process and brings a set of techniques that make app development an easier
 process with the ability to control things remotely.
 
-![The Vyuh Framework](../../../../assets/logo.png)
+![The Vyuh Framework](../../../assets/logo.png)
 
 It gives the **No-Code** control to the Business teams and **Full-Code** control
 to the Engineering. This is a good balance and achieves having best of both
@@ -78,7 +78,7 @@ each have their tools of choice, without compromise.
 
 **Hidden powers**
 
-![](../images/capabilities.png)
+![](images/capabilities.png)
 
 This combo is a hidden superpower that can propel an Enterprise into a new world
 with greater flexibility and control. It does mean shifting the mindset towards

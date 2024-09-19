@@ -4,7 +4,7 @@ description:
   A feature that shows Movies, TV Series and their details from the TMDB API
 ---
 
-![](images/tmdb.png)
+![Gallery of screens in the Movies Mini-App](images/tmdb-gallery.png)
 
 The Movies App is a much more _sophisticated_ example of applying the Vyuh
 Framework. It has a host of features that covers the breadth and depth of the
@@ -38,4 +38,4 @@ framework including:
     - Custom **Design System**
     - **Onboarding pages** that talk about the feature
 
-<figure><img src="../.gitbook/assets/image (9).png" alt=""><figcaption><p>Gallery of screens in the Movies Mini-App</p></figcaption></figure>
+![Gallery of screens in the Movies Mini-App](images/tmdb-gallery.png)
