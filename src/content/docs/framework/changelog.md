@@ -1,0 +1,36 @@
+---
+title: Changelog
+description: Tracking the evolution, one version at a time
+---
+
+## 1.x series
+
+<figure><img src="../.gitbook/assets/vyuh 1.0.png" alt="" width="375"><figcaption></figcaption></figure>
+
+- Launched **1.0** with foundation capabilities that are required by all
+  CMS-driven and Modular Vyuh Apps
+- **Core API** to run a Vyuh App using modular Features and Plugins
+- **Core Plugins** for Content, Analytics, Navigation, Network, Authentication,
+  Logging, Storage, Feature Flag, Dependency Injection
+- **Integrations** with Firebase, Sentry, Hive, GetIt and others
+- Core **Content Items** such as Card, Group, Accordion, Route (_Pages_ &
+  _Dialogs_), Portable Text, Web View, Divider, VideoPlayer.
+- **API Content Item** for showing content from third party APIs with custom
+  configurations and rendering
+- **Layouts** that allows a single Content Item to have switchable dynamic
+  layouts, configured from a CMS
+- **Actions** allow invoking standard and custom actions for various user
+  events. They are system wide and can be used by any Content Item.
+- **Conditional** elements for Routes, Content Items, Layouts and Actions
+- **Developer Tool** to give an X-Ray view of your Vyuh App
+- **Navigation** is done via `GoRouter` including full support for dynamic
+  routes loaded at runtime and templated routes.
+- **Mason bricks** to quickly scaffold your Vyuh App, Feature package and a
+  Sanity schema package
+- Sample Apps, built as features:
+  - **Movies app** that integrates with the TMDB API to browse Movies, Series
+    and much more
+  - **Wonderous App** that showcases the 8 wonders of the world. Each wonder is
+    a separate document on the CMS for easy management.
+  - **Miscellaneous feature** that shows the raw capabilities of the Framework
+    to serve as simpler examples
