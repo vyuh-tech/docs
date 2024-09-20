@@ -32,6 +32,6 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_VYUH_DOCS }}
           channelId: live
-          projectId: vyuh-docs
+          projectId: vyuh-tech-website
         env:
           FIREBASE_CLI_EXPERIMENTS: webframeworks

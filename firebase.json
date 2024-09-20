@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "vyuh-docs",
     "source": ".",
     "ignore": [
       "firebase.json",
