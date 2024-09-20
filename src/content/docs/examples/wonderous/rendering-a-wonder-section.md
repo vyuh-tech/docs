@@ -9,7 +9,7 @@ sections can be changed on the CMS with the UI automatically reflecting it.
 Because these sections are just a type of Content Block, you could even add
 other kinds of Content Blocks in between, if needed.
 
-<figure><img src="../../.gitbook/assets/image (9) (1).png" alt=""><figcaption><p>Sections of a Wonder on the CMS</p></figcaption></figure>
+![Sections of a Wonder on the CMS](images/details-route.png)
 
 ## The Flutter counterpart of a Wonder Section
 

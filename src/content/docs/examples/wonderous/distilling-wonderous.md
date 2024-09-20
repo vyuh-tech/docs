@@ -6,7 +6,7 @@ description: A quick breakdown of the Wonderous App
 Let's start with a quick breakdown of the Wonderous App and understand the
 moving parts in bit more detail.
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>Sample screens from Wonderous</p></figcaption></figure>
+![Sample screens from Wonderous](images/wonderous-original-screens.png)
 
 At the onset, we can see that the app is all about the _8 Wonders_ of the world.
 Each Wonder is a compiled set of information such as:
@@ -23,7 +23,7 @@ illustrations and animations to bring it all together in the App experience.
 
 ## Navigation
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>Navigation within the App</p></figcaption></figure>
+![Navigation within the App](images/wonderous-original-navigation.png)
 
 The app experience can be seen as a nice _master-detail_ scenario with the
 landing screen showing all the wonders. The landing screen is the _master_ that

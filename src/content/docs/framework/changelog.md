@@ -5,7 +5,7 @@ description: Tracking the evolution, one version at a time
 
 ## 1.x series
 
-<figure><img src="../.gitbook/assets/vyuh 1.0.png" alt="" width="375"><figcaption></figcaption></figure>
+![](images/vyuh-1.0.png)
 
 - Launched **1.0** with foundation capabilities that are required by all
   CMS-driven and Modular Vyuh Apps

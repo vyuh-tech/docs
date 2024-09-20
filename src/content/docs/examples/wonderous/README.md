@@ -34,10 +34,10 @@ choices made to reimagine the experience with Vyuh.
 [distilling-wonderous.md](distilling-wonderous.md) {% endcontent-ref %}
 
 {% content-ref url="a-schema-first-approach.md" %}
-[a-schema-first-approach.md](a-schema-first-approach.md) {% endcontent-ref %}
+[a-schema-first-approach.md](a-schema-first-approach.mdx) {% endcontent-ref %}
 
 {% content-ref url="navigation-and-structure.md" %}
-[navigation-and-structure.md](navigation-and-structure.md) {% endcontent-ref %}
+[navigation-and-structure.md](navigation-and-structure.mdx) {% endcontent-ref %}
 
 {% content-ref url="rendering-a-wonder-section.md" %}
 [rendering-a-wonder-section.md](rendering-a-wonder-section.md)

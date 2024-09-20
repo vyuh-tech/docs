@@ -22,7 +22,7 @@ and information blocks used in an Application. These blocks can be configured on
 the CMS and have a visual equivalent rendered with Flutter. The default layouts
 are shown below. However they are completely customizable with custom layouts.
 
-<figure><img src="../../.gitbook/assets/image (23).png" alt="" width="375"><figcaption></figcaption></figure>
+![](images/feature-system-components.png)
 
 The System feature includes core elements such as:
 
@@ -105,7 +105,7 @@ routes:&#x20;
 
 A special type of Route that allows branching between two or more routes based
 on a condition. Conditions are configured on the CMS and evaluated at runtime on
-the App by the framework.&#x20;
+the App by the framework.
 
 A simple example of a Conditional Route is one where you go to the _Login Route_
 if the user is _not authenticated_ and straight to the _Home route_ when

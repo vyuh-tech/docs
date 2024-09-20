@@ -6,17 +6,15 @@ description: Beyond the 8 wonders
 As you have seen so far, managing wonders is much more simpler and consolidated
 into a single document on the CMS.
 
-<figure><img src="../../.gitbook/assets/image (3) (1) (1).png" alt=""><figcaption></figcaption></figure>
+![](images/managing-wonders.png)
 
 We can easily add more wonders to this list and have them linked up in the CMS
 and rendered on the App. Publishing more wonders is now just a matter of
 gathering the visual assets, collecting the facts, putting it all into the
 wonder document and hitting "**Publish**" on the CMS.
 
-<figure><img src="../../.gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
-
 This is the true power of a content-driven workflow and has already been applied
-to fairly large scale apps.&#x20;
+to fairly large scale apps.
 
 With Vyuh, we are redefining the role of a CMS and how it can be used to build
 sophisticated content-oriented Flutter Apps. Surprisingly, this type of

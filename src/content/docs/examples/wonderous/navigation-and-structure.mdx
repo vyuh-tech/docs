@@ -3,12 +3,14 @@ title: Navigation and Structure
 description: Building the Wonderous' User Journeys in Vyuh
 ---
 
+import { Steps, Aside } from '@astrojs/starlight/components'
+
 In an earlier post, we talked about the essential journey of the Wonderous App,
 which starts with a list of the Wonders and navigates into the various details
 of the Wonder. This is the same setup we will replicate in the CMS, as shown
 below:
 
-<figure><img src="../../.gitbook/assets/image (5) (1) (1).png" alt=""><figcaption><p>Wonderous Journey Map</p></figcaption></figure>
+![Wonderous Journey Map](images/navigation-wonderous.png)
 
 These routes map to the `Route` document in the CMS. _**Route**_ is a special
 type in Vyuh that allows you to define a single page or dialog. Think of this as
@@ -19,7 +21,7 @@ link them together for navigation.
 
 The routes needed for our version of _Wonderous_ are as shown below:
 
-<figure><img src="../../.gitbook/assets/image (4) (1) (1).png" alt=""><figcaption><p>Wonderous Routes</p></figcaption></figure>
+![Wonderous Routes](images/wonderous-routes.png)
 
 Now, you might be wondering: **"How come we didn't create a separate route for
 each Wonder?"**. A very valid question! You see, all wonders have exactly the
@@ -39,9 +41,9 @@ the corresponding CMS route. We have a dedicated `CMSRoute` type (a subclass of
 
 Here is the entire route setup with some parts elided for brevity.
 
-{% code title="routes.dart" lineNumbers="true" %}
+```dart {"1":40-50}
+// routes.dart
 
-```dart
 import 'package:feature_wonderous/api/wonder_client.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -93,10 +95,9 @@ String wonderPathResolver(String path) {
 
 ```
 
-{% endcode %}
-
-The real magic is in the **`wonderPathResolver`** that looks at the specific
-`GoRoute` path and identifies the corresponding _CMS-path_.&#x20;
+The real magic is in the **`wonderPathResolver`** (shown in mark `1` above) that
+looks at the specific `GoRoute` path and identifies the corresponding
+_CMS-path_.&#x20;
 
 With this we are now able to navigate to a path like
 _`/wonderous/wonder/`**`taj-mahal`**`/details`_ and have it automatically use
@@ -108,21 +109,23 @@ Now that the application side routing is setup, its just a matter of linking the
 various wonder-cards in the _Wonderous Home_ route on the CMS. For the Taj Mahal
 wonder, we do it like so:
 
-<div>
+<Steps>
+1. **Locate the Taj Mahal Card**
+  ![](images/locate-taj-mahal-card.png)
 
-<figure><img src="../../.gitbook/assets/image (8) (1).png" alt=""><figcaption><p>Locate the Taj Mahal Card</p></figcaption></figure>
+2. **Edit the Navigation action** ![](images/edit-navigation.png)
 
-<figure><img src="../../.gitbook/assets/image (7) (1).png" alt=""><figcaption><p>Edit the Navigation action</p></figcaption></figure>
+3. **Link to Taj Mahal details** ![](images/link-to-taj-mahal.png)
 
-<figure><img src="../../.gitbook/assets/image (6) (1).png" alt=""><figcaption><p>Link to Taj Mahal details</p></figcaption></figure>
-
-</div>
+</Steps>
 
 Rinse and repeat for the remaining 7 cards, and lo and behold, all our cards are
 now pointing to their respective _detail-screens_.&#x20;
 
-{% hint style="info" %} On the **CMS Studio**, the easiest way to do this is
-**Duplicate** the card and just change the Navigation action! {% endhint %}
+<Aside>
+  On the **CMS Studio**, the easiest way to do this is **Duplicate** the card
+  and just change the Navigation action!
+</Aside>
 
 ### Wonder Detail Routes
 
@@ -131,7 +134,7 @@ details, photos and events related routes on the CMS. The difference is that
 these routes focus on the page structure for a single Wonder. Let's see the
 Details page as an example.
 
-<figure><img src="../../.gitbook/assets/image (9) (1).png" alt=""><figcaption><p>Page structure of the Details route</p></figcaption></figure>
+![Page structure of the Details route](images/details-route.png)
 
 Notice that we have divided the page content into a set of Wonder sections:
 `Hero`, `Facts & History`, `Construction` and `Location Info`. These are special
@@ -143,9 +146,9 @@ The wonder-section is defined in a schema for the CMS with a counterpart in
 Flutter. In the below two code-snippets, you can see the schema definition and
 its counterpart in Flutter.
 
-{% code title="feature.ts" %}
-
 ```typescript
+// feature.ts
+
 import { defineField, defineType, SchemaTypeDefinition } from 'sanity'
 import { TbSection as Icon } from 'react-icons/tb'
 
@@ -179,17 +182,15 @@ export const wonderSection: SchemaTypeDefinition = defineType({
 })
 ```
 
-{% endcode %}
-
 Notice that the CMS configuration for the _wonder-section_ is very simple and
 only gives a declarative name for the section. We don't concern ourselves with
 the visual details. If need be, we could add some configuration for controlling
 the presentation as well. However, its best not to venture too deep into this
 area as its not the recommended way of creating _**Structured Content**_.
 
-{% code title="feature.dart" %}
-
 ```dart
+// feature.dart
+
 final feature = FeatureDescriptor(
     name: 'wonderous',
     title: 'Wonderous',
@@ -221,8 +222,6 @@ final feature = FeatureDescriptor(
 
 ```
 
-{% endcode %}
-
 `WonderSection` is the Flutter version of the _wonder-section_ schema and knows
 how to render a specific part of the wonder. It looks at the _section-type_ and
 renders the appropriate section accordingly.
@@ -235,7 +234,7 @@ changes on the CMS gives a quick preview on the Flutter App. This workflow is
 very effective as you explore various layouts, content-combinations and tweak
 the visual details with _Flutter Hot Reload_.&#x20;
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>Navigating a single wonder in Vyuh</p></figcaption></figure>
+![Navigating a single wonder in Vyuh](images/managing-wonders.png)
 
 Note that we have taken some creative license in building these sections and
 they do not look exactly like the ones in the original Wonderous App. That is a

@@ -102,8 +102,8 @@ fashion.
 ## Template Routes in Wonderous
 
 If you haven't seen the
-[exposition on the Wonderous example](../../examples/wonderous-app/), now would
-be a good time to take a look at it.&#x20;
+[exposition on the Wonderous example](../../examples/wonderous/), now would be a
+good time to take a look at it.&#x20;
 
 The main goal of the **Wonderous** example is show the different wonders of the
 world. Interestingly, it maps perfectly to the template routes that we're
@@ -129,7 +129,7 @@ is further broken down into:
 
 This can be seen in the navigation structure, shown below:
 
-![Navigation structure in the Wonderous App](../../examples/wonderous-app/images/navigation-wonderous.png)
+![Navigation structure in the Wonderous App](../../examples/wonderous/images/navigation-wonderous.png)
 
 ### CMS Routes
 
@@ -146,7 +146,7 @@ wonder would just be cumbersome and unnecessary duplication.
 
 The template-route approach really shines here. {% endhint %}
 
-![CMS template routes for the Wonder](../../examples/wonderous-app/images/wonderous-routes.png)
+![CMS template routes for the Wonder](../../examples/wonderous/images/wonderous-routes.png)
 
 ### Application Routes
 
@@ -155,7 +155,7 @@ identifying the wonder on the CMS. When constructing the application route, we
 will include this identifier in the route path itself and use that to map the
 exact wonder page on the CMS.
 
-![Mapping of Wonder Detail routes](../../examples/wonderous-app/images/wonderous-route-mapping.png)
+![Mapping of Wonder Detail routes](../../examples/wonderous/images/wonderous-route-mapping.png)
 
 The magic of mapping the application route to the CMS route happens in our
 custom `GoRoute` called **`CMSRoute`**. We supply the **`cmsPathResolver`**

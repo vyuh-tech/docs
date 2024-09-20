@@ -1,5 +1,5 @@
 ---
-title: Movies App
+title: TMDB Movies
 description:
   A feature that shows Movies, TV Series and their details from the TMDB API
 ---

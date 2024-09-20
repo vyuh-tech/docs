@@ -1,0 +1,206 @@
+---
+title: Packages
+description: An overview of all packages in the Vyuh Framework
+---
+
+import { ShowcaseImage } from 'starlight-showcases'
+
+## Open Source Packages
+
+### Sanity
+
+<ShowcaseImage
+  entries={[
+    {
+      thumbnail: import('./images/pub-dev-logo.png'),
+      title: 'flutter_sanity_portable_text',
+      description: `Flutter renderer for Sanity's Portable Text Format. Supports all standard style with the ability to customize blocks, styles and annotations.`,
+      href: 'https://pub.dev/packages/flutter_sanity_portable_text',
+    },
+    {
+      thumbnail: import('./images/pub-dev-logo.png'),
+      title: 'sanity_client',
+      description: `Native client to connect to the Sanity.io CMS.`,
+      href: 'https://pub.dev/packages/sanity_client',
+    },
+  ]}
+/>
+
+### MobX
+
+<ShowcaseImage
+  entries={[
+    {
+      thumbnail: import('./images/pub-dev-logo.png'),
+      title: 'mobx',
+      description: `MobX is a library for reactively managing the state of your applications. Use the power of observables, actions, and reactions to supercharge your Dart and Flutter apps.`,
+      href: 'https://pub.dev/packages/mobx',
+    },
+    {
+      thumbnail: import('./images/pub-dev-logo.png'),
+      title: 'flutter_mobx',
+      description: `Flutter integration for MobX. It provides a set of Observer widgets that automatically rebuild when the tracked observables change.`,
+      href: 'https://pub.dev/packages/flutter_mobx',
+    },
+    {
+      thumbnail: import('./images/pub-dev-logo.png'),
+      title: 'mobx_codegen',
+      description: `Code generator for MobX that adds support for annotating your code with @observable, @computed, @action and also creating Store classes.`,
+      href: 'https://pub.dev/packages/mobx_codegen',
+    },
+  ]}
+/>
+
+### Vyuh
+
+<ShowcaseImage
+  entries={[
+    {
+      thumbnail: import('./images/pub-dev-logo.png'),
+      title: 'vyuh_core',
+      description:
+        'Core package that contains the main interfaces and types for the framework',
+      href: 'https://pub.dev/packages/vyuh_core',
+    },
+    {
+      thumbnail: import('./images/pub-dev-logo.png'),
+      title: 'vyuh_feature_system',
+      description:
+        'Core feature for working with a CMS. Contains all the essential building blocks for a CMS driven experience.',
+      href: 'https://pub.dev/packages/vyuh_feature_system',
+    },
+    {
+      thumbnail: import('./images/pub-dev-logo.png'),
+      title: 'vyuh_feature_developer',
+      description:
+        'A Developer tooling feature that shows the composition of a Vyuh-enabled App',
+      href: 'https://pub.dev/packages/vyuh_feature_developer',
+    },
+    {
+      thumbnail: import('./images/pub-dev-logo.png'),
+      title: 'vyuh_extension_content',
+      description: 'Extension for working with CMS content',
+      href: 'https://pub.dev/packages/vyuh_extension_content',
+    },
+    {
+      thumbnail: import('./images/pub-dev-logo.png'),
+      title: 'vyuh_plugin_content_provider_sanity',
+      description:
+        'A Content Provider for the Vyuh Framework that reads documents from Sanity.io.',
+      href: 'https://pub.dev/packages/vyuh_plugin_content_provider_sanity',
+    },
+    {
+      thumbnail: import('./images/pub-dev-logo.png'),
+      title: 'vyuh_cache',
+      description:
+        'Caching package for the Vyuh Framework that works with the Storage plugin',
+      href: 'https://pub.dev/packages/vyuh_cache',
+    },
+  ]}
+/>
+
+## NPM Schema Packages
+
+Schema packages allow you to compose the schemas for various features and
+bootstrap them into a single CMS Studio. We currently default to using
+[Sanity.io](https://sanity.io) as our CMS and all the following schema packages
+are for bootstrapping schemas into the Sanity Studio.
+
+<ShowcaseImage
+  entries={[
+    {
+      thumbnail: import('./images/npm.png'),
+      title: '@vyuh/sanity-schema-core',
+      description:
+        'Core bootstrapping routine and classes to work with the Sanity schema',
+      href: 'https://www.npmjs.com/package/@vyuh/sanity-schema-core',
+    },
+    {
+      thumbnail: import('./images/npm.png'),
+      title: '@vyuh/sanity-schema-system',
+      description:
+        'Essential building block schemas for using the Sanity CMS with the Vyuh Framework',
+      href: 'https://www.npmjs.com/package/@vyuh/sanity-schema-system',
+    },
+    {
+      thumbnail: import('./images/npm.png'),
+      title: '@vyuh/sanity-schema-firebase-auth',
+      description:
+        'Schemas for configuring Firebase Authentication on Sanity CMS when using the Vyuh Framework',
+      href: 'https://www.npmjs.com/package/@vyuh/sanity-schema-firebase-auth',
+    },
+    {
+      thumbnail: import('./images/npm.png'),
+      title: '@vyuh/sanity-schema-forms',
+      description:
+        'Schemas for using Forms and FormFields with the Vyuh Framework',
+      href: 'https://www.npmjs.com/package/@vyuh/sanity-schema-forms',
+    },
+    {
+      thumbnail: import('./images/npm.png'),
+      title: '@vyuh/sanity-schema-onboarding',
+      description:
+        'Sanity schemas for creating onboarding content when using the Vyuh Framework',
+      href: 'https://www.npmjs.com/package/@vyuh/sanity-schema-onboarding',
+    },
+  ]}
+/>
+
+## Pro Packages
+
+Pro Packages are available under the
+[**Enterprise Plan**](https://vyuh.tech/pricing) and expand the capabilities of
+the framework to include more Vendor integrations and advanced functionality for
+richer experiences. All of them offer configurability from a CMS.
+
+<ShowcaseImage
+  entries={[
+    {
+      thumbnail: import('./images/pub-dev-logo.png'),
+      title: 'vyuh_extension_script',
+      description:
+        'Extension for configuring JavaScript actions from a CMS. These actions are executed at runtime using the *Flutter JavaScript* bridge.',
+    },
+    {
+      thumbnail: import('./images/pub-dev-logo.png'),
+      title: 'vyuh_analytics_provider_firebase',
+      description:
+        'Analytics Provider for Firebase. Includes support for Firebase Analytics, Crashlytics and Performance services.',
+    },
+    {
+      thumbnail: import('./images/pub-dev-logo.png'),
+      title: 'vyuh_analytics_provider_sentry',
+      description:
+        'Analytics Provider for Sentry.io that tracks messages, events, errors, transactions including nested transactions.',
+    },
+    {
+      thumbnail: import('./images/pub-dev-logo.png'),
+      title: 'vyuh_plugin_auth_firebase',
+      description: 'Authentication Plugin for Firebase',
+    },
+    {
+      thumbnail: import('./images/pub-dev-logo.png'),
+      title: 'vyuh_feature_firebase_auth',
+      description:
+        'A set of UX building blocks for configuring Firebase Auth from a CMS',
+    },
+    {
+      thumbnail: import('./images/pub-dev-logo.png'),
+      title: 'vyuh_feature_forms',
+      description:
+        'Forms feature for creating simple to complex forms with fields and validations. Drive your entire form lifecycle from a CMS.',
+    },
+    {
+      thumbnail: import('./images/pub-dev-logo.png'),
+      title: 'vyuh_plugin_featureflag_firebase',
+      description:
+        'A feature-flag Plugin for interfacing with Firebase Remote Config. Use it to drive conditional workflows and A/B/N tests.',
+    },
+    {
+      thumbnail: import('./images/pub-dev-logo.png'),
+      title: 'vyuh_feature_onboarding',
+      description:
+        'A CMS content block for rendering onboarding content for an application. This is useful as an introduction screen for your application, all configurable from a CMS.',
+    },
+  ]}
+/>
