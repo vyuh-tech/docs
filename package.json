@@ -1,13 +1,15 @@
 {
-  "name": "",
+  "name": "vyuh-docs",
   "type": "module",
   "version": "0.0.1",
+  "private": true,
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "deploy": "firebase deploy --only hosting"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.3",
@@ -15,6 +17,7 @@
     "@expressive-code/plugin-line-numbers": "^0.37.0",
     "astro": "^4.15.3",
     "astro-embed": "^0.7.2",
+    "firebase-tools": "^13.18.0",
     "prettier": "^3.3.3",
     "sharp": "^0.32.5",
     "starlight-links-validator": "^0.12.0",
