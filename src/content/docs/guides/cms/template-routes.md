@@ -12,7 +12,7 @@ side, where they are rendered using an application router like the
 **`GoRouter`**. Thus an application route like `/home` can have CMS route with
 the same path that defines the structure of the page.
 
-![Application Route to CMS Route mapping](../images/route-mapping.png)
+![Application Route to CMS Route mapping](images/route-mapping.png)
 
 ---
 

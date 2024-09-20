@@ -17,7 +17,7 @@ After searching the internet for _free API resources_, we decided to go with the
 one at [DummyJSON](https://dummyjson.com/). This resource gives a variety of
 APIs for _products, carts, recipes, todos_, etc.&#x20;
 
-<figure><img src="../../.gitbook/assets/image (12) (1).png" alt="" width="375"><figcaption><p>DummyJSON APIs</p></figcaption></figure>
+![DummyJSON APIs](images/dummy-json-api.png)
 
 The API for **Products** is what we decided to use for this example. It has a
 rich schema for its responses and good query parameters around which we could
@@ -123,7 +123,7 @@ export const misc = new FeatureDescriptor({
 Now our API configuration shows up on the CMS and we can configure it as we
 need.
 
-<figure><img src="../../.gitbook/assets/image (13).png" alt="" width="375"><figcaption><p>Sanity configuration for the DummyJSON API</p></figcaption></figure>
+![Sanity configuration for the DummyJSON API](images/sanity-dummy-json-api.png)
 
 ## 3. API Configuration on the Flutter side
 
@@ -148,7 +148,7 @@ In our case, we chose to use a simple `ProductList` type that is a direct mirror
 of the response we get from the DummyJSON API. Thus, our Dart equivalent of the
 API configuration looks like so:
 
-```typescript
+```dart
 import 'dart:convert';
 
 import 'package:feature_misc/content/api/model.dart';
@@ -275,13 +275,13 @@ add more API configurations, we could include them as well in the
 We can now include the API Content block on the CMS and configure it with the
 DummyJSON API.
 
-<figure><img src="../../.gitbook/assets/image (14).png" alt="" width="375"><figcaption><p>API Content block with the DummyJSON configuration</p></figcaption></figure>
+![API Content block with the DummyJSON configuration](images/api-content-with-dummy-json.png)
 
 On the Flutter side, if we do a hot-reload and load the page which has this
 content block, we can see it live. We have done some simple styling to render
 the list of products with custom _ListContainer_ and _ProductTile_ widgets.
 
-<figure><img src="../../.gitbook/assets/image (15).png" alt="" width="375"><figcaption><p>Rendering the DummyJSON API products</p></figcaption></figure>
+![Rendering the DummyJSON API products](images/flutter-dummy-json-api.png)
 
 ## Summary
 

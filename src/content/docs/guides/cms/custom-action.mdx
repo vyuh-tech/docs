@@ -3,6 +3,9 @@ title: Custom Action
 description: Build App-specific operations that can be controlled from the CMS
 ---
 
+import { YouTube } from 'astro-embed'
+import { Aside } from '@astrojs/starlight/components'
+
 Actions are a great to way to build interactivity within your applications. We
 have several built-in actions that you can start with. However, you will
 eventually want to create your own and have something more relevant for your
@@ -11,7 +14,7 @@ scratch.
 
 ## Built-in Actions
 
-<figure><img src="../../.gitbook/assets/image (2) (1).png" alt="" width="375"><figcaption><p>All the System actions available in Vyuh</p></figcaption></figure>
+![All the System actions available in Vyuh](images/system-actions.png)
 
 It is worth mentioning that before you start creating your own action, it is a
 good idea to check the ones already available out of the box in Vyuh. These
@@ -30,10 +33,13 @@ include:
 - Restart Application
 - Execute JavaScript
 
-{% hint style="info" %} **Conditional Action**
+<Aside>
+**Conditional Action**
 
 An interesting one is the **`Conditional Action`** that allows you to branch
-between two ore more actions based on some runtime condition. {% endhint %}
+between two ore more actions based on some runtime condition.
+
+</Aside>
 
 ## A Custom "Show Barcode" Action
 
@@ -52,7 +58,7 @@ or bars. Additionally, these barcodes can be encoded in multiple formats. Thus,
 we need to have **`data`** and **`barcodeType`** as our two primary parameters
 for configuration.
 
-{% hint style="info" %}
+<Aside>
 
 #### One-Dimensional Barcodes (1D)
 
@@ -72,16 +78,16 @@ for configuration.
 - **Data Matrix:** A square or rectangular barcode that can store large amounts
   of data in a small space.
 
-{% endhint %}
+</Aside>
 
 With that in mind, here is our schema which we will define in a separate file.
 Notice the use of the schema type as **`misc.action.showBarcode`**. It is a good
 practice to namespace your actions within your feature and avoid name collisions
 with other features.
 
-{% code title="show-barcode.ts" %}
-
 ```typescript
+// show-barcode.ts
+
 import { defineField, defineType } from 'sanity'
 import { FaBarcode as Icon } from 'react-icons/fa6'
 
@@ -132,17 +138,15 @@ export const showBarcode = defineType({
 })
 ```
 
-{% endcode %}
-
 ### Include in Feature
 
 Now that the schema is ready, we need to include this action in our
 **`FeatureDescriptor`** for the **misc** feature. This is done in the
 **`index.ts`** file for the feature.
 
-{% code title="misc/src/index.ts" %}
-
 ```typescript
+// misc/src/index.ts
+
 import { FeatureDescriptor } from '@vyuh/sanity-schema-core'
 import { showBarcode } from './action/show-barcode.ts'
 
@@ -157,14 +161,12 @@ export const misc = new FeatureDescriptor({
 })
 ```
 
-{% endcode %}
-
 The above feature has already been included in the Sanity config and hence it
 will show up in the Studio.
 
-{% code title="sanity.config.ts" %}
-
 ```typescript
+// sanity.config.ts
+
 import { defineConfig } from 'sanity'
 import { vyuh } from '@vyuh/sanity-plugin-structure'
 import { system } from '@vyuh/sanity-schema-system'
@@ -193,15 +195,13 @@ export default defineConfig([
 ])
 ```
 
-{% endcode %}
-
 ### Configuring the Action inside Sanity Studio
 
 Now, its time to configure it inside the Studio. We will create a built-in Card
 which will invoke the action when tapped. Here is how it would look in the
 Studio with the configuration form.
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption><p>Setting up the "Show Barcode" Action</p></figcaption></figure>
+![Setting up the "Show Barcode" Action](images/barcode-action.png)
 
 ## Flutter counterpart for the Action
 
@@ -216,9 +216,9 @@ Framework. Since we have setup the schema for the configuration already in the
 CMS, this counterpart will just be a Dart class that maps the parameters
 accordingly. Let's see this.
 
-{% code title="show_barcode.dart" %}
-
 ```dart
+// show_barcode.dart
+
 import 'dart:async';
 
 import 'package:barcode_widget/barcode_widget.dart';
@@ -273,8 +273,6 @@ final class ShowBarcodeAction extends ActionConfiguration {
 
 ```
 
-{% endcode %}
-
 Notice that the **`barcodeType`** and the **`data`** fields map exactly to the
 ones in the previous schema definition for the action. We are also leveraging a
 custom pub package called
@@ -290,13 +288,12 @@ flutter pub add barcode_widget
 
 To ensure this action can be picked up when reading the Sanity payload, we need
 to include it in the **`FeatureDescriptor`** for our feature. This can be seen
-in the code below (**`line no 26-28`**). The use of a static
-**`typeDescriptor`** has become a common practice to ensure we keep it neatly
-tucked with the Action class itself.
+in the code below. The use of a static **`typeDescriptor`** has become a common
+practice to ensure we keep it neatly tucked with the Action class itself.
 
-{% code title="feature.dart" lineNumbers="true" %}
+```dart {27-29}
+// feature.dart
 
-```dart
 import 'package:feature_misc/action/show_barcode.dart';
 import 'package:flutter/material.dart';
 import 'package:vyuh_core/vyuh_core.dart';
@@ -329,8 +326,6 @@ final feature = FeatureDescriptor(
 );
 
 ```
-
-{% endcode %}
 
 ### Ensure feature is included with the App
 
@@ -371,12 +366,15 @@ With all the setup from before, we can now hot-reload the Flutter App and get
 ready to see the **`"Show Barcode"`** action. We have created a demo page that
 includes a Card linked to the "Show Barcode" Action.
 
-{% hint style="warning" %} One fun fact to note is that the **UPC**, **EAN** and
-**ISBN** formats can only encode numbers, so it will fail for our string "Vyuh
-Framework" :hushed:. {% endhint %}
+<Aside>
+  One fun fact to note is that the **UPC**, **EAN** and **ISBN** formats can
+  only encode numbers, so it will fail for our string "Vyuh Framework" :hushed:.
+</Aside>
 
-{% embed url="https://youtu.be/evt-9izEp-s" %} Quick test of the Show Barcode
-action {% endembed %}
+<YouTube
+  id={'https://youtu.be/evt-9izEp-s'}
+  title={'Quick test of the Show Barcode action'}
+/>
 
 ## Summary
 

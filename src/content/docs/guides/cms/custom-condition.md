@@ -78,7 +78,7 @@ export const partOfDay = defineType({
 ```
 
 Note that we have deliberately set the **`title`** field to `readOnly` along
-with an `initialValue`.&#x20;
+with an `initialValue`.
 
 {% hint style="info" %} **Naming inside the Schema**
 
@@ -118,7 +118,7 @@ the **misc** feature in our list of features. Thus the _part-of-day_ condition
 will now be visible when you try associating this condition for, say, a
 _conditional-block_.
 
-<figure><img src="../../.gitbook/assets/image (12) (1) (1).png" alt="" width="375"><figcaption><p>Setting the condtion to "Part of Day"</p></figcaption></figure>
+![Setting the condtion to "Part of Day"](images/setting-part-of-day-condition.png)
 
 ## 3. Create the Flutter counterpart
 
@@ -230,12 +230,12 @@ Let's create a _Conditional Block_ in our CMS and define the content items to
 show for the different conditions. We have created simple _Card_ items with the
 _title_ mentioning the part of the day.
 
-<figure><img src="../../.gitbook/assets/image (13) (1).png" alt="" width="375"><figcaption><p>Configuring a Conditional block</p></figcaption></figure>
+![Configuring a Conditional block](images/part-of-day-condition.png)
 
 And here is the App in action, showing the appropriate greeting. We are just shy
 of _12pm by 18 minutes_, which is why its still **`morning`**.
 
-<figure><img src="../../.gitbook/assets/image (14) (1).png" alt="" width="259"><figcaption><p>Part of Day condition, in action</p></figcaption></figure>
+![Part of Day condition, in action](images/flutter-part-of-day-condition.png)
 
 ## Summary
 

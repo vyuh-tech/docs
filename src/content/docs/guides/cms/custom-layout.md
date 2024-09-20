@@ -25,7 +25,7 @@ come back here.
 The default layout for the `ProductCard` item, that we created earlier, looks
 like below.&#x20;
 
-![Default layout for ProductCard](../images/product-card.png)
+![Default layout for ProductCard](images/product-card.png)
 
 We will change things up a bit and make the image come on the left and show just
 the `title`, `price` and `category`. This will be our mini-view of the
@@ -172,9 +172,9 @@ convenience method that creates a schema for a default layout. It uses the
 schemaType of the content as a prefix. Thus the for the `ProductCard`, it would
 be **`misc.productCard.layout.default`**. {% endhint %}
 
-![Choosing a layout for the ProductCard](../images/choosing-a-layout.png)
+![Choosing a layout for the ProductCard](images/choosing-a-layout.png)
 
-![Using the Mini View layout](../images/mini-view-layout.png)
+![Using the Mini View layout](images/mini-view-layout.png)
 
 ## 3. Creating the Dart `LayoutConfiguration`
 
@@ -303,7 +303,7 @@ final feature = FeatureDescriptor(
 Below you can see two product cards, each rendered with the mini and default
 layouts.
 
-![Different layouts for the ProductCard](../images/different-layouts.png)
+![Different layouts for the ProductCard](images/different-layouts.png)
 
 ## Summary
 

@@ -22,7 +22,7 @@ Thus, the 3 core widgets which are part of our mini design system include:
 
 ## Home Tab
 
-<figure><img src="../../.gitbook/assets/image (3).png" alt="" width="375"><figcaption><p>Home Tab</p></figcaption></figure>
+![Home Tab](images/home-tab.png)
 
 Here is the snippet of code from the Home tab that shows these widgets in use.
 
@@ -155,7 +155,7 @@ that direction. {% endhint %}
 
 ## Search Tab
 
-<figure><img src="../../.gitbook/assets/image (4).png" alt="" width="375"><figcaption><p>Search Tab</p></figcaption></figure>
+![Search Tab](images/search-tab.png)
 
 The Search Tab has a very similar structure and again relies on the
 `CollectionView` to render its listing of results. This can be seen in the code

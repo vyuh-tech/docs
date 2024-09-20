@@ -10,7 +10,7 @@ values. This can be used to control different aspects of the framework.
 Conditions are evaluated _**asynchronously**_, to accommodate making network
 calls or use local values.
 
-<figure><img src="../../.gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
+![](images/conditional-flow.png)
 
 ## Need for Conditions
 
@@ -122,7 +122,7 @@ This is where the true power of the framework comes out. Besides being a
 framework for building large-scale, production-quality apps, it can also be a
 great companion for exploration during your development journey.&#x20;
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+![](images/conditional-route-branching.png)
 
 Designers and Developers can work together to construct the building blocks and
 try out various permutations for a demo. Pick the one that makes most sense at

@@ -19,7 +19,7 @@ are:
 4. Action
 5. Condition
 
-<figure><img src="../../.gitbook/assets/core-elements.png" alt=""><figcaption><p>Core elements and their relationships</p></figcaption></figure>
+![Core elements and their relationships](images/core-elements.png)
 
 Let's see each of these in more detail.
 
