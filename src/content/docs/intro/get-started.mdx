@@ -4,6 +4,7 @@ description: A Quick start guide to get up and running with the Vyuh Framework
 ---
 
 import { Aside } from '@astrojs/starlight/components'
+import { Image } from 'astro:assets'
 
 Welcome to a new way to build Flutter Apps with the **Vyuh Framework**. The
 concepts here are simple and you will soon be in a position to build large scale
@@ -16,8 +17,8 @@ apps with minimal effort.
 If you have not read through the **Core Concepts**, now would be a good time to
 quickly glance through that. The important ones you should cover include:
 
-- [Features and Plugins](../concepts/features-and-plugins.md)
-- [Descriptors and Builders](../concepts/descriptors-and-builders.md)
+- [Features and Plugins](/concepts/features-and-plugins)
+- [Descriptors and Builders](/concepts/descriptors-and-builders)
 
 </Aside>
 
@@ -63,7 +64,7 @@ go ahead and define a feature.
 Create a file, under `/lib`, called `feature.dart` and put the following code in
 it:
 
-```dart
+```dart title="lib/feature.dart"
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:go_router/go_router.dart';
@@ -107,7 +108,7 @@ implementation for the `_Counter` widget. Let's add that next.
 In the same `feature.dart` file, add the following code below the `feature`
 field.
 
-```dart
+```dart title="lib/feature.dart"
 class _Counter extends StatefulWidget {
   const _Counter();
 
@@ -154,7 +155,7 @@ In the above code, you will notice that we are using MobX for state management.
 This is not mandatory, and you are free to use any state management technique
 you like.
 
-> Disclaimer
+> **Disclaimer**
 >
 > The creator of the **Vyuh Framework** has also created **MobX.dart** in the
 > past. So its natural to use MobX for all state management 😇.
@@ -165,7 +166,7 @@ Now we have the **counter-feature** ready, it's time to invoke the `runApp`
 method of the **Vyuh Framework**. Let's go back to the `main.dart` file in your
 project and replace it with these lines:
 
-```dart
+```dart title="lib/main.dart"
 import 'package:flutter/material.dart';
 import 'package:vyuh_core/vyuh_core.dart' as vc;
 import 'feature.dart';
@@ -196,7 +197,11 @@ flutter run
 After a few moments, you should see an app getting launched on your chosen
 device or simulator. Here's how it looks after a couple of button presses:
 
-![The Counter feature in action](images/flutter-counter.png)
+<Image
+  src={import('./images/flutter-counter.png')}
+  alt={'The Counter feature in action'}
+  height={600}
+/>
 
 ## Summary
 
@@ -210,8 +215,7 @@ Of course, as you gain more experience, you can become more sophisticated in
 your approach to including features conditionally or choosing to enable features
 for only some of your customers. The possibilities are endless.
 
-<Aside type={'note'}>
-  **A parting exercise**
+<Aside type={'note'} title={'A Parting Exercise'}>
 
 The framework also includes a developer feature (`vyuh_feature_developer`) that
 shows you details of all the included features in a Vyuh Application. We have

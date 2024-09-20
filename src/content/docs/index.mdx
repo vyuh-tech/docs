@@ -1,216 +1,33 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
+title: The Vyuh Framework
+description:
+  Technical Documentation, examples, guides and resources for the Vyuh Framework
 template: splash
 hero:
-  tagline: Congrats on setting up a new Starlight project!
+  tagline: Build Modular, CMS-driven Flutter Apps. At Scale.
   image:
-    file: ../../assets/houston.webp
+    file: ../../assets/logo.svg
   actions:
-    - text: Example Guide
-      link: /intro/getting-started/
+    - text: Get Started
+      link: /intro
       icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
-      icon: external
-      variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components'
 
 ## Next steps
 
-<CardGrid stagger>
-  <Card title="Intro" icon="pencil">
-    Edit `src/content/docs/index.mdx` to see this page change.
+<CardGrid>
+  <Card title="Concepts" icon="star">
+    [Learn](/concepts) the fundamental concepts of Vyuh
   </Card>
-  <Card title="Guides" icon="add-document">
-    Add Markdown or MDX files to `src/content/docs` to create new pages.
+  <Card title="Guides" icon="document">
+    [Take a deeper dive](/guides) into various aspects of the Framework
   </Card>
   <Card title="Examples" icon="setting">
-    Edit your `sidebar` and other config in `astro.config.mjs`.
+    [See how](/examples) various apps were built with Vyuh
   </Card>
   <Card title="Framework" icon="open-book">
-    Learn more in [the Starlight Docs](https://starlight.astro.build/).
+    [Explore](/framework) the packages that are part of the Vyuh Framework
   </Card>
 </CardGrid>
-
-## Technical Documentation, examples, guides and resources for the Vyuh Framework
-
-# Overview
-
-## What is Vyuh?
-
-Vyuh is a framework for building _modular, large scale_ **Mobile** and **Web**
-apps (aka _Super Apps_). It uses **Flutter** to drive the App Experience and an
-_optional_ **Server-Driven UI** using a headless **CMS**.&#x20;
-
-> It is a tried and tested approach for building **Super Apps** as a collection
-> of **modular Mini-Apps**. Vyuh allows you to create a _single unified App
-> Experience_ that can connect multiple mini-apps.
-
-![](../../assets/logo-light.png)
-
-This CMS-driven approach helps in **dramatically reducing your time** 🕛 to ship
-new features with a **much smaller team** 😇.&#x20;
-
-It also gives **phenomenal control** 🎛️ in switching things and trying different
-variations of a journey or content.&#x20;
-
-It unlocks new ways of **exploring UI Development** 🌈 which is fun, flexible
-and dynamic.
-
-> #### A framework that can take you from Idea to MVP to Production Scale. Makes the simple stuff easy and complex stuff possible with ease!
-
-## Fundamentals covered
-
-This is possible because the framework takes care of all the fundamentals of
-building large scale apps. This includes things like:
-
-- **CMS**-driven (aka _Server-driven_) UI
-- Custom Content types
-- Actions, Layouts, Conditions, Routes
-- Custom API Content
-- Custom journeys & Conditional flows
-- **Modular** development of **Features** with independent teams
-- Third party integrations via **Plugins**
-- **Remote configuration** with Zero App Store releases
-- **Design System** based UX
-- **Analytics**
-- **Feature Flags** and A/B/N testing
-- **Networking**
-- **Authentication**
-- Navigation and **Routing**
-- **State Management** with the sophistication you desire
-- **Error Handling**
-- **Theming**
-- **Storage** and Secure Storage
-- and much, much more...
-
-## Immediate Benefits
-
-As an enterprise looking to create your **flagship application**, or a **family
-of applications** or a **platform for white-labeled applications**, Vyuh is
-_ready for your journey_. The benefits below will be a _catalyst_ for _**faster
-time to market**_.
-
-<table data-view="cards">
-  <thead>
-    <tr>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <strong>Faster App Deployments</strong>
-      </td>
-      <td>
-        Change the App Experience without any App Store release or deployment
-      </td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Explorative Power</strong>
-      </td>
-      <td>Explore different variations of your UX without changing any code</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Small teams, Big outcomes</strong>
-      </td>
-      <td>Build sophisticated Apps with smaller teams and faster outcomes.</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Extensibility built-in</strong>
-      </td>
-      <td>
-        Tackle a variety of scenarios in your App Experience with customizations
-        to the hilt, be it custom content-blocks, layouts, actions, routes or
-        conditions.
-      </td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Server Driven (CMS-driven) UI</strong>
-      </td>
-      <td>
-        Build complete customer journeys using a CMS-driven approach. This
-        unlocks a new way to deliver experiences without an App Store release.
-      </td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Design System First</strong>
-      </td>
-      <td>
-        Use a Design System from the start to avoid visual consistency issues.
-      </td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Easy Third-Party integrations</strong>
-      </td>
-      <td>
-        Using API-driven content you can integrate any API, be it ReST, GraphQL
-        or WebSockets
-      </td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Powerful State Management</strong>
-      </td>
-      <td>
-        Use the power of Reactive State with{' '}
-        <a href="https://pub.dev/packages/mobx">MobX</a> to build simple to
-        highly sophisticated experiences
-      </td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Developer Productivity</strong>
-      </td>
-      <td>
-        Use the two super-powers of Dynamic updates via CMS and Flutter's Hot
-        Reload to supercharge your Developer Experience.
-      </td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Growing Integrations</strong>
-      </td>
-      <td>
-        Make use of the growing set of Plugins to cater to any aspect of your
-        App Development process from Networking to Analytics to Payments and
-        much more.
-      </td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>
-        <strong>Fundamentals Ready</strong>
-      </td>
-      <td>
-        Start with the built-in, fundamental building blocks to kickstart your
-        Application. Use the scaffolding tool to create your initial project.
-      </td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
-
-## Let's get started
-
-Take a deep dive into **Vyuh** and fast-track your apps today! 🚀.

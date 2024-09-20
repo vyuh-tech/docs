@@ -4,11 +4,16 @@ import starlight from '@astrojs/starlight'
 import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
 import starlightLinksValidator from 'starlight-links-validator'
 
+import react from '@astrojs/react'
+
+import tailwind from '@astrojs/tailwind'
+
 // https://astro.build/config
 export default defineConfig({
+  trailingSlash: 'never',
   integrations: [
     starlight({
-      title: 'Vyuh Docs',
+      title: 'Docs',
       description:
         'A framework to build Modular, CMS-driven Flutter Apps. At Scale.',
       logo: {
@@ -21,7 +26,13 @@ export default defineConfig({
         discord: 'https://discord.gg/b49sbjqszG',
         youtube: 'https://youtube.com/@vyuh_tech',
       },
+      customCss: ['./src/tailwind.css'],
       sidebar: [
+        {
+          label: 'Vyuh.tech Website',
+          link: 'https://vyuh.tech',
+          attrs: { target: '_blank', rel: 'noopener', class: 'external-link' },
+        },
         {
           label: 'Intro',
           autogenerate: { directory: 'intro' },
@@ -32,21 +43,53 @@ export default defineConfig({
         },
         {
           label: 'Guides',
-          autogenerate: { directory: 'guides' },
+          items: [
+            {
+              label: 'CMS',
+              autogenerate: { directory: 'guides/cms' },
+            },
+          ],
         },
         {
           label: 'Examples',
-          autogenerate: { directory: 'examples' },
+          items: [
+            'examples',
+            'examples/movies',
+            'examples/news',
+            {
+              label: 'Wonderous',
+              autogenerate: { directory: 'examples/wonderous' },
+            },
+            {
+              label: 'Unsplash',
+              autogenerate: { directory: 'examples/unsplash' },
+            },
+          ],
         },
         {
           label: 'Framework',
-          autogenerate: { directory: 'framework' },
+          items: [
+            'framework',
+            'framework/changelog',
+            {
+              label: 'Packages',
+              autogenerate: { directory: 'framework/packages' },
+            },
+          ],
         },
       ],
       expressiveCode: {
         // @ts-ignore
-        plugins: [pluginLineNumbers(), starlightLinksValidator()],
+        plugins: [pluginLineNumbers()],
       },
+      plugins: [starlightLinksValidator()],
+      editLink: {
+        baseUrl: 'https://github.com/vyuh-tech/docs/edit/main/',
+      },
+    }),
+    react(),
+    tailwind({
+      applyBaseStyles: false,
     }),
   ],
 })
