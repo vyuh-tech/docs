@@ -21,7 +21,7 @@ Unsplash app:
 - Built-in navigation between the listing and the details
 - Using the Unsplash Client from pub.dev to invoke all of the server calls.
 
-<figure><img src="../../.gitbook/assets/unsplash.png" alt=""><figcaption><p>The gallery of screenshots in the Unsplash feature</p></figcaption></figure>
+![The gallery of screenshots in the Unsplash feature](images/unsplash-app.png)
 
 ## Outline
 

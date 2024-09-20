@@ -173,12 +173,12 @@ Now that we have the schema defined, let's add some products to our page, in the
 CMS. Since the _Product Card_ has already been added to the _Route's
 region-items_, we can see it in the list of content items for the Region.
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt="" width="375"><figcaption><p>Adding a Product Card to the body region</p></figcaption></figure>
+![Adding a Product Card to the body region](images/adding-product-card.png)
 
 After adding some of the details of the Product, we have the card, ready to be
 displayed on the App.
 
-<figure><img src="../../.gitbook/assets/image (2) (1) (1).png" alt="" width="375"><figcaption><p>Adding a Product Card</p></figcaption></figure>
+![Configuring a Product Card](images/configuring-product-card.png)
 
 ## 2. Rendering the Product Card
 
@@ -191,7 +191,7 @@ Such a message is quite useful during development as it quickly helps in
 identifying the source of error. We are already aware of this missing piece, so
 let's fix it now.
 
-<figure><img src="../../.gitbook/assets/image (4) (1).png" alt=""><figcaption><p>Missing implementation for Content Item</p></figcaption></figure>
+![Missing implementation for Content Item](images/missing-schema.png)
 
 ### Building the Dart equivalent of the Schema
 
@@ -343,7 +343,7 @@ applied to it. This is configurable from the CMS, as shown with the highlighted
 _**`Layout`**_ field. Each layout is a different configuration and can contain
 specific parameters to tweak the visual representation.&#x20;
 
-![](<../../.gitbook/assets/image (5) (1).png>)
+![](images/layout-field.png)
 
 For our use case, we have created a default layout, which is simple and does not
 have any configurable parameters.&#x20; {% endhint %}
@@ -390,7 +390,7 @@ we created earlier to render the product as a simple `Card` widget.
 For the two products which we added on the page, the corresponding cards can be
 seen in the app below.
 
-<figure><img src="../../.gitbook/assets/image (3) (1).png" alt="" width="375"><figcaption><p>Rendering the Product Cards</p></figcaption></figure>
+![Rendering the Product Cards](images/product-cards.png)
 
 ## Summary
 

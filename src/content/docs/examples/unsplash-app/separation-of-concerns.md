@@ -15,7 +15,7 @@ accordingly between the various actors. In our case, the actors include:
 3. **The Widgets**: rendering surface for the information that is fetched from
    the API calls and serviced through the store.
 
-<figure><img src="../../.gitbook/assets/image (2).png" alt="" width="188"><figcaption><p>Information Flow</p></figcaption></figure>
+![Information Flow](images/concerns.png)
 
 ## Store
 

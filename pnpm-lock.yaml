@@ -13,10 +13,13 @@ importers:
         version: 0.9.3(prettier@3.3.3)(typescript@5.6.2)
       '@astrojs/starlight':
         specifier: ^0.28.1
-        version: 0.28.1(astro@4.15.7(rollup@4.22.0)(typescript@5.6.2))
+        version: 0.28.1(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2))
       astro:
         specifier: ^4.15.3
-        version: 4.15.7(rollup@4.22.0)(typescript@5.6.2)
+        version: 4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2)
+      astro-embed:
+        specifier: ^0.7.2
+        version: 0.7.2(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2))
       prettier:
         specifier: ^3.3.3
         version: 3.3.3
@@ -32,6 +35,32 @@ packages:
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
+
+  '@astro-community/astro-embed-integration@0.7.1':
+    resolution: {integrity: sha512-uPpVx/CluktB3nOnCTUB7tQ3jms2acYWTe/JgX5tFqTjjtiL686+FcjOaQ/Ej+FNErdg+36Y66WTeIxlYw4pvQ==}
+    peerDependencies:
+      astro: ^2.0.0 || ^3.0.0-beta || ^4.0.0-beta
+
+  '@astro-community/astro-embed-link-preview@0.2.1':
+    resolution: {integrity: sha512-pl+KYhv5l2VpvvSwmZXTrCV+x3FxY3js4FX7/V/ABpLiSUsgF0yno90m0qd4Hx2y0XoeC4b/TB4T/Eu4AQIBTQ==}
+
+  '@astro-community/astro-embed-twitter@0.5.4':
+    resolution: {integrity: sha512-wQyros0Uh4L8fDOCZ9+UYMoq4u+YiJZEvjnL6ZP0KL6dcsyfma/XC2/Q2DBL5SBBiIkkFcFHmzDBIPl4HsENXw==}
+    peerDependencies:
+      astro: ^2.0.0 || ^3.0.0-beta || ^4.0.0-beta
+
+  '@astro-community/astro-embed-utils@0.1.3':
+    resolution: {integrity: sha512-eiMO+vfCdE9GtW6qE7X5Xl6YCKZDCoXJEWqRofQcoC3GHjqN2/WhJlnaxNVRq3demSO03UNtho57Em5p7o7AOA==}
+
+  '@astro-community/astro-embed-vimeo@0.3.8':
+    resolution: {integrity: sha512-N8nCAy/Q7XZroev+2XqNgy1uWa3l8hOGuEV+Nj0cjDk4OR20bWxbK7/fyL/eKOAz376VRlZ/0ym9dmAmqsjQAg==}
+    peerDependencies:
+      astro: ^2.0.0 || ^3.0.0-beta || ^4.0.0-beta
+
+  '@astro-community/astro-embed-youtube@0.5.3':
+    resolution: {integrity: sha512-O06Y6XwhDM5e72Hl/n3qgl7jDSrJpqTSTurFZZ7RQypJQzfyhlWgc99f0REdAtZSnLkq7069HfuMX4CzcaOdkg==}
+    peerDependencies:
+      astro: ^2.0.0 || ^3.0.0-beta || ^4.0.0-beta
 
   '@astrojs/check@0.9.3':
     resolution: {integrity: sha512-I6Dz45bMI5YRbp4yK2LKWsHH3/kkHRGdPGruGkLap6pqxhdcNh7oCgN04Ac+haDfc9ow5BYPGPmEhkwef15GQQ==}
@@ -679,6 +708,9 @@ packages:
   '@types/node@17.0.45':
     resolution: {integrity: sha512-w+tIMs3rq2afQdsPJlODhoUEKzFP1ayaoyl1CcnwtIlsVe7K7bA1NGm4s3PraqTLlXnbIN84zuBlxBWo1u9BLw==}
 
+  '@types/node@18.19.50':
+    resolution: {integrity: sha512-xonK+NRrMBRtkL1hVCc3G+uXtjh1Al4opBLjqVmipe5ZAaBYWW6cNAiBVZ1BvmkBhep698rP3UM3aRAdSALuhg==}
+
   '@types/sax@1.2.7':
     resolution: {integrity: sha512-rO73L89PJxeYM3s3pPPjiPgVVcymqU490g0YO5n5By0k2Erzj6tay/4lr1CHAAU4JyOWd1rpQ8bCf6cZfHU96A==}
 
@@ -776,6 +808,17 @@ packages:
   astring@1.9.0:
     resolution: {integrity: sha512-LElXdjswlqjWrPpJFg1Fx4wpkOCxj1TDHlSV4PlaRxHGWko024xICaa97ZkMfs6DRKlCguiAI+rbXv5GWwXIkg==}
     hasBin: true
+
+  astro-auto-import@0.4.2:
+    resolution: {integrity: sha512-ZgWZQ58+EhbEym1+aoUnNyECOy0wsG5uRUs+rVp/7BzHtj1V76J2qkhjaTWLplgNb+8WrzhvTQNxytmXRCW+Ow==}
+    engines: {node: '>=16.0.0'}
+    peerDependencies:
+      astro: ^2.0.0 || ^3.0.0-beta || ^4.0.0-beta
+
+  astro-embed@0.7.2:
+    resolution: {integrity: sha512-v/j6yRA9Wa+TEHBV64dQU5bLKuYiy1mNudiKIM+nvFe1bAUh+4wzQOf3lRofrxyBMgHaZbr8Xy7oLS9PVzu5jg==}
+    peerDependencies:
+      astro: ^2.0.0 || ^3.0.0-beta || ^4.0.0-beta
 
   astro-expressive-code@0.35.6:
     resolution: {integrity: sha512-1U4KrvFuodaCV3z4I1bIR16SdhQlPkolGsYTtiANxPZUVv/KitGSCTjzksrkPonn1XuwVqvnwmUUVzTLWngnBA==}
@@ -947,13 +990,26 @@ packages:
     resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
     engines: {node: '>= 0.6'}
 
+  css-select@5.1.0:
+    resolution: {integrity: sha512-nwoRF1rvRRnnCqqY7updORDsuqKzqYJ28+oSMaJMMgOauh3fvwHqMS7EZpIPqK8GL+g9mKxF1vP/ZjSeNjEVHg==}
+
+  css-selector-parser@1.4.1:
+    resolution: {integrity: sha512-HYPSb7y/Z7BNDCOrakL4raGO2zltZkbeXyAd6Tg9obzix6QhzxCotdBl6VT0Dv4vZfJGVz3WL/xaEI9Ly3ul0g==}
+
   css-selector-parser@3.0.5:
     resolution: {integrity: sha512-3itoDFbKUNx1eKmVpYMFyqKX04Ww9osZ+dLgrk6GEv6KMVeXUhUnp4I5X+evw+u3ZxVU6RFXSSRxlTeMh8bA+g==}
+
+  css-what@6.1.0:
+    resolution: {integrity: sha512-HTUrgRJ7r4dsZKU6GjmpfRK1O76h97Z8MfS1G0FozR+oF2kG6Vfe8JE6zwrkbxigziPHinCJ+gCPjA9EaBDtRw==}
+    engines: {node: '>= 6'}
 
   cssesc@3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
     hasBin: true
+
+  cssom@0.5.0:
+    resolution: {integrity: sha512-iKuQcq+NdHqlAcwUY0o/HL69XQrUaQdMjmStJ8JFmUaiiQErlhrmuigkg/CU4E2J0IyUKUrMAgl36TvN67MqTw==}
 
   debug@4.3.7:
     resolution: {integrity: sha512-Er2nc/H7RrMXZBFCEim6TCmMk02Z8vLC2Rbi1KEBggpo0fS6l0S1nnapwmIi3yW/+GOJap1Krg4w0Hg80oCqgQ==}
@@ -1003,6 +1059,19 @@ packages:
 
   dlv@1.1.3:
     resolution: {integrity: sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==}
+
+  dom-serializer@2.0.0:
+    resolution: {integrity: sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==}
+
+  domelementtype@2.3.0:
+    resolution: {integrity: sha512-OLETBj6w0OsagBwdXnPdN0cnMfF9opN69co+7ZrbfPGrdpPVNBUj02spi6B1N7wChLQiPn4CSH/zJvXw56gmHw==}
+
+  domhandler@5.0.3:
+    resolution: {integrity: sha512-cgwlv/1iFQiFnU96XXgROh8xTeetsnJiDsTc7TYCLFd9+/WNkIqPTxiM/8pSd8VIrhXGTf1Ny1q1hquVqDJB5w==}
+    engines: {node: '>= 4'}
+
+  domutils@3.1.0:
+    resolution: {integrity: sha512-H78uMmQtI2AhgDJjWeQmHwJJ2bLPD3GMmO7Zja/ZZh84wkm+4ut+IUnUdRa8uCGX88DiVx1j6FRe1XfxEgjEZA==}
 
   dset@3.1.4:
     resolution: {integrity: sha512-2QF/g9/zTaPDc3BjNcVTGoBbXBgYfMTTceLaYcFJ/W9kggFUkhxD/hMEeuLKbugyef9SqAx8cpgwlIP/jinUTA==}
@@ -1245,6 +1314,9 @@ packages:
   html-whitespace-sensitive-tag-names@3.0.0:
     resolution: {integrity: sha512-KlClZ3/Qy5UgvpvVvDomGhnQhNWH5INE8GwvSIQ9CWt1K0zbbXrl7eN5bWaafOZgtmO3jMPwUqmrmEwinhPq1w==}
 
+  htmlparser2@8.0.2:
+    resolution: {integrity: sha512-GYdjWKDkbRLkZ5geuHs5NY1puJ+PXwP7+fHPRz06Eirsb9ugf6d8kkXav6ADhcODhFFPMIXyxkxSuMf3D6NCFA==}
+
   http-cache-semantics@4.1.1:
     resolution: {integrity: sha512-er295DKPVsV82j5kw1Gjt+ADA/XYHsajl82cGNQG2eyoPkvgUhX+nDIyelzhIWbbsXP39EHcI6l5tYs2FYqYXQ==}
 
@@ -1382,6 +1454,12 @@ packages:
   kleur@4.1.5:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
     engines: {node: '>=6'}
+
+  linkedom@0.14.26:
+    resolution: {integrity: sha512-mK6TrydfFA7phrnp+1j57ycBwFI5bGSW6YXlw9acHoqF+mP/y+FooEYYyniOt5Ot57FSKB3iwmnuQ1UUyNLm5A==}
+
+  lite-youtube-embed@0.3.3:
+    resolution: {integrity: sha512-gFfVVnj6NRjxVfJKo3qoLtpi0v5mn3AcR4eKD45wrxQuxzveFJUb+7Cr6uV6n+DjO8X3p0UzPPquhGt0H/y+NA==}
 
   load-yaml-file@0.2.0:
     resolution: {integrity: sha512-OfCBkGEw4nN6JLtgRidPX6QxjBQGQf72q3si2uvqyFEMbycSFFHwAZeXx6cJgFM9wmLrf9zBwCP3Ivqa+LLZPw==}
@@ -2068,6 +2146,12 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  uhyphen@0.2.0:
+    resolution: {integrity: sha512-qz3o9CHXmJJPGBdqzab7qAYuW8kQGKNEuoHFYrBwV6hWIMcpAmxDLXojcHfFr9US1Pe6zUswEIJIbLI610fuqA==}
+
+  undici-types@5.26.5:
+    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
+
   unified@11.0.5:
     resolution: {integrity: sha512-xKvGhPWw3k84Qjh8bI3ZeJjqnyadK+GEFtazSfZv/rKeTkTjOJho6mFqh2SM96iIcZokxiOpg78GazTSg8+KHA==}
 
@@ -2088,6 +2172,9 @@ packages:
 
   unist-util-remove-position@5.0.0:
     resolution: {integrity: sha512-Hp5Kh3wLxv0PHj9m2yZhhLt58KzPtEYKQQ4yxfYFEO7EvHwzyDYnduhHnY1mDxoqr7VUwVuHXk9RXKIiYS1N8Q==}
+
+  unist-util-select@4.0.3:
+    resolution: {integrity: sha512-1074+K9VyR3NyUz3lgNtHKm7ln+jSZXtLJM4E22uVuoFn88a/Go2pX8dusrt/W+KWH1ncn8jcd8uCQuvXb/fXA==}
 
   unist-util-stringify-position@4.0.0:
     resolution: {integrity: sha512-0ASV06AAoKCDkS2+xw5RXJywruurpbC4JZSm7nr7MOt1ojAzvyyaO+UxZf18j8FCF6kmzCZKcAgN/yu2gm2XgQ==}
@@ -2352,6 +2439,40 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
+  '@astro-community/astro-embed-integration@0.7.1(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2))':
+    dependencies:
+      '@astro-community/astro-embed-link-preview': 0.2.1
+      '@astro-community/astro-embed-twitter': 0.5.4(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2))
+      '@astro-community/astro-embed-vimeo': 0.3.8(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2))
+      '@astro-community/astro-embed-youtube': 0.5.3(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2))
+      '@types/unist': 2.0.11
+      astro: 4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2)
+      astro-auto-import: 0.4.2(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2))
+      unist-util-select: 4.0.3
+
+  '@astro-community/astro-embed-link-preview@0.2.1':
+    dependencies:
+      '@astro-community/astro-embed-utils': 0.1.3
+
+  '@astro-community/astro-embed-twitter@0.5.4(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2))':
+    dependencies:
+      '@astro-community/astro-embed-utils': 0.1.3
+      astro: 4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2)
+
+  '@astro-community/astro-embed-utils@0.1.3':
+    dependencies:
+      linkedom: 0.14.26
+
+  '@astro-community/astro-embed-vimeo@0.3.8(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2))':
+    dependencies:
+      '@astro-community/astro-embed-utils': 0.1.3
+      astro: 4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2)
+
+  '@astro-community/astro-embed-youtube@0.5.3(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2))':
+    dependencies:
+      astro: 4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2)
+      lite-youtube-embed: 0.3.3
+
   '@astrojs/check@0.9.3(prettier@3.3.3)(typescript@5.6.2)':
     dependencies:
       '@astrojs/language-server': 2.14.2(prettier@3.3.3)(typescript@5.6.2)
@@ -2417,12 +2538,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@3.1.6(astro@4.15.7(rollup@4.22.0)(typescript@5.6.2))':
+  '@astrojs/mdx@3.1.6(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2))':
     dependencies:
       '@astrojs/markdown-remark': 5.2.0
       '@mdx-js/mdx': 3.0.1
       acorn: 8.12.1
-      astro: 4.15.7(rollup@4.22.0)(typescript@5.6.2)
+      astro: 4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2)
       es-module-lexer: 1.5.4
       estree-util-visit: 2.0.0
       gray-matter: 4.0.3
@@ -2447,15 +2568,15 @@ snapshots:
       stream-replace-string: 2.0.0
       zod: 3.23.8
 
-  '@astrojs/starlight@0.28.1(astro@4.15.7(rollup@4.22.0)(typescript@5.6.2))':
+  '@astrojs/starlight@0.28.1(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2))':
     dependencies:
-      '@astrojs/mdx': 3.1.6(astro@4.15.7(rollup@4.22.0)(typescript@5.6.2))
+      '@astrojs/mdx': 3.1.6(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2))
       '@astrojs/sitemap': 3.1.6
       '@pagefind/default-ui': 1.1.1
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
-      astro: 4.15.7(rollup@4.22.0)(typescript@5.6.2)
-      astro-expressive-code: 0.35.6(astro@4.15.7(rollup@4.22.0)(typescript@5.6.2))
+      astro: 4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2)
+      astro-expressive-code: 0.35.6(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2))
       bcp-47: 2.1.0
       hast-util-from-html: 2.0.3
       hast-util-select: 6.0.2
@@ -3044,6 +3165,10 @@ snapshots:
 
   '@types/node@17.0.45': {}
 
+  '@types/node@18.19.50':
+    dependencies:
+      undici-types: 5.26.5
+
   '@types/sax@1.2.7':
     dependencies:
       '@types/node': 17.0.45
@@ -3154,12 +3279,27 @@ snapshots:
 
   astring@1.9.0: {}
 
-  astro-expressive-code@0.35.6(astro@4.15.7(rollup@4.22.0)(typescript@5.6.2)):
+  astro-auto-import@0.4.2(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2)):
     dependencies:
-      astro: 4.15.7(rollup@4.22.0)(typescript@5.6.2)
+      '@types/node': 18.19.50
+      acorn: 8.12.1
+      astro: 4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2)
+
+  astro-embed@0.7.2(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2)):
+    dependencies:
+      '@astro-community/astro-embed-integration': 0.7.1(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2))
+      '@astro-community/astro-embed-link-preview': 0.2.1
+      '@astro-community/astro-embed-twitter': 0.5.4(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2))
+      '@astro-community/astro-embed-vimeo': 0.3.8(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2))
+      '@astro-community/astro-embed-youtube': 0.5.3(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2))
+      astro: 4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2)
+
+  astro-expressive-code@0.35.6(astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2)):
+    dependencies:
+      astro: 4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2)
       rehype-expressive-code: 0.35.6
 
-  astro@4.15.7(rollup@4.22.0)(typescript@5.6.2):
+  astro@4.15.7(@types/node@18.19.50)(rollup@4.22.0)(typescript@5.6.2):
     dependencies:
       '@astrojs/compiler': 2.10.3
       '@astrojs/internal-helpers': 0.4.1
@@ -3219,8 +3359,8 @@ snapshots:
       tsconfck: 3.1.3(typescript@5.6.2)
       unist-util-visit: 5.0.0
       vfile: 6.0.3
-      vite: 5.4.6
-      vitefu: 1.0.2(vite@5.4.6)
+      vite: 5.4.6(@types/node@18.19.50)
+      vitefu: 1.0.2(vite@5.4.6(@types/node@18.19.50))
       which-pm: 3.0.0
       xxhash-wasm: 1.0.2
       yargs-parser: 21.1.1
@@ -3407,9 +3547,23 @@ snapshots:
 
   cookie@0.6.0: {}
 
+  css-select@5.1.0:
+    dependencies:
+      boolbase: 1.0.0
+      css-what: 6.1.0
+      domhandler: 5.0.3
+      domutils: 3.1.0
+      nth-check: 2.1.1
+
+  css-selector-parser@1.4.1: {}
+
   css-selector-parser@3.0.5: {}
 
+  css-what@6.1.0: {}
+
   cssesc@3.0.0: {}
+
+  cssom@0.5.0: {}
 
   debug@4.3.7:
     dependencies:
@@ -3444,6 +3598,24 @@ snapshots:
   direction@2.0.1: {}
 
   dlv@1.1.3: {}
+
+  dom-serializer@2.0.0:
+    dependencies:
+      domelementtype: 2.3.0
+      domhandler: 5.0.3
+      entities: 4.5.0
+
+  domelementtype@2.3.0: {}
+
+  domhandler@5.0.3:
+    dependencies:
+      domelementtype: 2.3.0
+
+  domutils@3.1.0:
+    dependencies:
+      dom-serializer: 2.0.0
+      domelementtype: 2.3.0
+      domhandler: 5.0.3
 
   dset@3.1.4: {}
 
@@ -3813,6 +3985,13 @@ snapshots:
 
   html-whitespace-sensitive-tag-names@3.0.0: {}
 
+  htmlparser2@8.0.2:
+    dependencies:
+      domelementtype: 2.3.0
+      domhandler: 5.0.3
+      domutils: 3.1.0
+      entities: 4.5.0
+
   http-cache-semantics@4.1.1: {}
 
   i18next@23.15.1:
@@ -3908,6 +4087,16 @@ snapshots:
   kleur@3.0.3: {}
 
   kleur@4.1.5: {}
+
+  linkedom@0.14.26:
+    dependencies:
+      css-select: 5.1.0
+      cssom: 0.5.0
+      html-escaper: 3.0.3
+      htmlparser2: 8.0.2
+      uhyphen: 0.2.0
+
+  lite-youtube-embed@0.3.3: {}
 
   load-yaml-file@0.2.0:
     dependencies:
@@ -5021,6 +5210,10 @@ snapshots:
 
   typescript@5.6.2: {}
 
+  uhyphen@0.2.0: {}
+
+  undici-types@5.26.5: {}
+
   unified@11.0.5:
     dependencies:
       '@types/unist': 3.0.3
@@ -5057,6 +5250,13 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.3
       unist-util-visit: 5.0.0
+
+  unist-util-select@4.0.3:
+    dependencies:
+      '@types/unist': 2.0.11
+      css-selector-parser: 1.4.1
+      nth-check: 2.1.1
+      zwitch: 2.0.4
 
   unist-util-stringify-position@4.0.0:
     dependencies:
@@ -5100,17 +5300,18 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vite@5.4.6:
+  vite@5.4.6(@types/node@18.19.50):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.47
       rollup: 4.22.0
     optionalDependencies:
+      '@types/node': 18.19.50
       fsevents: 2.3.3
 
-  vitefu@1.0.2(vite@5.4.6):
+  vitefu@1.0.2(vite@5.4.6(@types/node@18.19.50)):
     optionalDependencies:
-      vite: 5.4.6
+      vite: 5.4.6(@types/node@18.19.50)
 
   volar-service-css@0.0.61(@volar/language-service@2.4.5):
     dependencies:

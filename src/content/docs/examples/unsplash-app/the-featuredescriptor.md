@@ -50,4 +50,4 @@ tools and also makes it easier for your team members to know what this feature
 consists of. In fact, it shows up in the developer tools like the screenshot
 below. And BTW, having a good icon always helps.
 
-<figure><img src="../../.gitbook/assets/image.png" alt="" width="375"><figcaption><p>Unsplash feature in the Developer Tools</p></figcaption></figure>
+![Unsplash feature in the Developer Tools](images/unsplash-devtools.png)

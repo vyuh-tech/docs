@@ -6,9 +6,18 @@ import starlight from '@astrojs/starlight'
 export default defineConfig({
   integrations: [
     starlight({
-      title: 'My Docs',
+      title: 'Vyuh Docs',
+      description:
+        'A framework to build Modular, CMS-driven Flutter Apps. At Scale.',
+      logo: {
+        light: './src/assets/logo-light.png',
+        dark: './src/assets/logo-dark.png',
+      },
       social: {
-        github: 'https://github.com/withastro/starlight',
+        github: 'https://github.com/vyuh-tech/vyuh',
+        'x.com': 'https://x.com/vyuh_tech',
+        discord: 'https://discord.gg/b49sbjqszG',
+        youtube: 'https://youtube.com/@vyuh_tech',
       },
       sidebar: [
         {

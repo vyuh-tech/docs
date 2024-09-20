@@ -28,7 +28,7 @@ a set of screens that show content and help accomplish the task in that feature.
 The user will navigate these screens and carry out the task. Thus, a
 hierarchical view of a feature could look like so:
 
-![Feature Hierarchy in an Application](../../../assets/feature-hierarchy.png)
+![Feature Hierarchy in an Application](images/feature-hierarchy.png)
 
 The interesting part about a Feature _in the context of the Vyuh Framework_ is
 that **we don't include Journeys and Screens** by default. That might seem a bit
@@ -57,7 +57,7 @@ journeys can be built into the feature for simplicity.
 
 Thus, a more realistic hierarchy of the feature looks like so:
 
-![Real Feature Hierarchy in an Application](../../../assets/feature-hierarchy-real.png)
+![Real Feature Hierarchy in an Application](images/feature-hierarchy-real.png)
 
 The _dashed lines_ to the `Journey` and `Screen` suggests that they are optional
 and not the standard way of packaging a feature.
@@ -103,4 +103,4 @@ same with vendor specific adjustments.
 everything you can possibly imagine in an App can be built with just these
 building blocks.
 
-![Features and Plugins as the two primary building blocks](../../../assets/features-and-plugins.png)
+![Features and Plugins as the two primary building blocks](images/features-and-plugins.png)

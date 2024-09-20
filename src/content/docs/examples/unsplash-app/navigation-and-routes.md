@@ -14,7 +14,7 @@ details.
 
 This navigation structure can be visualized in the diagram below.
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p>Navigation structure</p></figcaption></figure>
+![Navigation structure](images/navigation.png)
 
 ## Route Setup
 

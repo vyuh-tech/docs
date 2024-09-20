@@ -79,7 +79,7 @@ CMS, the framework identifies the correct builder for the various content types
 and renders them. The builders are maintained in a type-safe registry for easy
 lookup based on a schema name.
 
-![Descriptors and Builders working together to orchestrate Content + Presentation](../../../assets/descriptors-builders.png)
+![Descriptors and Builders working together to orchestrate Content + Presentation](images/descriptors-builders.png)
 
 Note that from a framework's perspective even the page is a content type and has
 its own builder. The process works recursively down into the items of the page.
