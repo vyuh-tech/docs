@@ -58,6 +58,7 @@ export default defineConfig({
       ],
       components: {
         Head: './src/components/starlight/Head.astro',
+        Footer: './src/components/starlight/Footer.astro',
         SkipLink: './src/components/starlight/SkipLink.astro',
       },
       customCss: ['./src/tailwind.css'],

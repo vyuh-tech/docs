@@ -1,0 +1,16 @@
+---
+import type { Props } from '@astrojs/starlight/props'
+import Default from '@astrojs/starlight/components/Footer.astro'
+import { Image } from 'astro:assets'
+---
+
+<Default {...Astro.props}>
+  <slot />
+</Default>
+
+<footer class="mt-16 p-8 border-t border-gray-200 text-xs text-gray-500 flex flex-col gap-4 items-center">
+  <Image src={import('../../assets/logo.svg')} alt="Vyuh Technologies" width="20" height="20" />
+  <div>
+    Copyright &copy; {new Date(Date.now()).getFullYear()}, Vyuh Technologies Private Limited.
+  </div>
+</footer>
