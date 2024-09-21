@@ -56,6 +56,10 @@ export default defineConfig({
           },
         },
       ],
+      components: {
+        Head: './src/components/starlight/Head.astro',
+        SkipLink: './src/components/starlight/SkipLink.astro',
+      },
       customCss: ['./src/tailwind.css'],
       sidebar,
       expressiveCode: {
