@@ -1,10 +1,5 @@
 export const sidebar = [
   {
-    label: 'Vyuh.tech Website',
-    link: 'https://vyuh.tech',
-    attrs: { target: '_blank', rel: 'noopener', class: 'external-link' },
-  },
-  {
     label: 'Intro',
     items: [
       'intro',

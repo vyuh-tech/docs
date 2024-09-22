@@ -58,6 +58,7 @@ export default defineConfig({
       ],
       components: {
         Head: './src/components/starlight/Head.astro',
+        SocialIcons: './src/components/starlight/SocialIcons.astro',
         Footer: './src/components/starlight/Footer.astro',
         SkipLink: './src/components/starlight/SkipLink.astro',
       },

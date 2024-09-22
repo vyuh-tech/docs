@@ -1,0 +1,12 @@
+---
+import type { Props } from '@astrojs/starlight/props'
+import Default from '@astrojs/starlight/components/SocialIcons.astro'
+---
+
+<div>
+  <a href="https://vyuh.tech"
+     class={`font-bold decoration-0 external-link no-underline px-2 hover:bg-accent-200 rounded`}
+  target="_blank" rel="noopener">Vyuh.tech</a>
+</div>
+
+<Default {...Astro.props}><slot /></Default>
