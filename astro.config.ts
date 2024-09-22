@@ -9,9 +9,12 @@ import react from '@astrojs/react'
 import tailwind from '@astrojs/tailwind'
 import { sidebar } from './sidebar.ts'
 
+console.log(import.meta.env.DEV)
+
 // https://astro.build/config
 export default defineConfig({
   trailingSlash: 'never',
+  site: 'https://docs.vyuh.tech',
   integrations: [
     starlight({
       title: 'Docs',

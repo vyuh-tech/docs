@@ -1,7 +1,7 @@
 {
   "hosting": {
     "site": "vyuh-docs",
-    "source": ".",
+    "public": "dist",
     "ignore": [
       "firebase.json",
       "**/.*",
