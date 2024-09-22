@@ -9,3 +9,7 @@
     content: url('/external-link.svg');
     @apply ml-1 w-[16px] h-[16px];
 }
+
+.mobile-preferences {
+    @apply items-center justify-center;
+}
