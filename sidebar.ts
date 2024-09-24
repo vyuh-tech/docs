@@ -22,8 +22,9 @@ export const sidebar = [
   {
     label: 'Guides',
     items: [
+      'guides',
       'guides/designing-features',
-      'guides/typical-project-structure',
+      'guides/project-structure',
       'guides/using-plugins',
       {
         label: 'CMS',
@@ -64,10 +65,10 @@ export const sidebar = [
         label: 'Unsplash',
         items: [
           'examples/unsplash',
-          'examples/unsplash/the-featuredescriptor',
+          'examples/unsplash/feature-descriptor',
           'examples/unsplash/navigation-and-routes',
           'examples/unsplash/separation-of-concerns',
-          'examples/unsplash/the-widgets',
+          'examples/unsplash/widgets',
         ],
       },
     ],
