@@ -29,10 +29,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Build Docs
+        run: pnpm run build
+
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_VYUH_TECH_WEBSITE }}
           projectId: vyuh-tech-website
-        env:
-          FIREBASE_CLI_EXPERIMENTS: webframeworks
