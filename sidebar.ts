@@ -4,8 +4,8 @@ export const sidebar = [
     items: [
       'intro',
       'intro/get-started',
-      'intro/integrating-cms',
       'intro/mason-setup',
+      'intro/integrating-cms',
     ],
   },
   {
