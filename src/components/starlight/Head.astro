@@ -1,19 +1,31 @@
 ---
 import type { Props } from '@astrojs/starlight/props'
 import Default from '@astrojs/starlight/components/Head.astro'
+import { ViewTransitions } from 'astro:transitions'
 ---
 
 <Default {...Astro.props}>
   <slot />
 </Default>
 
+<ViewTransitions />
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3THXBRT184"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<script is:inline>
+  window.dataLayer = window.dataLayer || []
 
-  gtag('config', 'G-3THXBRT184');
+  function gtag() {
+    dataLayer.push(arguments)
+  }
+</script>
+
+<script is:inline>
+  document.addEventListener('astro:page-load', () => {
+    gtag('js', new Date())
+
+    gtag('config', 'G-3THXBRT184')
+
+  }, { once: false })
 </script>
 
