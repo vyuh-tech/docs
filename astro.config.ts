@@ -8,6 +8,7 @@ import react from '@astrojs/react'
 
 import tailwind from '@astrojs/tailwind'
 import { sidebar } from './sidebar.ts'
+import rehypeExternalLinks from 'rehype-external-links'
 
 console.log(import.meta.env.DEV)
 
@@ -15,6 +16,16 @@ console.log(import.meta.env.DEV)
 export default defineConfig({
   trailingSlash: 'never',
   site: 'https://docs.vyuh.tech',
+  markdown: {
+    rehypePlugins: [
+      [
+        rehypeExternalLinks,
+        {
+          content: { type: 'text', value: ' 🔗' },
+        },
+      ],
+    ],
+  },
   integrations: [
     starlight({
       title: 'Docs',
