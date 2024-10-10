@@ -1,0 +1,181 @@
+---
+title: Vyuh CLI
+description: The CLI to scaffold your Vyuh project, features and schemas
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components'
+import { PubBadge } from '@/components/PubBadge'
+
+The Vyuh CLI is a new tool that allows you to quickly scaffold projects,
+features, and schemas for the Vyuh framework. It is built on top of the `Mason`
+package and includes a few other utilities to make it easier to generate
+projects and features.
+
+<Aside type={'caution'} title={'Deprecation'}>
+  If you have been previously using the Mason tool to generate your projects or
+  features, that is now deprecated in favor of the **Vyuh CLI**.
+</Aside>
+
+## Activate the Vyuh CLI
+
+The first step is to activate the <PubBadge name="vyuh_cli" inline /> package
+globally. This gives you access to the `vyuh` command that can be used to
+generate the initial structure. Run this command in your terminal:
+
+```shell
+dart pub global activate vyuh_cli
+```
+
+<Aside type={'tip'} title={'Adding to Shell Path'}>
+
+If you want to use the `vyuh` command from anywhere in your terminal, you can
+add the Dart pub global executables to your shell path. This is usually done by
+adding the following line to your shell profile file (like `.bashrc` or `.zshrc`
+or `.config/fish/config.fish`):
+
+<Tabs>
+  <TabItem label={'Bash, Zsh'}>
+
+    ```shell
+    export PATH="$HOME/.pub-cache/bin:$PATH"
+    ```
+
+  </TabItem>
+  <TabItem label={'Fish'}>
+
+    ```shell
+    set PATH "$HOME/.pub-cache/bin:$PATH"
+    ```
+
+  </TabItem>
+</Tabs>
+
+After adding this line, you can run the `vyuh` command from anywhere in your
+terminal.
+
+A similar setup is required for those running on **Windows**.
+
+</Aside>
+
+### Create your new project
+
+In the folder where you plan to build your _mono-repo_ project for the Vyuh
+Application, run the following. The `<project_name>` tag is the one where you
+should specify your own name for the project.
+
+```bash
+vyuh create project <project_name>
+```
+
+The above command will create a complete folder structure under `<project-name>`
+which is described in more detail in the
+[Project Structure](/guides/project-structure) article.
+
+### More parameters
+
+There are more details you can pass when creating the project as shown below:
+
+```text title="Create Project" {3}
+A Vyuh Flutter project created by Vyuh CLI.
+
+Usage: vyuh create project <project-name> [arguments]
+-h, --help                Print this usage information.
+-o, --output-directory    The desired output directory when creating a new project.
+    --description         The description for this new project.
+                          (defaults to "A Vyuh Flutter project created by Vyuh CLI.")
+    --cms                 The content management system for this new project.
+                          (defaults to "sanity")
+    --org-name            The organization for this new project.
+                          (defaults to "com.example.vyuh")
+    --application-id      The bundle identifier on iOS or application id on Android. (defaults to <org-name>.<project-name>)
+```
+
+## Add a new feature
+
+Just like the command for creating projects, we also have a
+`vyuh create feature <feature-name>` that does very similar things in terms of
+setting up a new feature for the project.
+
+This will create a new feature package (_in Flutter_) inside the current folder
+of your shell.
+
+```text title="Create Feature" {3}
+Create a new Vyuh feature.
+
+Usage: vyuh create feature <feature-name> [arguments]
+-h, --help                Print this usage information.
+-o, --output-directory    The desired output directory when creating a new feature.
+
+Run "vyuh help" to see global options.
+
+```
+
+## Add a new schema
+
+We also have the command for creating a new schema for the CMS. You can use
+`vyuh create schema <feature-name>` to set it up.
+
+This will create a new schema package (_in Typescript_) inside the current
+folder of your shell.
+
+```text title="Create Schema" {3}
+Create a new Vyuh feature CMS schema.
+
+Usage: vyuh create schema <feature-name> [arguments]
+-h, --help                Print this usage information.
+-o, --output-directory    The desired output directory when creating a new feature.
+    --cms                 The content management system for this new schema.
+                          (defaults to "sanity")
+
+Run "vyuh help" to see global options.
+
+```
+
+<Aside title={'Custom output folder'}>
+
+By default the CLI generates the files in the folder where you run the command.
+To create it inside a specific folder, you could pass in the **`-o`** flag with
+the relative directory. This is particularly useful when generating features.
+
+For example, to generate the feature package inside the **`./features`** folder
+of your root project directory, you would run the following:
+
+```bash
+vyuh create feature "new-feature" -o features
+```
+
+Don't worry about passing space-separated words inside your feature name. The
+tool automatically takes care of converting it to a proper_snake_case when it
+generates the feature. For the previous command, the name "new-feature" will
+result in creating a folder called `new_feature` inside the `features`
+directory.
+
+</Aside>
+
+## Update the CLI
+
+The Vyuh CLI has an inbuilt mechanism to update itself. You can run the
+following command to update the CLI:
+
+```shell
+vyuh update
+```
+
+This will check for the latest version of the CLI and update it if necessary.
+
+```shell
+> vyuh update
+✓ Checked for updates (0.7s)
+CLI is already at the latest version.
+
+```
+
+## Summary
+
+This guide showed you the steps to set up the **Vyuh CLI** on your system and
+use it to generate various parts of the Application. Currently, there is support
+for creating a new Vyuh App, a Vyuh Feature package for Flutter and a Vyuh
+schema package for Sanity CMS.
+
+There will be more added in the future to accommodate other aspects of
+developing Vyuh Apps.

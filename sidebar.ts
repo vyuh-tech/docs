@@ -1,12 +1,7 @@
 export const sidebar = [
   {
     label: 'Intro',
-    items: [
-      'intro',
-      'intro/get-started',
-      'intro/mason-setup',
-      'intro/integrating-cms',
-    ],
+    items: ['intro', 'intro/get-started', 'intro/cli', 'intro/integrating-cms'],
   },
   {
     label: 'Concepts',
