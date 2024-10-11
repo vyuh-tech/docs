@@ -79,7 +79,6 @@ export default defineConfig({
       customCss: ['./src/tailwind.css'],
       sidebar,
       expressiveCode: {
-        // @ts-ignore
         plugins: [pluginLineNumbers()],
         defaultProps: {
           showLineNumbers: false,

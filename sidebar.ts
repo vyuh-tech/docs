@@ -21,6 +21,7 @@ export const sidebar = [
       'guides/designing-features',
       'guides/project-structure',
       'guides/using-plugins',
+      'guides/adding-packages',
       {
         label: 'CMS',
         items: [
