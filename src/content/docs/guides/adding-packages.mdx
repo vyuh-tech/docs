@@ -3,7 +3,7 @@ title: Adding Packages
 description: Learn how to add new packages to your Vyuh project.
 ---
 
-import { Aside, Steps } from '@astrojs/starlight/components'
+import { Aside, Steps, Badge } from '@astrojs/starlight/components'
 
 When adding packages to your Dart projects, there are two ways in which these
 packages can be referenced inside your `pubspec.yaml`.
@@ -23,7 +23,7 @@ dependencies:
 For a list of all the packages which are publicly available on `pub.dev`, refer
 to the [article on packages](/framework/packages).
 
-## Adding a package from the Enterprise Package Registry
+## Adding a package from the Enterprise <sup><Badge text='Plan' /></sup> Package Registry
 
 Adding a package from the private pub registry requires you to set up a token
 for the hosted provider. You will get this `token` during the onboarding process
@@ -36,7 +36,7 @@ provider as below.
 
     Keep the details of the hosted provider handy. You will need the URL of the
     hosted provider and the token to authenticate the requests. Let's capture
-    these in these variables for rest of the steps:
+    these with the following variables for rest of the steps:
 
     - `<token>`: secret token to authenticate requests to the hosted provider
     - `<private-pub-registry>`: URL of the hosted provider
