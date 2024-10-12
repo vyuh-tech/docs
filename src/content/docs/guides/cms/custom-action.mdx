@@ -5,6 +5,7 @@ description: Build App-specific operations that can be controlled from the CMS
 
 import { YouTube } from 'astro-embed'
 import { Aside } from '@astrojs/starlight/components'
+import { Image } from 'astro:assets'
 
 Actions are a great to way to build interactivity within your applications. We
 have several built-in actions that you can start with. However, you will
@@ -14,10 +15,14 @@ scratch.
 
 ## Built-in Actions
 
-![All the System actions available in Vyuh](images/system-actions.png)
+<Image
+  src={import('./images/system-actions.png')}
+  alt="All the System actions available in Vyuh"
+  width={[350]}
+/>
 
 It is worth mentioning that before you start creating your own action, it is a
-good idea to check the ones already available out of the box in Vyuh. These
+good idea to check the ones already available out-of-the-box in Vyuh. These
 include:
 
 - Navigation
