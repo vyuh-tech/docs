@@ -3,6 +3,7 @@ title: Integrating the CMS
 description: Simple integration of Vyuh with Sanity.io, the default CMS
 ---
 
+import { PubBadge } from '@/components/PubBadge'
 import { Aside } from '@astrojs/starlight/components'
 
 Now that we know how to setup a feature in Vyuh, let's see how we can integrate
@@ -33,12 +34,11 @@ While creating the sanity project, select the project template as
 
 <Aside type={'note'} title={'Scaffold Quickly'}>
 
-A faster way to scaffold a Vyuh project would be with the
-[vyuh-tech/bricks](https://github.com/vyuh-tech/bricks) repo. You can use the
-Dart scaffolding tool, **Mason**, to quickly create a _Vyuh project_ with
-Flutter and Sanity.
+A faster way to scaffold a Vyuh project would be with the <PubBadge
+name={'vyuh_cli'} inline /> tool. The Vyuh CLI can generate a complete Vyuh
+Project, a Flutter feature package and an NPM schema package as well.
 
-Refer to the [Mason Setup](/intro/cli) guide for more details.
+Refer to the [Vyuh CLI](/intro/cli) guide for more details.
 
 </Aside>
 
