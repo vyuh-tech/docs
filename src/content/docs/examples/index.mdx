@@ -4,7 +4,7 @@ description:
   Collection of several mini-app examples to demonstrate the Vyuh Framework
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components'
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components'
 
 The Vyuh framework has been designed from the ground-up to handle large scale
 development of features (aka **Mini-Apps**), across multiple distributed teams
@@ -23,21 +23,45 @@ Each example has a breakdown of how the mini-App was built. Many of them use
 advanced techniques that are generally seen in production-grade applications.
 
 <CardGrid>
-<Card title={'Unsplash App'} icon={'open-book'}>
-  ![](unsplash/images/unsplash-logo.png)
-  An image gallery app that allows browsing different images, their details and searching by a variety of criteria.
-</Card>
+  <Card title={'Counter'} icon={'open-book'}>
+    The classic Flutter counter example, as a Vyuh Feature
 
-  <Card title={'Wonderous App'} icon={'open-book'}>
-    ![](wonderous/images/wonderous-logo.png)
-    A classic example used in the Flutter community to demonstrate a rich, animated experience of browsing the wonders of the world. This is our own take on Wonderous.
+    <a href={'/examples/counter'}>Read more</a>
+
   </Card>
-  <Card title={'Movies App'} icon={'open-book'}>
-  ![](images/tmdb-logo.svg)
-  Explore movies, tv series, cast and crew using the TMDB API
-</Card>
-  <Card title={'News App'} icon={'open-book'}>
-  ![](images/news.png)
-  Locate articles and breaking news headlines from news sources and blogs across the web
-</Card>
+  <Card title={'Food'} icon={'star'}>
+    A simple restaurant menu with item details
+
+    <a href={'/examples/food'}>Read more</a>
+
+  </Card>
+  <Card title={'Puzzle'} icon={'puzzle'}>
+    A puzzle with levels managed from the CMS
+
+    <a href={'/examples/puzzles'}>Read more</a>
+
+  </Card>
+  <Card title={'Unsplash App'} icon={'instagram'}>
+    ![](unsplash/images/unsplash-logo.png) An image gallery app that allows
+    browsing different images, their details and searching by a variety of
+    criteria.
+
+    <a href={'/examples/unsplash'}>Read more</a>
+
+  </Card>
+  <Card title={'Wonderous App'} icon={'document'}>
+    ![](wonderous/images/wonderous-logo.png) A classic example used in the
+    Flutter community to demonstrate a rich, animated experience of browsing the
+    wonders of the world. This is our own take on Wonderous.
+
+    <a href={'/examples/wonderous'}>Read more</a>
+
+  </Card>
+  <Card title={'Movies App'} icon={'youtube'}>
+    ![](images/tmdb-logo.svg) Explore movies, tv series, cast and crew using the
+    TMDB API
+
+    <a href={'/examples/movies'}>Read more</a>
+
+  </Card>
 </CardGrid>
