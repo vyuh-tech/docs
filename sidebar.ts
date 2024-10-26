@@ -44,8 +44,10 @@ export const sidebar = [
     label: 'Examples',
     items: [
       'examples',
+      'examples/counter',
+      'examples/food',
+      'examples/puzzles',
       'examples/movies',
-      'examples/news',
       {
         label: 'Wonderous',
         items: [
