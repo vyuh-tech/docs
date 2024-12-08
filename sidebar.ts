@@ -23,6 +23,10 @@ export const sidebar = [
       'guides/using-plugins',
       'guides/adding-packages',
       {
+        slug: 'guides/events',
+        badge: { text: 'New', variant: 'note' },
+      },
+      {
         label: 'CMS',
         items: [
           'guides/cms',
