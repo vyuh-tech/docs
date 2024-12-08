@@ -3,7 +3,7 @@ title: Glossary
 description: Definition of various terms in the context of the Vyuh Framework
 ---
 
-import { Aside } from '@astrojs/starlight/components'
+import { Aside, Badge } from '@astrojs/starlight/components'
 
 ## Descriptor
 
@@ -164,6 +164,13 @@ You can add your own actions and make them relevant to your app.
 > Like everything else in the _Vyuh Framework_, Action has counterparts on CMS
 > and on the Flutter side.
 
+## Events
+
+Events allow you to listen to lifecycle events that happen inside the framework.
+They can also be used by features to communicate with other features. The
+eventing system inside Vyuh acts like an event-bus where different features and
+plugins can communicate with each other with a type-safe event.
+
 ## Layout
 
 Layouts describe the visual structure of a content-type. Every content type
@@ -172,6 +179,16 @@ other layouts. They are particularly useful for routes, and content types like
 `Card` or `Group`. Whether a `Group` should be shown as a _vertical list_ or a
 _2-column grid_ is controlled by the layout. Layouts can be switched for
 different platforms, screen sizes, or based on runtime conditions.
+
+## Modifier <sup><Badge text="New" /></sup>
+
+Modifiers are chainable visual behaviors that can be attached to any
+content-item. You can have one or more Modifiers for a Content Item and are
+applied in the same order as specified.
+
+The framework takes the output of the layout, which is a `Widget` and feeds it
+to the first modifier in the chain. The end output after applying all modifiers
+is also a `Widget`.
 
 ## Feature Registry
 
