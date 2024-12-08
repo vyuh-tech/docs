@@ -77,7 +77,7 @@ export default defineConfig({
         SkipLink: './src/components/starlight/SkipLink.astro',
       },
       customCss: ['./src/tailwind.css'],
-      sidebar,
+      sidebar: sidebar,
       expressiveCode: {
         plugins: [pluginLineNumbers()],
         defaultProps: {

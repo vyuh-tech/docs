@@ -3,7 +3,7 @@ title: Core Elements
 description: The 5 core elements for building CMS-driven UI Experiences
 ---
 
-import { Aside } from '@astrojs/starlight/components'
+import { Aside, Badge } from '@astrojs/starlight/components'
 
 Applications have become much more sophisticated in the past few years and will
 continue to advance the State of the Art. Many of them are moving into the realm
@@ -12,14 +12,15 @@ that we would like to play as a framework.
 
 In this article let's explore the five core elements of building such
 experiences. This is a distilled version of the essentials for any App and are
-the fundamental building blocks of a CMS-driven experience. These 5 elements
+the fundamental building blocks of a CMS-driven experience. These 6 elements
 are:
 
 1. Route
 2. Content Item
 3. Layout
-4. Action
-5. Condition
+4. Modifiers <Badge text="New" />
+5. Action
+6. Condition
 
 ![Core elements and their relationships](images/core-elements.png)
 
@@ -99,6 +100,37 @@ page. This is purely a layout change for the same Product content-item.
 
 Every Content Item has a default layout, which is used when there is none
 specified on the CMS.
+
+</Aside>
+
+## Modifiers <sup><Badge text="New" /></sup>
+
+Modifiers are additional visual behaviors that can be attached to the output of
+the layout in order to produce something interesting. This could change the
+theme of the contained widget, provide more localization context, or do things
+like in coach marks.
+
+Modifiers are an interesting way of extending the visual behaviors of the layout
+without having to write all of those behaviors for each specific content item.
+
+The input to a modifier is the built `Widget` of the content item, which is then
+optionally wrapped in a `Widget` by each modifier in order to produce the final
+output.
+
+Thus, the output of a modifier is also a `Widget`. For modifiers that don't make
+any change, it is very natural to return the same widget that was passed in.
+This could be the case of a simple pass-through modifier. Other modifiers can do
+a wrapping of additional providers or `InheritedWidget`s to provide additional
+context for the contained widget
+
+<Aside type="tip" title={'Modifiers are composable and chained'}>
+
+You can have multiple modifiers applied to a single content item. This allows
+you to build complex visual behaviors by composing and chaining simpler ones.
+The order is particularly important as the output of one modifier is the input
+to the next.
+
+As expected, you can configure all modifiers in the CMS.
 
 </Aside>
 

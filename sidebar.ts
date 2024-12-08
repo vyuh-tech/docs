@@ -30,6 +30,10 @@ export const sidebar = [
           'guides/cms/designing-content-schemas',
           'guides/cms/custom-content-type',
           'guides/cms/custom-layout',
+          {
+            slug: 'guides/cms/custom-modifier',
+            badge: { text: 'New', variant: 'note' },
+          },
           'guides/cms/custom-action',
           'guides/cms/custom-api-content',
           'guides/cms/conditions',
