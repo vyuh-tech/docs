@@ -26,7 +26,7 @@ required to setup custom plugins and integrations that are suited for your app.
 This is done as part of the **`runApp()`** call, from the **`vyuh_core`**
 package. Here is an example of the invocation with the various plugins.
 
-```dart title="lib/main.dart"
+```dart title="lib/main.dart" showLineNumbers {2,33,45,56,58,59}
 void main() async {
   final plugins = await _getPlugins();
 
@@ -100,7 +100,7 @@ _getPlugins() async {
 In the above code-block, we are using a variety of custom configured plugins:
 
 - **Content**: configured with the Sanity provider
-- **Navigation**: using the GoRouter plugin
+- **Navigation**: using the `GoRouter` package
 - **Analytics**: uses Firebase Analytics, Performance and Crashlytics
 - **Feature Flag**: using Firebase Remote Config
 - **Logger**: the built-in console logger
@@ -108,22 +108,24 @@ In the above code-block, we are using a variety of custom configured plugins:
 
 ## Available Plugins
 
-There are many built-in plugins available in the Open Source and many more are
-being added for the Enterprise plans. These plugins fall into the following
+There are many built-in plugins available in the Open Source plan and many more
+are being added for the Enterprise plans. These plugins fall into the following
 categories:
 
-- Content
-- Network
-- Environment (loads environment variables)
-- Dependency Injection
-- Storage
-- Secure Storage
-- Authentication
-- Analytics
-- Feature Flag
-- Logger
-- Ads
-- Notifications
+| **Category**         | **API**            |
+| -------------------- | ------------------ |
+| Content              | `vyuh.content`     |
+| Network              | `vyuh.network`     |
+| Authentication       | `vyuh.auth`        |
+| Navigation           | `vyuh.router`      |
+| Dependency Injection | `vyuh.di`          |
+| Environment          | `vyuh.env`         |
+| Analytics            | `vyuh.analytics`   |
+| Telemetry            | `vyuh.telemetry`   |
+| Feature Flag         | `vyuh.featureFlag` |
+| Logger               | `vyuh.log`         |
+| Events               | `vyuh.event`       |
 
 We also plan to introduce new categories in the future that caters to
-simplifying some aspect of the Application. An example could be _User Feedback_.
+simplifying various aspects of the Application. An example could be _User
+Feedback_.
