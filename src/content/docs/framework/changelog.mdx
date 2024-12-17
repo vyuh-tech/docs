@@ -3,6 +3,26 @@ title: Changelog
 description: Tracking the evolution, one version at a time
 ---
 
+## Dec 2024 Update
+
+- Added support for **Scoped DI** that allows registering dependencies only at
+  the Route level. This avoids polluting the global DI container.
+- Several updates to the **Forms** package that supports complex Multi-Step
+  forms, validations, custom fields and layouts
+- Split the Analytics Plugin into **Telemetry Plugin** + Analytics Plugin.
+  Telemetry focuses on logs, metrics and traces whereas Analytics is about
+  user-level analytics and tracking User behavior.
+- Added a new abstraction called **Modifiers** that allows a Content Item to
+  have more complex visual behaviors, such as Themes, Localization, Visual
+  Annotations, etc.
+- Introduced **Events** for communicating between Features and Plugins. Events
+  are type-safe and can be used to build custom events with necessary type-safe
+  payloads.
+- Complete refresh of the https://vyuh.tech **Website** which is now built with
+  Astro
+
+Read more on our [Blog](https://vyuh.tech/blog/december-updates/).
+
 ## 1.x series
 
 ![](images/vyuh-1.0.png)
@@ -23,7 +43,7 @@ description: Tracking the evolution, one version at a time
   events. They are system wide and can be used by any Content Item.
 - **Conditional** elements for Routes, Content Items, Layouts and Actions
 - **Developer Tool** to give an X-Ray view of your Vyuh App
-- **Navigation** is done via `GoRouter` including full support for dynamic
+- **Navigation** is done via **GoRouter** including full support for dynamic
   routes loaded at runtime and templated routes.
 - **Vyuh CLI** to quickly scaffold your Vyuh App, Feature package and a Sanity
   schema package

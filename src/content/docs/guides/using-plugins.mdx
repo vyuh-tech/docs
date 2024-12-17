@@ -74,7 +74,12 @@ _getPlugins() async {
     analytics: vc.AnalyticsPlugin(
       providers: [
         FirebaseAnalyticsProvider(),
-        SentryAnalyticsProvider(
+      ],
+    ),
+    telemetry: vc.TelemetryPlugin(
+      providers: [
+        vc.ConsoleLoggerTelemetryProvider(),
+        SentryTelemetryProvider(
           config: SentryProviderConfig(
             sampleRate: 0.2,
             dsn: '<dsn>',
@@ -84,7 +89,6 @@ _getPlugins() async {
     ),
     auth: FirebaseAuthPlugin(),
     others: [
-      vc.ConsoleLoggerPlugin(),
       FirebaseFeatureFlagPlugin(
         settings: RemoteConfigSettings(
           fetchTimeout: const Duration(seconds: 10),
@@ -129,3 +133,164 @@ categories:
 We also plan to introduce new categories in the future that caters to
 simplifying various aspects of the Application. An example could be _User
 Feedback_.
+
+## Using the `ContentPlugin`
+
+The `ContentPlugin` is one of the core plugins in the Vyuh Framework, accessible
+via the `vyuh.content` API. It allows you to interact with the CMS content and
+render it on the Flutter widget.
+
+It also takes care of registering various types that are found during the
+deserialization process of reading the JSON content from CMS. This helps in
+ensuring that you have a type-safe Dart object when working inside your Flutter
+code. Some of the core responsibilities of the Content plugin include:
+
+### Content Building
+
+Content can be rendered with the `buildContent()` and `buildRoute()` methods.
+The Content building APIs can be used while constructing custom layouts and can
+also be used directly if needed.
+
+> `buildContent()` internally works with the `ContentBuilder` to use the correct
+> layout configured in the `ContentItem`. Below you can see a simple
+> **`FoodMenuItem`** (subclass of `ContentItem`) being rendered in a Flutter
+> Widget. The `item.description` contains PortableText content.
+
+```dart {17}
+final class FoodItemHero extends StatelessWidget {
+  final FoodMenuItem item;
+
+  const FoodItemHero({super.key, required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(item.title, style: theme.textTheme.headlineMedium),
+        Text('${item.calories.toInt()} calories'),
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: theme.spacing.s20),
+          child: vyuh.content.buildContent(context, item.description),
+        ),
+      ],
+    );
+  }
+}
+
+```
+
+You can also build the content directly by passing in an instance of a specific
+`ContentItem`. This is useful when dealing with `APIContent` items that render
+data from an API. Here is an example of a simple _WonderItem_ being rendered
+from an API call:
+
+```dart {12-26}
+import 'package:vyuh_feature_system/vyuh_feature_system.dart' as vf;
+
+class _WonderItem extends StatelessWidget {
+  const _WonderItem({
+    required this.document,
+  });
+
+  final WonderMiniInfo document;
+
+  @override
+  Widget build(BuildContext context) {
+    return vyuh.content.buildContent(
+      context,
+      vf.Card(
+        title: document.title,
+        description: document.subtitle,
+        image: document.icon,
+        action: vc.Action(
+          configurations: [
+            NavigationAction(
+              url: '/wonderous/wonder/${document.identifier}/details',
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+```
+
+### Type Registrations
+
+- Types can be registered and checked with the `register()`, `isRegistered()`
+  methods.
+  > You would generally not need to use these methods directly unless you are
+  > building a very custom `ContentItem` with a `ContentBuilder` that leverages
+  > custom `ContentDescriptor`.
+- Deserialization when reading content from CMS.
+- Most of the work of the Content plugin is delegated to the `ContentProvider`,
+  which takes care of fetching content from the CMS. Once the data is ready, the
+  Content plugin can take over in rendering it on the Flutter widgets.
+
+## Using the `NavigationPlugin`
+
+This plugin can be accessed using the `vyuh.router` API. The navigation plugin
+allows you to navigate within the application by pushing and popping routes. Th
+e plugin internally uses the `GoRouter` package to do all the navigation. If you
+are familiar with the `GoRouter` package, there is nothing new that this plugin
+is doing besides just wrapping the methods (`go()`, `push()`, `pop()`,
+`replace()`, etc.)
+
+> The advantage of using this plugin is that it also calls the analytics plugin
+> (`vyuh.analytics`) wherever needed to track page transitions and send across
+> to the `AnalyticsProvider`.
+
+Here is an example of a Widget that uses the vyuh.router to push a specific
+route:
+
+```dart {4}
+PhotoCard(
+  photo: photo,
+  showStats: true,
+  onTap: () => vyuh.router.push('/unsplash/home/photos/${photo.id}'),
+)
+```
+
+## Using the `NetworkPlugin`
+
+This plugin can be accessed using the `vyuh.network` API. It's a wrapper around
+the `HTTPClient` and allows you to make network calls for all the HTTP verbs
+(GET, POST, PATCH, PUT, DELETE, OPTIONS, etc.). The advantage of using this
+plugin is that it creates a singular HTTP client that is useful across the
+application. This avoids creating multiple copies per feature.
+
+The network API is typically useful when creating API clients for your own
+bespoke or third-party APIs. Here's an example of using it with the TMDB API.
+
+```dart
+Future<GenresListResponse> genres() async {
+  final response = await vyuh.network.get(apiUrl('genre/movie/list'));
+
+  final data = jsonDecode(response.body);
+  return GenresListResponse.fromJson(data);
+}
+```
+
+## Using the `DIPlugin`
+
+TBD
+
+## Using the `AuthPlugin`
+
+TBD
+
+## Using the `TelemetryPlugin`
+
+TBD
+
+## Using the `EnvPlugin`
+
+TBD
+
+## Using the `EventPlugin`
+
+Refer to the [guide on Events](/guides/events)
