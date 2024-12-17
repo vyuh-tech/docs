@@ -277,7 +277,45 @@ Future<GenresListResponse> genres() async {
 
 ## Using the `DIPlugin`
 
-TBD
+Accessible via the `vyuh.di` API. The Di plug-in is useful for injecting shared
+dependencies within a feature or even across features. This is a core plugin
+that allows you to manage stores and services that are required within a feature
+or across features.
+
+Typically, when you are building a feature, you would do all the DI
+registrations inside the `init()` method of the feature. This puts all the
+dependencies on the global DI container.
+
+However, there might be situations where you would like to have the dependencies
+only use the scope of a single route. For such scenarios, you can use the Scoped
+DI, which is accessible inside the `RouteLifecycleConfiguration` for the route.
+The lifecycle handler is invoked during the `init()` and `dispose()` of
+individual routes, thus giving you a distinct time-boundary within which the
+dependencies are active. Note that the Scoped-DI Container for the Route is
+automatically reset when refreshing a route.
+
+Depending on your needs, you can choose to put your dependencies on the global
+container or the scoped container.
+
+Here is an example of the TMDB feature that uses the `init()` to register some
+feature-level dependencies:
+
+```dart {8-10}
+final feature = FeatureDescriptor(
+  name: 'tmdb',
+  title: 'TMDB',
+  description:
+      'Uses the TMDB API to show details of movies with ability to favorite and add to watchlists',
+  icon: Icons.movie_creation_outlined,
+  init: () async {
+    vyuh.di.register(TMDBClient(vyuh.env.get('TMDB_API_KEY')));
+    vyuh.di.register(TMDBStore());
+    vyuh.di.register(TmdbSearchStore());
+  },
+
+  // rest of the feature config
+);
+```
 
 ## Using the `AuthPlugin`
 
