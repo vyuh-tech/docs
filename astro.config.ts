@@ -7,7 +7,7 @@ import starlightLinksValidator from 'starlight-links-validator'
 import react from '@astrojs/react'
 
 import tailwind from '@astrojs/tailwind'
-import { sidebar } from './sidebar.ts'
+import sidebar from './sidebar.ts'
 import rehypeExternalLinks from 'rehype-external-links'
 
 import icon from 'astro-icon'

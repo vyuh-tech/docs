@@ -1,4 +1,4 @@
-export const sidebar = [
+export default [
   {
     label: 'Intro',
     items: ['intro', 'intro/get-started', 'intro/cli', 'intro/integrating-cms'],
@@ -24,6 +24,10 @@ export const sidebar = [
       'guides/adding-packages',
       {
         slug: 'guides/events',
+        badge: { text: 'New', variant: 'note' },
+      },
+      {
+        slug: 'guides/scoped-di',
         badge: { text: 'New', variant: 'note' },
       },
       {
