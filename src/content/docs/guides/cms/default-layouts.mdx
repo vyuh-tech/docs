@@ -1,0 +1,140 @@
+---
+title: Default Layouts
+description: Set default layouts for a ContentItem
+---
+
+import { Image } from 'astro:assets'
+import { Aside } from '@astrojs/starlight/components'
+import defaultLayoutImage from './images/default-layout.png'
+
+Every content item inside the Vyuh framework comes with a **default layout**. In
+fact, when you register a content item with the content builder, you do specify
+this default layout in it. This is the layout that is used when none is
+specified on the CMS.
+
+```dart showLineNumbers {8-10,14-16} title="feature.dart"
+final feature = FeatureDescriptor(
+  name: 'misc',
+  title: 'Misc',
+  extensions: [
+    ContentExtensionDescriptor(
+      contents: [
+        ProductCardDescriptor(
+          layouts: [
+            DefaultProductCardLayout.typeDescriptor,
+            MiniViewProductCardLayout.typeDescriptor,
+          ],
+        ),
+      ],
+      contentBuilders: [
+        ProductCard.contentBuilder,
+      ],
+    ),
+  ],
+);
+
+```
+
+```dart title="product_card.dart" showLineNumbers {11-15}
+// Rest of the file
+
+final class ProductCard extends ContentItem {
+  static const schemaName = 'misc.productCard';
+  static final typeDescriptor = TypeDescriptor(
+    schemaType: schemaName,
+    title: 'Product Card',
+    fromJson: ProductCard.fromJson,
+  );
+
+  static final contentBuilder = ContentBuilder<ProductCard>(
+    content: ProductCard.typeDescriptor,
+    defaultLayout: DefaultProductCardLayout(),
+    defaultLayoutDescriptor: DefaultProductCardLayout.typeDescriptor,
+  );
+
+}
+```
+
+If you are building your own design system, it's possible that most of the
+content items (including standard content items) may have a completely different
+appearance inside your design system. In order to use that different experience,
+you may have to explicitly set this layout on the CMS. That might be cumbersome
+if you have lots of items that use the standard components.
+
+To fix this, we have introduced the concept of changing the default layouts of
+the standard content items. You could do it for any content item. With this
+approach, instead of using the out-of-the-box default layout, you could set a
+default that is relevant and adopts the design system that is inside your
+application.
+
+You can do this inside your feature `init()` by listening to the
+`SystemReadyEvent` and swapping out all the default layouts. Let's see an
+example of doing this for the `Card` content item.
+
+```dart showLineNumbers title="app/lib/root_feature.dart" {13,15-19}
+import 'package:flutter/material.dart' hide Card;
+import 'package:go_router/go_router.dart';
+import 'package:vyuh_core/vyuh_core.dart';
+import 'package:vyuh_extension_content/vyuh_extension_content.dart';
+import 'package:vyuh_feature_system/content/card/button_layout.dart';
+import 'package:vyuh_feature_system/vyuh_feature_system.dart';
+
+final feature = FeatureDescriptor(
+  name: 'root',
+  title: 'Vyuh Root Feature',
+  description: 'The root feature for the Vyuh Demo app',
+  init: () async {
+    vyuh.event.once<SystemReadyEvent>((event) {
+
+      vyuh.content.setDefaultLayout(
+        schemaType: Card.schemaName,
+        layout: ButtonCardLayout(),
+        fromJson: ButtonCardLayout.fromJson,
+      );
+    });
+  },
+  routes: () => [
+    GoRoute(path: '/chakra', pageBuilder: defaultRoutePageBuilder),
+  ],
+);
+
+```
+
+Lines 15-19 show the use of the `vyuh.content.setDefaultLayout()` method. This
+takes in the schemaType of the content-item, an instance of the
+`LayoutConfiguration` and the `fromJson` method to use when deserializing the
+layouts from CMS.
+
+<Aside title={'Setting a bunch of default layouts'}>
+
+In a typical application you may swap out several such layouts for the standard
+content-items. It is a good practice to move out all these calls to a separate
+file (eg: `default_layouts_override.dart`) and just invoke it from the feature
+`init()`.
+
+You can use a designated **root-feature** that takes care of all such
+initializations. Note that this is just a convention for easier maintenance.
+
+</Aside>
+
+The example we have shown above is an extreme case where the default layouts of
+all the `Cards` are switched to a **ButtonLayout**. Of course, this is not
+something you may want to use, but this is just an example to show that swapping
+out the default layouts can have a pretty dramatic effect in your app.
+
+<Image
+  src={defaultLayoutImage}
+  alt={'Default layouts for Card, before and after switching'}
+/>
+
+## Summary
+
+In this guide, we have covered the way to override the default layouts of the
+standard content-items like `Card`, `Group` and `PortableText`. We have seen how
+to do this by listening to the `SystemReadyEvent` and using a designated
+root-feature. Setting default layouts allows you to adopt your own Design System
+much more easily and minimizes the configuration needed for the item's layout on
+the CMS.
+
+Default layouts can be changed with the `vyuh.content.setDefaultLayout()`
+method.

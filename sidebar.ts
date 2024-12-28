@@ -39,6 +39,10 @@ export default [
           'guides/cms/custom-content-type',
           'guides/cms/custom-layout',
           {
+            slug: 'guides/cms/default-layouts',
+            badge: { text: 'New', variant: 'note' },
+          },
+          {
             slug: 'guides/cms/custom-modifier',
             badge: { text: 'New', variant: 'note' },
           },
