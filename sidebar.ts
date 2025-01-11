@@ -52,6 +52,10 @@ export default [
           'guides/cms/custom-condition',
           'guides/cms/conditional-route',
           'guides/cms/template-routes',
+          {
+            slug: 'guides/cms/previews',
+            badge: { text: 'New', variant: 'note' },
+          },
         ],
       },
     ],
