@@ -56,6 +56,10 @@ export default [
             slug: 'guides/cms/previews',
             badge: { text: 'New', variant: 'note' },
           },
+          {
+            slug: 'guides/cms/widgetbook',
+            badge: { text: 'New', variant: 'note' },
+          },
         ],
       },
     ],
