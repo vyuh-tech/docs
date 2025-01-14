@@ -90,10 +90,41 @@ Provides comprehensive logging and monitoring capabilities. Supports multiple te
 Manages dependency injection throughout the application. Provides a clean way to register and resolve dependencies. Includes a default implementation using the GetIt service locator.
 
 #### Event Plugin
-Handles application-wide event management. Provides a pub/sub system for communication between different parts of the application. Includes both synchronous and asynchronous event handling.
+Provides a type-safe event bus for application-wide communication. Supports both synchronous and asynchronous event handling with a pub/sub pattern.
+
+```dart
+abstract class EventPlugin extends Plugin {
+  // Subscribe to events
+  DisposeFunction on<T extends VyuhEvent>(VyuhEventListener<T> listener);
+  
+  // One-time event subscription
+  void once<T extends VyuhEvent>(VyuhEventListener<T> listener);
+  
+  // Emit events
+  void emit<T extends VyuhEvent>(T event);
+}
+```
 
 #### Storage Plugin
-Manages persistent storage operations. Provides a unified interface for storing and retrieving data across different storage backends.
+Manages data persistence with both regular and secure storage options. Provides a consistent interface for key-value storage operations.
+
+```dart
+// Regular storage for non-sensitive data
+abstract class StoragePlugin extends Plugin {
+  Future<dynamic> read(String key);
+  Future<dynamic> write(String key, dynamic value);
+  Future<bool> has(String key);
+  Future<bool> delete(String key);
+}
+
+// Secure storage for sensitive data
+abstract class SecureStoragePlugin extends Plugin {
+  Future<dynamic> read(String key);
+  Future<dynamic> write(String key, dynamic value);
+  Future<bool> has(String key);
+  Future<bool> delete(String key);
+}
+```
 
 ### Plugin Providers
 
@@ -114,6 +145,90 @@ Vyuh provides default implementations for most plugins:
 - `DefaultEnvPlugin`: Basic environment variable management
 - `GetItDIPlugin`: Default dependency injection using GetIt
 - `NoOpTelemetryProvider`: No-op implementation for telemetry
+
+## Platform Widgets
+
+Vyuh provides a set of customizable platform widgets for common UI patterns:
+
+### Error Views
+Handles various error states in the application:
+- Network errors
+- Content loading failures
+- Route not found
+- General error boundaries
+
+### Loading States
+Customizable loading indicators for:
+- Initial app loading
+- Content fetching
+- Route transitions
+- Plugin initialization
+
+### Framework Views
+Special views for framework states:
+- Platform initialization
+- Plugin loading
+- Feature registration
+- Debug information
+
+### Custom Platform Widgets
+You can customize the platform widgets by implementing the `PlatformWidgetBuilder`:
+
+```dart
+final class PlatformWidgetBuilder {
+  PlatformWidgetBuilder({
+    required this.appBuilder,
+    required this.appLoader,
+    required this.contentLoader,
+    required this.routeLoader,
+    required this.errorView,
+    required this.routeErrorView,
+    required this.imagePlaceholder,
+  });
+
+  // Root app widget builder (MaterialApp/CupertinoApp)
+  final AppBuilder appBuilder;
+
+  // Loading states
+  final Loader appLoader;           // App initialization
+  final Loader contentLoader;       // Content loading
+  final RouteLoader routeLoader;    // Route transitions
+
+  // Error handling
+  final ErrorViewBuilder errorView;         // General errors
+  final RouteErrorViewBuilder routeErrorView; // Route-specific errors
+
+  // Asset handling
+  final ImagePlaceholderBuilder imagePlaceholder;
+}
+
+// Builder function types
+typedef AppBuilder = Widget Function(VyuhPlatform platform);
+typedef Loader = Widget Function(BuildContext context);
+typedef RouteLoader = Widget Function(BuildContext context, [Uri? url, String? routeId]);
+typedef ImagePlaceholderBuilder = Widget Function(BuildContext context, {double? width, double? height});
+
+typedef ErrorViewBuilder = Widget Function(
+  BuildContext context, {
+  required String title,
+  dynamic error,
+  StackTrace? stackTrace,
+  String? retryLabel,
+  VoidCallback? onRetry,
+  String? subtitle,
+  bool showRestart,
+});
+
+typedef RouteErrorViewBuilder = Widget Function(
+  BuildContext context, {
+  required String title,
+  String? retryLabel,
+  VoidCallback? onRetry,
+  dynamic error,
+  StackTrace? stackTrace,
+  String? subtitle,
+});
+```
 
 ## Usage Example
 
