@@ -1,31 +1,155 @@
 ---
 title: Vyuh Core
-description:
-  The main runtime package that provides the default platform and bootstrapping
-  capability for Vyuh
+description: The main runtime package that provides the default platform and bootstrapping capability for Vyuh
 ---
 
 import { PubBadge } from '@/components/PubBadge'
 
 <PubBadge name="vyuh_core" />
 
-The Vyuh Core package exposes the core types that are required for running the
-Vyuh application. This includes the following:
+The Vyuh Core package provides the foundation for building Vyuh applications. It includes the core runtime, plugin system, and extension mechanisms that power the framework.
 
-- **runApp()**: the entry point to running a Vyuh Application. This takes in the
-  list of features and a list of plugins as arguments. You can also customize
-  specific widgets in the framework such as the loaders, error-views and the
-  root app-builder.
-- **Descriptors & Builders**: the main descriptors for defining a feature
-  (`FeatureDescriptor`) and extension (`ExtensionDescriptor`). Also includes the
-  `ExtensionBuilder` type for creating extensions to the framework.
-- **Interface types** for the core plugins:
-  - Content
-  - Analytics
-  - Network
-  - Logger
-  - DI (Dependency Injection)
-  - Authentication
-  - Navigation
-- **CMSRoute**: custom GoRoute subclass that allows deeper customization by
-  mapping to a CMS path or supplying custom transitions.
+## Core Components
+
+### runApp()
+The main entry point for bootstrapping a Vyuh application. It initializes the platform, sets up the plugin system, and starts the application with the specified features. The function handles the initialization sequence, ensuring plugins are loaded in the correct order and features are properly registered before the application starts.
+
+```dart
+void runApp({
+  required FeaturesBuilder features,
+  PluginDescriptor? plugins,
+  PlatformWidgetBuilder? platformWidgetBuilder,
+  String? initialLocation,
+})
+```
+
+- `features`: A builder function that returns a Features object configuring app features
+- `plugins`: Optional PluginDescriptor specifying plugins (defaults to PluginDescriptor.defaultPlugins)
+- `platformWidgetBuilder`: Optional builder for platform-specific widgets
+- `initialLocation`: Optional initial route location
+
+### Feature System
+
+#### FeatureDescriptor
+A comprehensive descriptor for defining features in a Vyuh application. It encapsulates all aspects of a feature including its metadata, initialization logic, routing, and extensions. Features are the primary building blocks of a Vyuh application, providing modular and reusable functionality that can be composed together. The descriptor ensures features are properly isolated and can be independently developed and tested.
+
+```dart
+final class FeatureDescriptor {
+  final String name;
+  final String title;
+  final String? description;
+  final IconData? icon;
+  final VoidFutureFunction? init;
+  final VoidFutureFunction? dispose;
+  final List<ExtensionDescriptor>? extensions;
+  final List<ExtensionBuilder>? extensionBuilders;
+  final RouteBuilderFunction? routes;
+
+  FeatureDescriptor({
+    required this.name,
+    required this.title,
+    this.description,
+    this.icon,
+    this.init,
+    this.dispose,
+    required RouteBuilderFunction routes,
+    this.extensions,
+    this.extensionBuilders,
+  });
+}
+```
+
+## Plugin System
+
+Vyuh uses a plugin architecture to provide core functionality and enable extensibility. Each plugin follows a common interface pattern and can be configured through the PluginDescriptor.
+
+### Core Plugins
+
+#### Content Plugin
+The backbone of Vyuh's content management system. It provides a standardized interface for content retrieval, caching, and updates. This plugin is essential for applications that need to manage and display structured content from CMS systems like Sanity.io. Includes both the main plugin interface and a no-op implementation for testing.
+
+#### Authentication Plugin
+Manages user authentication and session state. Provides a unified interface for different authentication providers while handling common authentication flows, session persistence, and user state management. Supports anonymous authentication, email/password, phone OTP, and OAuth providers.
+
+#### Navigation Plugin
+Powers Vyuh's routing and navigation system. Provides a declarative way to define routes, handle deep linking, and manage navigation state. Includes both the plugin interface and a default implementation using GoRouter.
+
+#### Analytics Plugin
+Enables comprehensive user interaction tracking and analytics. Provides a flexible interface for logging events and user properties, supporting multiple analytics providers while maintaining a clean separation between business logic and analytics implementation.
+
+#### Network Plugin
+Handles all network communication. Provides a standardized interface for making HTTP requests while supporting features like request interceptors, response caching, and error handling. Includes a default HTTP implementation.
+
+#### Environment Plugin
+Manages environment-specific configuration and feature flags. Provides a type-safe way to access environment variables and configuration values, supporting different environments (development, staging, production). Includes both the interface and a default implementation.
+
+#### Telemetry Plugin
+Provides comprehensive logging and monitoring capabilities. Supports multiple telemetry providers and log levels, enabling detailed application monitoring and debugging. Includes a no-op provider for testing.
+
+#### Dependency Injection Plugin
+Manages dependency injection throughout the application. Provides a clean way to register and resolve dependencies. Includes a default implementation using the GetIt service locator.
+
+#### Event Plugin
+Handles application-wide event management. Provides a pub/sub system for communication between different parts of the application. Includes both synchronous and asynchronous event handling.
+
+#### Storage Plugin
+Manages persistent storage operations. Provides a unified interface for storing and retrieving data across different storage backends.
+
+### Plugin Providers
+
+Each plugin can have multiple providers that implement the actual functionality:
+
+- **Content Providers**: Implement content fetching and manipulation for different backends
+- **Analytics Providers**: Implement analytics tracking for different services
+- **Telemetry Providers**: Implement logging for different logging systems
+- **Auth Providers**: Implement authentication for different auth services
+
+### Default Implementations
+
+Vyuh provides default implementations for most plugins:
+
+- `NoOpContentPlugin`: A no-op implementation of the content plugin
+- `DefaultNavigationPlugin`: Default implementation using GoRouter
+- `HttpNetworkPlugin`: Default HTTP-based network implementation
+- `DefaultEnvPlugin`: Basic environment variable management
+- `GetItDIPlugin`: Default dependency injection using GetIt
+- `NoOpTelemetryProvider`: No-op implementation for telemetry
+
+## Usage Example
+
+```dart
+void main() {
+  runApp(
+    initialLocation: '/',
+    plugins: PluginDescriptor(
+      content: DefaultContentPlugin(
+        provider: SanityContentProvider.withConfig(
+          config: SanityConfig(
+            projectId: '<your-project-id>',
+            dataset: 'production',
+            perspective: Perspective.previewDrafts,
+            useCdn: false,
+            token: '<your-token>',
+          ),
+          cacheDuration: const Duration(seconds: 5),
+        ),
+      ),
+      env: DefaultEnvPlugin(),
+      auth: MyCustomAuthPlugin(),
+      telemetry: TelemetryPlugin(
+        providers: [],
+      ),
+    ),
+    features: () => [
+      // Core Vyuh features
+      system.feature,
+      developer.feature,
+
+      // Custom features
+      root.feature,
+      counter.feature,
+      onboarding.feature,
+      auth.feature(),
+    ],
+  );
+}

@@ -73,6 +73,10 @@ export default [
       'examples/puzzles',
       'examples/movies',
       {
+        slug: 'examples/conference',
+        badge: { text: 'New', variant: 'note' },
+      },
+      {
         label: 'Wonderous',
         items: [
           'examples/wonderous',

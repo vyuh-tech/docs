@@ -42,6 +42,7 @@ export default defineConfig({
         'x.com': 'https://x.com/vyuh_tech',
         discord: 'https://discord.gg/b49sbjqszG',
         youtube: 'https://youtube.com/@vyuh_tech',
+        linkedin: 'https://www.linkedin.com/company/vyuh-tech',
       },
       // Add Open Graph images.
       head: [
