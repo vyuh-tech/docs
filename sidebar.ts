@@ -62,6 +62,10 @@ export default [
           },
         ],
       },
+      {
+        label: 'Sanity',
+        items: ['guides/sanity/structure-plugin'],
+      },
     ],
   },
   {
