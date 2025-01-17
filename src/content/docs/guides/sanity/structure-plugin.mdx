@@ -54,6 +54,30 @@ These packages provide:
 - `@vyuh/sanity-plugin-structure`: The Vyuh structure plugin that combines and
   organizes your feature schemas
 
+<Aside title="Using pnpm Workspaces" type="tip">
+
+Consider using pnpm workspaces to better organize your Sanity Studio and feature
+packages. Workspaces allow you to manage multiple packages in a single
+repository, sharing dependencies and enabling easier development:
+
+```bash
+# pnpm-workspace.yaml
+packages:
+  - 'studio'
+  - 'features/*'
+```
+
+This setup allows you to:
+
+- Keep all feature packages and studio in one repository
+- Share dependencies across packages
+- Use consistent versioning
+- Run commands across all packages
+
+Learn more about [pnpm workspaces](https://pnpm.io/workspaces).
+
+</Aside>
+
 ## Using FeatureDescriptor
 
 ### Basic Structure
