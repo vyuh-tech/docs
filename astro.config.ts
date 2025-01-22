@@ -11,6 +11,7 @@ import sidebar from './sidebar.ts'
 import rehypeExternalLinks from 'rehype-external-links'
 
 import icon from 'astro-icon'
+import starlightCoolerCredit from 'starlight-cooler-credit'
 
 // https://astro.build/config
 export default defineConfig({
@@ -85,7 +86,17 @@ export default defineConfig({
           showLineNumbers: false,
         },
       },
-      plugins: [starlightLinksValidator()],
+      plugins: [
+        starlightLinksValidator(),
+        starlightCoolerCredit({
+          customImage: './src/assets/logo.svg',
+          credit: {
+            title: 'Vyuh',
+            href: 'https://vyuh.tech',
+            description: 'Build Modular, Scalable Flutter Apps.',
+          },
+        }),
+      ],
       editLink: {
         baseUrl: 'https://github.com/vyuh-tech/docs/edit/main/',
       },
