@@ -3,7 +3,7 @@ title: Vyuh CLI
 description: The CLI to scaffold your Vyuh project, features and schemas
 ---
 
-import { Aside, Tabs, TabItem } from '@astrojs/starlight/components'
+import { Aside, Tabs, TabItem, Badge } from '@astrojs/starlight/components'
 import { PubBadge } from '@/components/PubBadge'
 
 The Vyuh CLI is a new tool that allows you to quickly scaffold projects,
@@ -136,6 +136,27 @@ Run "vyuh help" to see global options.
 
 ```
 
+<Aside title={'Custom output folder'}>
+
+By default the CLI generates the files in the folder where you run the command.
+To create it inside a specific folder, you could pass in the **`-o`** flag with
+the relative directory. This is particularly useful when generating features.
+
+For example, to generate the feature package inside the **`./features`** folder
+of your root project directory, you would run the following:
+
+```bash
+vyuh create feature "new-feature" -o features
+```
+
+Don't worry about passing space-separated words inside your feature name. The
+tool automatically takes care of converting it to a proper_snake_case when it
+generates the feature. For the previous command, the name "new-feature" will
+result in creating a folder called `new_feature` inside the `features`
+directory.
+
+</Aside>
+
 ## Add a new schema
 
 We also have the command for creating a new schema for the CMS. You can use
@@ -157,26 +178,34 @@ Run "vyuh help" to see global options.
 
 ```
 
-<Aside title={'Custom output folder'}>
+## Environment checks with Doctor <Badge text="New" />
 
-By default the CLI generates the files in the folder where you run the command.
-To create it inside a specific folder, you could pass in the **`-o`** flag with
-the relative directory. This is particularly useful when generating features.
+The `vyuh doctor` command helps you verify that your development environment is
+properly set up for Vyuh development. It checks for all required dependencies
+and their versions:
 
-For example, to generate the feature package inside the **`./features`** folder
-of your root project directory, you would run the following:
+![](images/vyuh_cli_doctor.png)
 
 ```bash
-vyuh create feature "new-feature" -o features
+vyuh doctor
 ```
 
-Don't worry about passing space-separated words inside your feature name. The
-tool automatically takes care of converting it to a proper_snake_case when it
-generates the feature. For the previous command, the name "new-feature" will
-result in creating a folder called `new_feature` inside the `features`
-directory.
+This command validates the presence and configuration of:
 
-</Aside>
+- Flutter SDK
+- Dart SDK
+- Melos (for monorepo management)
+- Node.js
+- pnpm (for package management)
+- Sanity CLI
+
+The command provides a detailed report of any issues found and suggestions for
+fixing them. It's particularly useful when:
+
+- Setting up a new development environment
+- Troubleshooting build or runtime issues
+- Ensuring your environment meets all prerequisites before creating a new
+  project
 
 ## Update the CLI
 
