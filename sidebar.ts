@@ -53,6 +53,10 @@ export default [
           'guides/cms/conditional-route',
           'guides/cms/template-routes',
           {
+            slug: 'guides/cms/content-widget',
+            badge: { text: 'New', variant: 'note' },
+          },
+          {
             slug: 'guides/cms/previews',
             badge: { text: 'New', variant: 'note' },
           },

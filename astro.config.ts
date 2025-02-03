@@ -81,6 +81,7 @@ export default defineConfig({
       customCss: ['./src/tailwind.css'],
       sidebar: sidebar,
       expressiveCode: {
+        themes: ['dracula'],
         plugins: [pluginLineNumbers()],
         defaultProps: {
           showLineNumbers: false,
