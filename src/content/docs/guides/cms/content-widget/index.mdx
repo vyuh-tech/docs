@@ -170,10 +170,10 @@ NPM package.
       type: 'string'
     },
     {
-      name: 'item',
-      title: 'Item',
+      name: 'items',
+      title: 'Items',
       type: 'array',
-      validation: Rule => Rule.length(1),
+      validation: Rule => Rule.min(1),
       of: [] // Populated with allowed content types
     }
   ]
@@ -209,11 +209,11 @@ VyuhContentWidget.fromDocument(
           ),
         if (document.description != null)
           Text(document.description!),
-        if (document.item != null)
+        if (document.items != null && document.items!.isNotEmpty)
           Expanded(
             child: VyuhContentBinding.content.buildContent(
               context,
-              document.item!,
+              document.items!.first,
             ),
           ),
       ],
