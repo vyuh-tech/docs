@@ -76,7 +76,16 @@ Add the following to your `pubspec.yaml`:
 ```yaml
 dependencies:
   vyuh_content_widget: ^1.0.0
+  vyuh_feature_system: ^1.0.0
 ```
+
+<Aside type={'note'}>
+
+The `vyuh_feature_system` dependency is required for the standard system
+content-blocks. This enhances the `VyuhContentWidget` to work with a wider
+variety of content.
+
+</Aside>
 
 #### Setup your CMS
 
@@ -93,10 +102,11 @@ desired plugins and configurations. This is typically done in your app's
 initialization code. The below code shows the initialization with
 `SanityContentProvider`.
 
-```dart {7,19}
+```dart {7,19,27}
 import 'package:sanity_client/sanity_client.dart';
 import 'package:vyuh_content_widget/vyuh_content_widget.dart';
 import 'package:vyuh_core/vyuh_core.dart' hide runApp;
+import 'package:vyuh_feature_system/vyuh_feature_system.dart' as system;
 import 'package:vyuh_plugin_content_provider_sanity/vyuh_plugin_content_provider_sanity.dart';
 
 // Configure your Sanity provider
@@ -119,6 +129,7 @@ void main() {
     ),
     // Optional: Add custom content descriptors
     descriptors: [
+      system.extensionDescriptor,
       ContentExtensionDescriptor(
         contents: [MyContent.descriptor()],
         contentBuilders: [MyContent.contentBuilder],
@@ -133,11 +144,11 @@ void main() {
 This initialization step is crucial as it:
 
 - Sets up the Sanity content provider for fetching CMS content
-- Sets up content type descriptors for your custom models. By default, it sets
-  up the `vyuh.document` content type for `Document` models and the system
-  content types in the
-  [`vyuh_feature_system`](/framework/packages/vyuh-feature-system) package.
-  These can later be used for rendering your content.
+- Sets up content type descriptors for your custom models. By default, it only
+  sets up the `vyuh.document` content type for `Document` models. We are
+  enhancing the range of content-blocks by including the system content types
+  from the [`vyuh_feature_system`](/framework/packages/vyuh-feature-system)
+  package.
 - Enables additional plugins like telemetry if needed
 
 ### 3. Basic Usage
@@ -147,6 +158,10 @@ The simplest way to use `VyuhContentWidget` is with a `Document`. A Document
 for content in Vyuh applications. This is part of the
 [`@vyuh/sanity-schema-system`](https://www.npmjs.com/package/@vyuh/sanity-schema-system)
 NPM package.
+
+> If you would like to work with your own content sources, make sure to send the
+> document in the same schema. You will also have to create a custom
+> `ContentProvider` that can fetch your content.
 
 #### Document Schema in Sanity
 
