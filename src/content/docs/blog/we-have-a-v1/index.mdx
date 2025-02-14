@@ -1,0 +1,63 @@
+---
+date: 2024-05-28
+title: We have a v1.0
+excerpt: The first cut of the Vyuh Framework is ready for the world.
+tags:
+  - Announcements
+cover:
+  alt: Cover Image
+  image: ./vyuh-1.0.png
+---
+
+The Vyuh framework has been in the works for a couple of months. We are now
+ready with a `v1.0` that has some of the core capabilities for building
+_CMS-driven Flutter apps_.
+
+## What is Vyuh? In a nutshell...
+
+Vyuh is a framework for building Flutter Apps with a CMS driving most of the App
+Experience. This is a new paradigm of building apps where you split the
+responsibility of creating the user journeys, content of different screens
+entirely from the CMS and do it via configurations exposed by your
+content-schemas (aka `configurations`). The implementations of those
+configurations come to life on the Flutter side when rendered on the device or
+the simulator.
+
+### CMS-driven
+
+The CMS and Flutter combination of building apps gives you a powerful way of
+prototyping different types of user-journeys, screen content, and also carrying
+out A/B testing, all from the comfort of your CMS Studio.
+
+### Modular features
+
+Additionally, you get the benefit of organising your application features in a
+modular fashion. This allows you to combine features in unique ways and also
+build a family of **vyuh**-enabled apps by moving features atomically between
+these applications. Features can also contribute different types of content,
+layouts, actions, and conditions that can all be combined and configured on the
+CMS.
+
+> The use of modularity has been a huge part of the development of Vyuh. This
+> allows going from a simple app to a complex Super App that has disparate
+> features that span across a variety of business functions.
+
+### Plugins
+
+Almost every app requires a core set of capabilities (such as authentication,
+analytics, logging, networking, error management, showing loaders, feature
+flagging, etc.). All of these capabilities are exposed in the form of plugins in
+the Vyuh framework, allowing any feature to rely on these plugins and do things
+like opening up a login dialog from anywhere in your application.
+
+Plugins are also extensible, and you can build custom plugins that do unique
+things for your application which are cross-cutting across the app.
+
+> `Features` and `Plugins` become the two core building blocks of the Vyuh
+> framework.
+
+## Sounds interesting?
+
+We encourage you to take a look at the [Documentation](https://docs.vyuh.tech)
+and explore building Vyuh apps. Currently, [Sanity.io](https://sanity.io) is our
+default CMS. We will add support for other CMS-es depending on enterprise needs.

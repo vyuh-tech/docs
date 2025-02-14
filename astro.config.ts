@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config'
 import starlight from '@astrojs/starlight'
 import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
 import starlightLinksValidator from 'starlight-links-validator'
+import starlightBlog from 'starlight-blog'
 
 import react from '@astrojs/react'
 
@@ -88,6 +89,16 @@ export default defineConfig({
         },
       },
       plugins: [
+        starlightBlog({
+          authors: {
+            pavan: {
+              name: 'Pavan Podila',
+              title: 'Founder/CEO @ Vyuh',
+              picture: 'https://github.com/pavanpodila.png',
+              url: 'https://linkedin.com/in/pavanpodila',
+            },
+          },
+        }),
         starlightLinksValidator(),
         starlightCoolerCredit({
           customImage: './src/assets/logo.svg',

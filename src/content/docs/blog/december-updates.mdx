@@ -1,0 +1,112 @@
+---
+date: 2024-12-12
+title: Updates for December 2024
+excerpt:
+  New capabilities added to the Vyuh Framework and some refactoring of plugins.
+tags:
+  - Announcements
+cover:
+  alt: Cover Image
+  image: ./images/december-updates.png
+---
+
+import { YouTube } from 'astro-embed'
+
+The last two months have been marked by a lot of new updates coming into the
+framework. Some of them include:
+
+- Enhancements to the `Forms` package, which we talked about earlier on our
+  [LinkedIn post](https://www.linkedin.com/posts/vyuh-tech_multi-step-forms-with-the-vyuh-framework-activity-7270339865030852608-yTwm).
+- New capabilities added to the framework such as: using **events** to
+  communicate between features and plugins, **modifiers** to specifically wrap
+  content items just before getting rendered.
+- Refactoring of plugins to make them more modular and easier to use.
+- Separating some of the methods in the `AnalyticsPlugin` into a
+  `TelemetryPlugin`.
+- Use of **Scoped DI** to isolate the scoping of dependencies only within a
+  Widget tree. Currently, this is available within a Route. This ensures that
+  the global DI container is not affected by dependencies that have a limited
+  lifetime.
+- Ability to **set default layouts** for various ContentItems. This allows you
+  to swap with your Design-System specific variants and simplifies managing
+  layouts on the CMS as well.
+- Added some tests to the `vyuh_core` package.
+- Added the ability to post large queries on Sanity Client. It will
+  automatically switch to a `POST` request if the query size exceeds 11Kb.
+
+Let's see some of these in more detail.
+
+## Forms Package Enhancements
+
+The `Forms` package has been enhanced to support multistep forms. This is a
+common use-case in many applications where you need to break down a form into
+multiple steps. This is now possible with the `Forms` package. You can see a
+demo of these features in the below video. It includes:
+
+- Adding a form with multiple steps.
+- Reordering steps, reordering fields within a step
+- Showing completion percentage
+- Navigating between steps
+- Validating the form
+- Saving drafts
+- Submitting the form
+
+<YouTube id="8efMfwkT1RQ" />
+
+## Events for Communication
+
+Any respectable UI framework includes events to communicate between different
+aspects of your application. In our case, we would need a way in which features
+could communicate with each other and also to have communication channels
+between plugins and features. This is now enabled through **type-safe** events,
+which you can explore on our [documentation site](/guides/events).
+
+## Modifiers
+
+Modifiers are new abstractions introduced into the framework that allow you to
+wrap the `Widget`, the output of the layout step. Modifiers are set up as an
+array, so you pass through a sequence of these modifiers before it renders the
+content item. This allows the individual modifiers to add visual enrichments to
+the content item, which will be pretty useful in some cases and pretty powerful
+as well.
+
+The input to the modifier is the output of the layout phase, which is the
+Flutter `Widget`. After passing through the sequence of modifiers, the output
+comes out as a Widget, visually enriched by each of these modifiers.
+
+> The advantage of the modifiers is that you could apply a single, consistent
+> visual change across all the content items without creating custom layouts for
+> each of those content items.
+
+Currently, the framework includes a `ThemeModifier` that allows you to attach a
+custom theme to individual content items or at the route level. This allows you
+surgically apply light and dark themes at a content level or even at the route
+level.
+
+Read more about modifiers on the
+[documentation site](/guides/cms/custom-modifier).
+
+## Splitting the AnalyticsPlugin into TelemetryPlugin
+
+The `Analytics` plugin had been taking on a lot of responsibility in terms of
+capturing user analytics and also doing telemetry operations (reporting errors
+and Flutter errors and messages and traces, etc.).
+
+We felt that all of these additional functionalities really belonged to a
+separate plugin - the `Telemetry` plugin. This split has now been applied, so
+the Analytics plugin focuses on reporting user-level events (taps, views,
+scrolls and domain specific events). All the other functionality in terms of
+reporting errors and traces has been moved into the telemetry plugin. Both of
+these plugins are required plugins, and we have defaults implementations
+available at the framework level.
+
+We now have a `vyuy.analytics` and `vyuh.telemetry` API that gives you access to
+these plugin instances at runtime.
+
+## Summary
+
+This is a brief overview of the updates that have been made to the framework. We
+are excited to see how these new capabilities will be used by our users. If you
+have any feedback or suggestions, please feel free to reach out to us on our
+[GitHub repository](https://github.com/vyuh-tech/vyuh). We are always looking
+for ways to improve the framework and make it more user-friendly.
