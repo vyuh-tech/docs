@@ -99,7 +99,9 @@ export default defineConfig({
             },
           },
         }),
-        starlightLinksValidator(),
+        starlightLinksValidator({
+          exclude: ['/blog'],
+        }),
         starlightCoolerCredit({
           customImage: './src/assets/logo.svg',
           credit: {
