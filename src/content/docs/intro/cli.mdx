@@ -17,11 +17,11 @@ The Vyuh CLI internally uses `pnpm` and `melos` to manage the packages for the
 schema and feature packages. This is to ensure that the packages are managed in
 a consistent way across all the projects.
 
-it's a good idea to have `pnpm` and `melos` installed globally. To read more
-about how to do it, refer to these links:
+For seamless functionality, ensure the following dependencies are installed and accessible in your shell path:
 
-- [Setup PNPM](https://pnpm.io/installation)
-- [Setup Melos](https://melos.invertase.dev/getting-started)
+pnpm and melos - for managing the mono-repo structure of both NPM schema packages and Dart-based feature packages. It's recommended to install these globally for consistent package management.
+
+Sanity CLI - for building CMS-driven UIs and managing Sanity projects. Ensure you are logged into Sanity using sanity login.
 
 </Aside>
 
@@ -67,23 +67,6 @@ A similar setup is required for those running on **Windows**.
 </Aside>
 
 ### Create your new project
-
-<Aside type={'note'} title={'Prerequisites'}>
-
-The Vyuh CLI needs some additional programs to be installed for it to work
-properly. These are opinionated choices and ensures a consistent development
-environment across all projects. Please ensure these are installed and available
-on your shell path:
-
-- [**pnpm**](https://pnpm.io/installation) - for managing the mono-repo with the
-  NPM schema packages.
-- [**melos**](https://melos.invertase.dev/getting-started) - for managing the
-  mono-repo with feature packages, written in Dart.
-- [**Sanity CLI**](https://www.sanity.io/docs/getting-started-with-sanity-cli) -
-  for building CMS-driven UI and creating a new Sanity project. Please ensure
-  you have also logged into Sanity using the `sanity login` command.
-
-</Aside>
 
 In the folder where you plan to build your _mono-repo_ project for the Vyuh
 Application, run the following. The `<project_name>` tag is the one where you
