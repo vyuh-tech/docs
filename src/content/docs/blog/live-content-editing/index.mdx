@@ -1,0 +1,100 @@
+---
+title: 'Supercharge Your Workflow: Live Content Editing with Vyuh & Sanity!'
+featured: true
+excerpt:
+  See your Sanity CMS content changes appear in your Flutter app in real-time
+  with Vyuh's new Live Content Editing feature.
+date: 2025-03-01
+tags:
+  - Announcements
+cover:
+  alt: Cover Image
+  image: ./cover.png
+---
+
+import { YouTube } from 'astro-embed'
+
+Tired of hitting refresh every time you make a content change in your CMS? Say
+goodbye to those tedious days! Vyuh now brings you **Live Content Editing**, a
+game-changing feature that lets you see your Sanity CMS content updates in your
+Flutter app _instantly_.
+
+## What's the Big Deal?
+
+Imagine this:
+
+1.  You make a content change in the Sanity Studio.
+2.  ...and that's it! The change _automatically_ appears in your Flutter app,
+    running on your simulator or device.
+
+No more:
+
+- Manually refreshing the app.
+- Interrupting your development flow.
+- Losing focus on what matters: creating amazing content and user experiences.
+
+Vyuh's Live Content Editing keeps you in the zone, boosting your developer
+productivity. It's seriously addictive once you start using it!
+
+## How Does It Work?
+
+Vyuh leverages a new `Live Content API` integration to enable real-time updates
+across the board for Vyuh-based apps connected to Sanity CMS. This means your
+app stays in sync with your content, always.
+
+> This can work in both development and production environments. In production,
+> you would have to publish your content before they show up on the customer
+> devices.
+
+Enabling is as simple as turning on the `useLiveRoute` flag on the
+`DefaultContentPlugin`.
+
+```dart {6} title="main.dart"
+import 'package:vyuh_core/vyuh_core.dart';
+import 'package:vyuh_extension_content/vyuh_extension_content.dart';
+
+void main() async {
+  final plugins = PluginDescriptor(
+    content: DefaultContentPlugin(
+      useLiveRoute: true,
+      provider: SanityContentProvider.withConfig(
+        config: SanityConfig(
+          projectId: '<your-project-id>',
+          dataset: 'production',
+          perspective: Perspective.previewDrafts,
+          useCdn: false,
+          token: '<your-token>',
+        )
+      )
+    )
+  );
+
+  vyuh.runApp(
+    initialLocation: '/demo',
+    features: () => [
+      system.feature,
+      developer.feature,
+      // ... other features ...
+    ],
+    plugins: plugins,
+  );
+}
+
+```
+
+## See It in Action!
+
+Check out these videos to see Live Content Editing in action.
+
+### Using the Live Content API with the `useLiveRoute` enabled on the `DefaultContentPlugin`
+
+<YouTube id={'-9USgfqzDs8'} />
+
+### Using the raw Sanity Client's Live Content API
+
+<YouTube id={'NKTHKDD33TI'} />
+
+## Get Started Today
+
+Ready to experience the magic of Live Content Editing? Integrate Vyuh with your
+Sanity CMS and unlock a new level of productivity!
