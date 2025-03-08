@@ -7,9 +7,9 @@ import { Aside, Tabs, TabItem, Badge } from '@astrojs/starlight/components'
 import { PubBadge } from '@/components/PubBadge'
 
 The Vyuh CLI is a new tool that allows you to quickly scaffold projects,
-features, and schemas for the Vyuh framework. It is built on top of the `Mason`
-package and includes a few other utilities to make it easier to generate
-projects and features.
+features, schemas and content-items for the Vyuh framework. It is built on top
+of the `Mason` package and includes a few other utilities to make it easier to
+generate projects and features.
 
 <Aside type={'note'} title={'PNPM and Melos'}>
 
@@ -66,7 +66,7 @@ A similar setup is required for those running on **Windows**.
 
 </Aside>
 
-### Create your new project
+## Create your new project
 
 <Aside type={'note'} title={'Prerequisites'}>
 
@@ -177,6 +177,41 @@ Usage: vyuh create schema <feature-name> [arguments]
 Run "vyuh help" to see global options.
 
 ```
+
+## Add a new content item
+
+The `vyuh create item <item-name>` command is used to create a new content item
+within your Vyuh project. Content items represent individual pieces of content,
+such as articles, blog posts, or product descriptions.
+
+```text title="Create Item" {3}
+Create a new Vyuh ContentItem.
+
+Usage: vyuh create item <item-name> [arguments]
+-h, --help                Print this usage information.
+-o, --output-directory    The desired output directory when creating a new item.
+-f, --feature             The feature to add the content item to. If not specified, the item will be created without a feature context.
+
+Run "vyuh help" to see global options.
+```
+
+The `<item-name>` argument specifies the name of the content item to be created.
+The name should be a valid Dart identifier.
+
+The `-o` or `--output-directory` option allows you to specify the directory
+where the content item will be created. If not specified, the content item will
+be created in the current directory.
+
+The `-f` or `--feature` option allows you to specify the feature to which the
+content item belongs. If specified, the content item will be created within the
+`lib/content` directory of the specified feature. If not specified, the content
+item will be created in the `lib/content` directory of the current project.
+
+After creating the content item, you will need to:
+
+1.  Run `dart run build_runner build` to generate the JSON serialization code.
+2.  Register the `ContentBuilder` in your `FeatureDescriptor` with the
+    `ContentExtensionDescriptor()`.
 
 ## Environment checks with Doctor <Badge text="New" />
 
