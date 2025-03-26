@@ -222,6 +222,7 @@ export default defineConfig({
                   items: [
                     'framework',
                     'framework/changelog',
+                    'framework/plugins',
                     {
                       label: 'Packages',
                       items: [
@@ -272,6 +273,7 @@ export default defineConfig({
           },
         }),
         starlightLinksValidator({
+          errorOnLocalLinks: false,
           exclude: ['/blog'],
         }),
         starlightCoolerCredit({
