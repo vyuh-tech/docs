@@ -169,6 +169,11 @@ import { VyuhProvider } from '@vyuh/react-core'
 import { systemFeature } from '@vyuh/react-feature-system'
 import { blogFeature } from './features/blog'
 
+// Include the styles
+import '@vyuh/react-core/style.css'
+import '@vyuh/react-extension-content/style.css'
+import '@vyuh/react-feature-system/style.css'
+
 function App() {
   return (
     <VyuhProvider
@@ -219,7 +224,7 @@ function AppRoutes() {
 For Next.js, you could create a dynamic route:
 
 ```tsx
-// pages/blog/[slug].tsx
+// app/blog/[slug].tsx
 import { useParams } from 'next/navigation'
 import { RouteLoader } from '@vyuh/react-extension-content'
 
