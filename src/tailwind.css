@@ -1,8 +1,30 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@plugin '@astrojs/starlight-tailwind';
 
 .mobile-preferences {
     @apply items-center justify-center;
 }
 
+/* Target only lists inside .sl-markdown-content */
+.sl-markdown-content {
+    /* Direct child selector for first-level lists */
+    > ul:not([class]) {
+        @apply list-disc list-inside;
+    }
+
+    > ol:not([class]) {
+        @apply list-decimal list-inside;
+    }
+
+    /* For nested lists */
+    li > ul:not([class]) {
+        @apply list-disc list-inside ml-4 mt-1;
+    }
+
+    li > ol:not([class]) {
+        @apply list-decimal list-inside ml-4 mt-1;
+    }
+}

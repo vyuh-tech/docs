@@ -1,0 +1,159 @@
+---
+title: Get Started
+description:
+  A React-focused quick-start guide to get up and running with the Vyuh
+  Framework
+---
+
+import { Aside, LinkCard, TabItem, Tabs } from '@astrojs/starlight/components'
+
+Adding Vyuh to your React project is straightforward with your favorite package
+manager. We will be installing the following packages:
+
+- `@vyuh/react-core`: Core package for Vyuh React
+- `@vyuh/react-extension-content`: Extension for working with CMS content
+- `@vyuh/react-feature-system`: Core feature for working with a CMS
+- `@vyuh/react-plugin-content-provider-sanity`: Content provider for Sanity.io
+
+<Tabs>
+  <TabItem label="pnpm">
+
+    ```bash
+    pnpm add @vyuh/react-core @vyuh/react-extension-content @vyuh/react-feature-system @vyuh/react-plugin-content-provider-sanity
+    ```
+
+  </TabItem>
+  <TabItem label="npm">
+
+    ```bash
+    npm install @vyuh/react-core @vyuh/react-extension-content @vyuh/react-feature-system @vyuh/react-plugin-content-provider-sanity
+
+    ```
+
+  </TabItem>
+  <TabItem label="yarn">
+
+    ```bash
+    yarn add @vyuh/react-core @vyuh/react-extension-content @vyuh/react-feature-system @vyuh/react-plugin-content-provider-sanity
+
+    ```
+
+  </TabItem>
+</Tabs>
+
+Then integrate it with your React application:
+
+```tsx
+import { VyuhProvider } from '@vyuh/react-core'
+import { RouteLoader } from '@vyuh/react-extension-content'
+import { SanityContentProvider } from '@vyuh/react-plugin-content-provider-sanity'
+import { systemFeature } from '@vyuh/react-feature-system'
+import { blogFeature } from './features/blog'
+
+function App() {
+  return (
+    <VyuhProvider
+      features={[systemFeature, blogFeature]}
+      contentProvider={
+        new SanityContentProvider({
+          projectId: 'your-project-id',
+          dataset: 'production',
+          useCdn: true,
+        })
+      }
+    >
+      <YourAppComponent />
+    </VyuhProvider>
+  )
+}
+
+// For rendering CMS-driven blog pages
+function BlogPostPage() {
+  return <RouteLoader path="/blog/my-first-post" live={true} />
+}
+```
+
+Notice the use of the `RouteLoader` component that allows you to load a document
+at a `path`. You can also pass it the `live` property and make this route
+automatically update whenever there are changes to that particular document. The
+`blogFeature` feature is a custom feature that exposes components for managing
+blog posts on the Studio, and rendered on the React app.
+
+<Aside title="For Next.js users" type="note">
+
+If you're using Vyuh with Next.js, you can integrate it into your pages or app
+router:
+
+```tsx
+// pages/blog/[slug].tsx or app/blog/[slug]/page.tsx
+import { useParams } from 'next/navigation'
+import { RouteLoader } from '@vyuh/react-extension-content'
+
+export default function BlogPostPage() {
+  const params = useParams<{ slug: string }>()
+  const slug = params.slug
+
+  return <RouteLoader path={`/blog/${slug}`} live={true} />
+}
+```
+
+Make sure to wrap your Next.js app with the `VyuhProvider` in your `_app.tsx` or
+root layout component.
+
+</Aside>
+
+The Vyuh framework includes a host of functionality for building custom
+features, with actions, conditions, layouts for different content items and also
+custom plugins. We'll explore all of these as we expand our documentation.
+
+## What's Next?
+
+Now that you've installed the basic Vyuh React packages, you're ready to build a
+CMS-driven blog application:
+
+<LinkCard
+  title="Set Up Sanity CMS"
+  description="Learn how to configure Sanity.io as your headless CMS and create blog post schemas for your Vyuh React application."
+  href="/react/intro/setup-sanity"
+/>
+
+<LinkCard
+  title="Rendering Content with Vyuh React"
+  description="Discover how to fetch and display blog posts in your React components with live updates."
+  href="/react/intro/rendering-content"
+/>
+
+### How Vyuh Renders CMS Content
+
+The power of Vyuh comes from its ability to seamlessly connect your React
+components to CMS content:
+
+1. **Content Definition**: You'll define blog post schemas in Sanity that
+   specify fields like title, author, and content
+2. **Component Mapping**: Vyuh maps CMS content types to your React components
+   through features like `blogFeature`
+3. **Dynamic Rendering**: The `RouteLoader` component fetches content from
+   specific paths in your CMS
+4. **Live Updates**: With the `live={true}` prop, your UI automatically updates
+   when content changes in the CMS
+
+This approach gives content editors the freedom to update blog posts without
+developer intervention, while developers maintain control over the presentation
+layer through React components.
+
+## Join the Vyuh Community
+
+We're excited to see what you build with Vyuh React! The framework is designed
+to make content-driven applications easier to develop and maintain, giving your
+team the flexibility to iterate quickly.
+
+- **GitHub**: Star our [repository](https://github.com/vyuh-tech/vyuh) and
+  contribute to the project
+- **Discord**: Join our [community](https://discord.gg/b49sbjqszG) to connect
+  with other developers
+
+Whether you're building a blog, e-commerce site, or complex web application,
+Vyuh React provides the tools you need to create dynamic, CMS-driven experiences
+with minimal effort.
+
+Happy coding!

@@ -6,13 +6,12 @@ import starlightLinksValidator from 'starlight-links-validator'
 import starlightBlog from 'starlight-blog'
 
 import react from '@astrojs/react'
-
-import tailwind from '@astrojs/tailwind'
-import sidebar from './sidebar.ts'
 import rehypeExternalLinks from 'rehype-external-links'
 
 import icon from 'astro-icon'
 import starlightCoolerCredit from 'starlight-cooler-credit'
+import starlightSidebarTopicsPlugin from 'starlight-sidebar-topics'
+import tailwindcss from '@tailwindcss/vite'
 
 // https://astro.build/config
 export default defineConfig({
@@ -74,13 +73,10 @@ export default defineConfig({
         },
       ],
       components: {
-        Head: './src/components/starlight/Head.astro',
-        SocialIcons: './src/components/starlight/SocialIcons.astro',
         Footer: './src/components/starlight/Footer.astro',
         SkipLink: './src/components/starlight/SkipLink.astro',
       },
       customCss: ['./src/tailwind.css'],
-      sidebar: sidebar,
       expressiveCode: {
         themes: ['dracula'],
         plugins: [pluginLineNumbers()],
@@ -89,6 +85,182 @@ export default defineConfig({
         },
       },
       plugins: [
+        starlightSidebarTopicsPlugin(
+          [
+            {
+              label: 'vyuh.tech',
+              icon: 'external',
+              link: 'https://vyuh.tech',
+            },
+            {
+              label: 'Blog',
+              icon: 'open-book',
+              link: '/blog',
+              id: 'blog',
+              items: [],
+            },
+            {
+              label: 'Flutter',
+              icon: 'seti:dart',
+              link: '/intro',
+              items: [
+                {
+                  label: 'Intro',
+                  items: [
+                    'intro',
+                    'intro/get-started',
+                    'intro/cli',
+                    'intro/integrating-cms',
+                  ],
+                },
+                {
+                  label: 'Concepts',
+                  items: [
+                    'concepts',
+                    'concepts/content-driven-apps',
+                    'concepts/features-and-plugins',
+                    'concepts/descriptors-and-builders',
+                    'concepts/thinking-in-blocks',
+                    'concepts/glossary',
+                  ],
+                },
+                {
+                  label: 'Guides',
+                  items: [
+                    'guides',
+                    'guides/designing-features',
+                    'guides/project-structure',
+                    'guides/using-plugins',
+                    'guides/adding-packages',
+                    {
+                      slug: 'guides/events',
+                      badge: { text: 'New', variant: 'note' },
+                    },
+                    {
+                      slug: 'guides/scoped-di',
+                      badge: { text: 'New', variant: 'note' },
+                    },
+                    {
+                      label: 'CMS',
+                      items: [
+                        'guides/cms',
+                        'guides/cms/core-elements',
+                        'guides/cms/designing-content-schemas',
+                        'guides/cms/custom-content-type',
+                        'guides/cms/custom-layout',
+                        {
+                          slug: 'guides/cms/default-layouts',
+                          badge: { text: 'New', variant: 'note' },
+                        },
+                        {
+                          slug: 'guides/cms/custom-modifier',
+                          badge: { text: 'New', variant: 'note' },
+                        },
+                        'guides/cms/custom-action',
+                        'guides/cms/custom-api-content',
+                        'guides/cms/conditions',
+                        'guides/cms/custom-condition',
+                        'guides/cms/conditional-route',
+                        'guides/cms/template-routes',
+                        {
+                          slug: 'guides/cms/content-widget',
+                          badge: { text: 'New', variant: 'note' },
+                        },
+                        {
+                          slug: 'guides/cms/previews',
+                          badge: { text: 'New', variant: 'note' },
+                        },
+                        {
+                          slug: 'guides/cms/widgetbook',
+                          badge: { text: 'New', variant: 'note' },
+                        },
+                      ],
+                    },
+                    {
+                      label: 'Sanity',
+                      items: ['guides/sanity/structure-plugin'],
+                    },
+                  ],
+                },
+                {
+                  label: 'Examples',
+                  items: [
+                    'examples',
+                    'examples/counter',
+                    'examples/food',
+                    'examples/puzzles',
+                    'examples/movies',
+                    {
+                      slug: 'examples/conference',
+                      badge: { text: 'New', variant: 'note' },
+                    },
+                    {
+                      label: 'Wonderous',
+                      items: [
+                        'examples/wonderous',
+                        'examples/wonderous/distilling-wonderous',
+                        'examples/wonderous/schema-first-approach',
+                        'examples/wonderous/navigation-and-structure',
+                        'examples/wonderous/rendering-a-wonder-section',
+                        'examples/wonderous/managing-wonders',
+                      ],
+                    },
+                    {
+                      label: 'Unsplash',
+                      items: [
+                        'examples/unsplash',
+                        'examples/unsplash/feature-descriptor',
+                        'examples/unsplash/navigation-and-routes',
+                        'examples/unsplash/separation-of-concerns',
+                        'examples/unsplash/widgets',
+                      ],
+                    },
+                  ],
+                },
+                {
+                  label: 'Framework',
+                  items: [
+                    'framework',
+                    'framework/changelog',
+                    {
+                      label: 'Packages',
+                      items: [
+                        'framework/packages',
+                        'framework/packages/vyuh-core',
+                        'framework/packages/vyuh-extension-content',
+                        'framework/packages/vyuh-feature-system',
+                        'framework/packages/vyuh-plugin-content-provider-sanity',
+                        'framework/packages/developer-tools',
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              label: 'React',
+              icon: 'seti:react',
+              link: '/react',
+              items: [
+                {
+                  label: 'Intro',
+                  items: [
+                    'react',
+                    'react/intro/get-started',
+                    'react/intro/setup-sanity',
+                    'react/intro/rendering-content',
+                    'react/intro/custom-content-type',
+                  ],
+                },
+              ],
+            },
+          ],
+          {
+            topics: {
+              blog: ['/blog/**/*'],
+            },
+          },
+        ),
         starlightBlog({
           authors: {
             pavan: {
@@ -104,6 +276,7 @@ export default defineConfig({
         }),
         starlightCoolerCredit({
           customImage: './src/assets/logo.svg',
+          customImageAlt: 'Vyuh Logo',
           credit: {
             title: 'Vyuh',
             href: 'https://vyuh.tech',
@@ -117,9 +290,9 @@ export default defineConfig({
       lastUpdated: true,
     }),
     react(),
-    tailwind({
-      applyBaseStyles: false,
-    }),
     icon(),
   ],
+  vite: {
+    plugins: [tailwindcss()],
+  },
 })

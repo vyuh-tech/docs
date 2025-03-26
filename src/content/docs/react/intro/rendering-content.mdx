@@ -1,0 +1,259 @@
+---
+title: Rendering Content
+description:
+  A step-by-step guide to rendering CMS-driven content in your React application
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components'
+
+This guide walks you through the process of rendering CMS-driven content in your
+React application using the Vyuh framework.
+
+<Aside type="tip">
+  Before starting, make sure you've completed the [Get
+  Started](/react/intro/get-started) guide and have Vyuh React installed in your
+  project.
+</Aside>
+
+## Overview
+
+Vyuh React allows you to render content from your CMS in a flexible,
+component-based way. The framework handles fetching content, mapping it to the
+appropriate components, and updating the UI when content changes.
+
+<Steps>
+
+1. **Set up your content provider**
+
+   First, configure a content provider to connect to your CMS. In this example,
+   we'll use Sanity.io:
+
+   ```tsx
+   import { SanityContentProvider } from '@vyuh/react-plugin-content-provider-sanity'
+
+   const contentProvider = new SanityContentProvider({
+     projectId: 'your-project-id',
+     dataset: 'production',
+     useCdn: true,
+   })
+   ```
+
+2. **Create a content type**
+
+   Define a TypeScript interface for your content type:
+
+   ```tsx
+   // content/blog-post.ts
+   import { ContentItem } from '@vyuh/react-extension-content'
+
+   export const BLOG_POST_SCHEMA_TYPE = 'blog.post'
+
+   export interface BlogPost extends ContentItem {
+     title: string
+     publishDate: string
+     author: string
+     content: any // This would typically be a Portable Text block from Sanity
+     featuredImage?: string
+     tags?: string[]
+   }
+   ```
+
+3. **Create a layout for your content**
+
+   Create a React component that will render your content type:
+
+   ```tsx
+   // layouts/blog-post-layout.tsx
+   import React from 'react'
+   import { LayoutConfiguration, TypeDescriptor } from '@vyuh/react-core'
+   import { BlogPost, BLOG_POST_SCHEMA_TYPE } from '../content/blog-post'
+   import { PortableText } from '@portabletext/react'
+
+   export class DefaultBlogPostLayout extends LayoutConfiguration<BlogPost> {
+     static readonly schemaName = `${BLOG_POST_SCHEMA_TYPE}.layout.default`
+     static readonly typeDescriptor = new TypeDescriptor(this.schemaName, this)
+
+     constructor() {
+       super({
+         schemaType: DefaultBlogPostLayout.schemaName,
+         title: 'Default Blog Post Layout',
+       })
+     }
+
+     render(content: BlogPost): React.ReactNode {
+       return (
+         <article className="max-w-2xl mx-auto py-8">
+           {content.featuredImage && (
+             <img
+               src={content.featuredImage}
+               alt={content.title}
+               className="w-full h-64 object-cover rounded-lg mb-6"
+             />
+           )}
+           <div className="mb-6">
+             <h1 className="text-3xl font-bold mb-2">{content.title}</h1>
+             <div className="text-gray-600">
+               <span>By {content.author}</span>
+               <span className="mx-2">•</span>
+               <time>{new Date(content.publishDate).toLocaleDateString()}</time>
+             </div>
+             {content.tags && (
+               <div className="flex flex-wrap gap-2 mt-3">
+                 {content.tags.map((tag) => (
+                   <span
+                     key={tag}
+                     className="px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded-full"
+                   >
+                     {tag}
+                   </span>
+                 ))}
+               </div>
+             )}
+           </div>
+           <div className="prose prose-lg">
+             <PortableText value={content.content} />
+           </div>
+         </article>
+       )
+     }
+   }
+   ```
+
+4. **Create a content builder**
+
+   Create a content builder that connects your content type to its layout:
+
+   ```tsx
+   // content/blog-post-builder.ts
+   import { ContentBuilder } from '@vyuh/react-extension-content'
+   import { BlogPost, BLOG_POST_SCHEMA_TYPE } from './blog-post'
+   import { DefaultBlogPostLayout } from '../layouts/blog-post-layout'
+
+   export class BlogPostContentBuilder extends ContentBuilder<BlogPost> {
+     constructor() {
+       super({
+         schemaType: BLOG_POST_SCHEMA_TYPE,
+         defaultLayout: new DefaultBlogPostLayout(),
+         defaultLayoutDescriptor: DefaultBlogPostLayout.typeDescriptor,
+       })
+     }
+   }
+   ```
+
+5. **Register your content in a feature**
+
+   Create a feature that includes your content type:
+
+   ```tsx
+   // features/blog/index.ts
+   import { FeatureDescriptor } from '@vyuh/react-core'
+   import { ContentExtensionDescriptor } from '@vyuh/react-extension-content'
+   import { BlogPostContentBuilder } from './content/blog-post-builder'
+
+   export const blogFeature = new FeatureDescriptor({
+     name: 'blog',
+     title: 'Blog Feature',
+     description: 'Blog functionality for your app',
+
+     extensions: [
+       new ContentExtensionDescriptor({
+         contentBuilders: [new BlogPostContentBuilder()],
+       }),
+     ],
+   })
+   ```
+
+6. **Set up your app with VyuhProvider**
+
+   Wrap your application with the `VyuhProvider` component:
+
+   ```tsx
+   // App.tsx
+   import { VyuhProvider } from '@vyuh/react-core'
+   import { systemFeature } from '@vyuh/react-feature-system'
+   import { blogFeature } from './features/blog'
+
+   function App() {
+     return (
+       <VyuhProvider
+         features={[systemFeature, blogFeature]}
+         contentProvider={contentProvider}
+       >
+         <YourAppComponent />
+       </VyuhProvider>
+     )
+   }
+   ```
+
+7. **Render content with RouteLoader**
+
+   Use the `RouteLoader` component to render content from a specific path:
+
+   ```tsx
+   // BlogPage.tsx
+   import { RouteLoader } from '@vyuh/react-extension-content'
+
+   function BlogPage() {
+     return <RouteLoader path="/blog/my-first-post" live={true} />
+   }
+   ```
+
+   The `live` prop enables real-time updates when content changes in the CMS.
+
+8. **Add routing to your app**
+
+   Integrate with your routing solution (React Router, Next.js, etc.):
+
+   ```tsx
+   // For React Router
+   import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
+   function AppRoutes() {
+     return (
+       <BrowserRouter>
+         <Routes>
+           <Route path="/" element={<HomePage />} />
+           <Route path="/blog/:slug" element={<BlogPage />} />
+         </Routes>
+       </BrowserRouter>
+     )
+   }
+   ```
+
+   For Next.js, you could create a dynamic route:
+
+   ```tsx
+   // pages/blog/[slug].tsx
+   import { useParams } from 'next/navigation'
+   import { RouteLoader } from '@vyuh/react-extension-content'
+
+   export default function DynamicBlogPost() {
+     const params = useParams<{ slug: string }>()
+     const slug = params.slug
+
+     if (!slug) return <div>Loading...</div>
+
+     return <RouteLoader path={`/blog/${slug}`} live={true} />
+   }
+   ```
+
+</Steps>
+
+## Summary
+
+By following these steps, you've set up a complete content rendering pipeline
+with Vyuh React:
+
+1. Defined content types that match your CMS schema
+2. Created layouts to render your content
+3. Connected everything with content builders and features
+4. Used the `RouteLoader` component to fetch and render content
+
+This approach gives you a flexible, component-based system for rendering CMS
+content in your React application, with support for real-time updates and
+conditional rendering.
+
+<Aside type="note">
+  Remember to set up your CMS schema to match your content types. For Sanity.io,
+  you'll need to create corresponding schemas in your Sanity Studio project.
+</Aside>
