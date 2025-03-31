@@ -68,27 +68,39 @@ manager. We need the following packages:
   </TabItem>
 </Tabs>
 
-Then integrate it with your React application:
+Then integrate it with your React application. The connection to the CMS is
+handled by the `SanityContentProvider` via the `DefaultContentPlugin`.
 
 ```tsx
-import { VyuhProvider } from '@vyuh/react-core'
-import { RouteLoader } from '@vyuh/react-extension-content'
+import { PluginDescriptor, VyuhProvider } from '@vyuh/react-core'
+import {
+  RouteLoader,
+  DefaultContentPlugin,
+} from '@vyuh/react-extension-content'
 import { SanityContentProvider } from '@vyuh/react-plugin-content-provider-sanity'
-import { systemFeature } from '@vyuh/react-feature-system'
-import { shopFeature } from './features/shop'
+import { system } from '@vyuh/react-feature-system'
+import { shop } from './features/shop'
+
+/**
+ * Plugin configuration
+ */
+const plugins = new PluginDescriptor({
+  content: new DefaultContentPlugin(
+    new SanityContentProvider({
+      projectId: '<your-project-id>',
+      dataset: 'production',
+      perspective: 'drafts',
+      useCdn: false,
+      token: '<your-token>',
+    }),
+  ),
+})
+
+const getFeatures = () => [system, shop]
 
 function App() {
   return (
-    <VyuhProvider
-      features={[systemFeature, shopFeature]}
-      contentProvider={
-        new SanityContentProvider({
-          projectId: 'your-project-id',
-          dataset: 'production',
-          useCdn: true,
-        })
-      }
-    >
+    <VyuhProvider features={getFeatures} plugins={plugins}>
       <YourAppComponent />
     </VyuhProvider>
   )
