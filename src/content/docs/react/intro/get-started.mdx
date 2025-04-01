@@ -48,24 +48,35 @@ manager. We will be installing the following packages:
 Then integrate it with your React application:
 
 ```tsx
-import { VyuhProvider } from '@vyuh/react-core'
-import { RouteLoader } from '@vyuh/react-extension-content'
+import { PluginDescriptor, VyuhProvider } from '@vyuh/react-core'
+import {
+  RouteLoader,
+  DefaultContentPlugin,
+} from '@vyuh/react-extension-content'
 import { SanityContentProvider } from '@vyuh/react-plugin-content-provider-sanity'
 import { systemFeature } from '@vyuh/react-feature-system'
 import { blogFeature } from './features/blog'
 
+/**
+ * Plugin configuration
+ */
+const plugins = new PluginDescriptor({
+  content: new DefaultContentPlugin(
+    new SanityContentProvider({
+      projectId: '<your-project-id>',
+      dataset: 'production',
+      perspective: 'drafts',
+      useCdn: false,
+      token: '<your-token>',
+    }),
+  ),
+})
+
+const getFeatures = () => [systemFeature, blogFeature]
+
 function App() {
   return (
-    <VyuhProvider
-      features={[systemFeature, blogFeature]}
-      contentProvider={
-        new SanityContentProvider({
-          projectId: 'your-project-id',
-          dataset: 'production',
-          useCdn: true,
-        })
-      }
-    >
+    <VyuhProvider features={getFeatures} plugins={plugins}>
       <YourAppComponent />
     </VyuhProvider>
   )

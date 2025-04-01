@@ -96,7 +96,7 @@ mkdir -p schemas/blog
 Create a blog post schema file:
 
 ```typescript
-// schemas/blog/post.ts
+// features/blog/post.ts
 import { defineType, defineField } from 'sanity'
 
 export const blogPost = defineType({
@@ -171,7 +171,7 @@ export const blogPost = defineType({
 Create a feature descriptor file to organize your blog schemas:
 
 ```typescript
-// schemas/blog/index.ts
+// features/blog/index.ts
 import { FeatureDescriptor } from '@vyuh/sanity-schema-core'
 import { BuiltContentSchemaBuilder } from '@vyuh/sanity-schema-core'
 import { blogPost } from './post'
@@ -193,7 +193,7 @@ Update your `sanity.config.ts` file to include your blog feature:
 import { defineConfig } from 'sanity'
 import { vyuh } from '@vyuh/sanity-plugin-structure'
 import { system } from '@vyuh/sanity-schema-system'
-import { blog } from './schemas/blog'
+import { blog } from './features/blog'
 
 export default defineConfig({
   name: 'default',
