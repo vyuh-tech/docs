@@ -59,10 +59,10 @@ export interface BlogPost extends ContentItem {
 Create a React component that will render your content type:
 
 ```tsx
-// layouts/blog-post-layout.tsx
+// content/blog-post-layout.tsx
 import React from 'react'
 import { LayoutConfiguration, TypeDescriptor } from '@vyuh/react-core'
-import { BlogPost, BLOG_POST_SCHEMA_TYPE } from '../content/blog-post'
+import { BlogPost, BLOG_POST_SCHEMA_TYPE } from './blog-post'
 import { PortableText } from '@portabletext/react'
 
 export class DefaultBlogPostLayout extends LayoutConfiguration<BlogPost> {
@@ -169,17 +169,23 @@ import { VyuhProvider } from '@vyuh/react-core'
 import { systemFeature } from '@vyuh/react-feature-system'
 import { blogFeature } from './features/blog'
 
-// Include the styles
-import '@vyuh/react-core/style.css'
-import '@vyuh/react-extension-content/style.css'
-import '@vyuh/react-feature-system/style.css'
+const plugins = new PluginDescriptor({
+  content: new DefaultContentPlugin(
+    new SanityContentProvider({
+      projectId: '<your-project-id>',
+      dataset: 'production',
+      perspective: 'drafts',
+      useCdn: false,
+      token: '<your-token>',
+    }),
+  ),
+})
+
+const features = () => [systemFeature, blogFeature]
 
 function App() {
   return (
-    <VyuhProvider
-      features={[systemFeature, blogFeature]}
-      contentProvider={contentProvider}
-    >
+    <VyuhProvider features={features} plugins={plugins}>
       <YourAppComponent />
     </VyuhProvider>
   )
