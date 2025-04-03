@@ -40,17 +40,19 @@ Define a TypeScript interface for your content type:
 
 ```tsx
 // content/blog-post.ts
-import { ContentItem } from '@vyuh/react-extension-content'
+import {ImageReference} from '@vyuh/react-core';
+import {ContentItem} from '@vyuh/react-extension-content';
+import {PortableText} from '@vyuh/react-feature-system';
 
-export const BLOG_POST_SCHEMA_TYPE = 'blog.post'
+export const BLOG_POST_SCHEMA_TYPE = 'blog.post';
 
 export interface BlogPost extends ContentItem {
-  title: string
-  publishDate: string
-  author: string
-  content: any // This would typically be a Portable Text block from Sanity
-  featuredImage?: string
-  tags?: string[]
+  title: string;
+  publishDate: string;
+  author: string;
+  content: PortableText;
+  featuredImage?: ImageReference;
+  tags?: string[];
 }
 ```
 
@@ -60,10 +62,9 @@ Create a React component that will render your content type:
 
 ```tsx
 // content/blog-post-layout.tsx
+import {LayoutConfiguration, TypeDescriptor} from '@vyuh/react-core'
 import React from 'react'
-import { LayoutConfiguration, TypeDescriptor } from '@vyuh/react-core'
-import { BlogPost, BLOG_POST_SCHEMA_TYPE } from './blog-post'
-import { PortableText } from '@portabletext/react'
+import {BLOG_POST_SCHEMA_TYPE, BlogPost} from './blog-post'
 
 export class DefaultBlogPostLayout extends LayoutConfiguration<BlogPost> {
   static readonly schemaName = `${BLOG_POST_SCHEMA_TYPE}.layout.default`
@@ -77,42 +78,53 @@ export class DefaultBlogPostLayout extends LayoutConfiguration<BlogPost> {
   }
 
   render(content: BlogPost): React.ReactNode {
-    return (
-      <article className="max-w-2xl mx-auto py-8">
-        {content.featuredImage && (
-          <img
-            src={content.featuredImage}
-            alt={content.title}
-            className="w-full h-64 object-cover rounded-lg mb-6"
-          />
-        )}
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold mb-2">{content.title}</h1>
-          <div className="text-gray-600">
-            <span>By {content.author}</span>
-            <span className="mx-2">•</span>
-            <time>{new Date(content.publishDate).toLocaleDateString()}</time>
-          </div>
-          {content.tags && (
-            <div className="flex flex-wrap gap-2 mt-3">
-              {content.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded-full"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
-        <div className="prose prose-lg">
-          <PortableText value={content.content} />
-        </div>
-      </article>
-    )
+    return <BlogPostContent content={content} />
   }
 }
+
+// Separate component for rendering blog post content
+const BlogPostContent: React.FC<{ content: BlogPost }> = ({ content }) => {
+  const { plugins } = useVyuh()
+  const imageUrl = content.featuredImage
+    ? plugins.content.provider.image(content.featuredImage)
+    : undefined
+
+  return (
+    <article className="max-w-2xl mx-auto py-8">
+      {imageUrl && (
+        <img
+          src={imageUrl}
+          alt={content.title}
+          className="w-full h-64 object-cover rounded-lg mb-6"
+        />
+      )}
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold mb-2">{content.title}</h1>
+        <div className="text-gray-600">
+          <span>By {content.author}</span>
+          <span className="mx-2">•</span>
+          <time>{new Date(content.publishDate).toLocaleDateString()}</time>
+        </div>
+        {content.tags && (
+          <div className="flex flex-wrap gap-2 mt-3">
+            {content.tags.map((tag) => (
+              <span
+                key={tag}
+                className="px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded-full"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+      <div className="prose prose-lg">
+        {content.content && plugins.content.render(content.content)}
+      </div>
+    </article>
+  )
+}
+
 ```
 
 ## 4. Create a content builder
@@ -165,9 +177,11 @@ Wrap your application with the `VyuhProvider` component:
 
 ```tsx
 // App.tsx
-import { VyuhProvider } from '@vyuh/react-core'
+import { VyuhProvider, PluginDescriptor } from '@vyuh/react-core'
 import { systemFeature } from '@vyuh/react-feature-system'
 import { blogFeature } from './features/blog'
+import { DefaultContentPlugin } from '@vyuh/react-extension-content'
+import {SanityContentProvider} from '@vyuh/react-plugin-content-provider-sanity';
 
 const plugins = new PluginDescriptor({
   content: new DefaultContentPlugin(

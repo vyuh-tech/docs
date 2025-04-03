@@ -16,15 +16,17 @@ will be cast to this particular type for easier usage.
 
 ```tsx
 // features/shop/content/product.ts
+import { ImageReference } from '@vyuh/react-core'
 import { ContentItem } from '@vyuh/react-extension-content'
+import { PortableText } from '@vyuh/react-feature-system'
 
 export const PRODUCT_SCHEMA_TYPE = 'shop.product'
 
 export interface Product extends ContentItem {
   title: string
   price: number
-  description?: string
-  image?: string
+  description?: PortableText
+  image?: ImageReference
   skuId: string
   category: string
   inStock: boolean
@@ -59,11 +61,15 @@ export class DefaultProductLayout extends LayoutConfiguration<Product> {
   }
 
   render(content: Product): React.ReactNode {
+    const { plugins } = useVyuhStore.getState()
+    const imageUrl = plugins.content.provider.image(content.image)
+
+
     return (
       <div className="rounded-lg shadow-md overflow-hidden bg-white">
-        {content.image && (
+        {imageUrl && (
           <img
-            src={content.image}
+            src={imageUrl}
             alt={content.title}
             className="w-full h-48 object-cover"
           />
@@ -76,7 +82,9 @@ export class DefaultProductLayout extends LayoutConfiguration<Product> {
             {content.title}
           </h2>
           {content.description && (
-            <p className="text-sm text-gray-600 mb-3">{content.description}</p>
+            <p className="text-sm text-gray-600 mb-3">
+              {content.description && plugins.content.render(content.description)}
+            </p>
           )}
           <div className="flex justify-between items-center">
             <span className="text-lg font-bold text-accent-600">
