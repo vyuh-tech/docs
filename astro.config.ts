@@ -253,6 +253,16 @@ export default defineConfig({
                     'react/intro/custom-content-type',
                   ],
                 },
+                {
+                  label: 'Guides',
+                  items: [
+                    'react/guides/overview',
+                    'react/guides/content-blocks',
+                    'react/guides/layouts',
+                    'react/guides/actions',
+                    'react/guides/conditions'
+                  ],
+                },
               ],
             },
           ],
