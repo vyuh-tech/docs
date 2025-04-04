@@ -254,7 +254,7 @@ export default defineConfig({
                 {
                   label: 'Guides',
                   items: [
-                    'react/guides/overview',
+                    'react/guides',
                     'react/guides/content-blocks',
                     'react/guides/layouts',
                     'react/guides/actions',
@@ -266,10 +266,7 @@ export default defineConfig({
                 },
                 {
                   label: 'Examples',
-                  items: [
-                    'react/examples/marketing',
-                    'react/examples/blog',
-                  ],
+                  items: ['react/examples/marketing', 'react/examples/blog'],
                 },
               ],
             },
