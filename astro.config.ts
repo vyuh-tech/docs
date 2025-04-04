@@ -27,6 +27,13 @@ export default defineConfig({
       ],
     ],
   },
+  i18n: {
+    locales: ['en'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+    defaultLocale: 'en',
+  },
   integrations: [
     starlight({
       title: 'Docs',
