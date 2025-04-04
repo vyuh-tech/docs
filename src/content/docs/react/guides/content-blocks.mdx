@@ -1,31 +1,35 @@
 ---
 title: Content Blocks
-description: A comprehensive guide to all content blocks available in the Vyuh React feature system
+description:
+  A comprehensive guide to all content blocks available in the Vyuh React
+  feature system
 ---
 
-import { Aside, LinkCard } from '@astrojs/starlight/components'
-import { NpmBadge } from '@/components/NpmBadge'
-
-<NpmBadge name="@vyuh/react-feature-system" />
+import { Aside } from '@astrojs/starlight/components'
 
 ## Introduction
 
-Content blocks are the building blocks of your Vyuh React application. They represent different types of content that can be configured in your CMS and rendered in your React application. The `@vyuh/react-feature-system` package provides a comprehensive set of content blocks that you can use out of the box.
+Content blocks are the building blocks of your Vyuh React application. They
+represent different types of content that can be configured in your CMS and
+rendered in your React application. The `@vyuh/react-feature-system` package
+provides a comprehensive set of content blocks that you can use out of the box.
 
-For an overview of how content blocks fit into the broader Vyuh framework, see the [Framework Overview](/react/guides/overview).
+For an overview of how content blocks fit into the broader Vyuh framework, see
+the [Framework Overview](/react/guides/overview).
 
 ## Rendering Content Blocks
 
-All content blocks in Vyuh are rendered using the content plugin's `render` method:
+All content blocks in Vyuh are rendered using the content plugin's `render`
+method:
 
 ```tsx
-import { useVyuh } from '@vyuh/react-core';
+import { useVyuh } from '@vyuh/react-core'
 
 function MyComponent() {
-  const { plugins } = useVyuh();
+  const { plugins } = useVyuh()
 
   // Render any content block by passing its object representation
-  return plugins.content.render(contentBlockObject);
+  return plugins.content.render(contentBlockObject)
 }
 ```
 
@@ -45,18 +49,19 @@ const routeContent = {
       identifier: 'body',
       items: [
         // Content blocks in this region
-      ]
-    }
-  ]
-};
+      ],
+    },
+  ],
+}
 
 // Render with content plugin
-plugins.content.render(routeContent);
+plugins.content.render(routeContent)
 ```
 
 ### Card
 
-Cards are versatile content blocks for displaying concise information with optional actions.
+Cards are versatile content blocks for displaying concise information with
+optional actions.
 
 ```tsx
 // Card content object
@@ -65,15 +70,14 @@ const cardContent = {
   title: 'My Card',
   description: 'This is a card component',
   image: { _ref: 'image-123' },
-  imageUrl: 'https://example.com/image.jpg',
   action: {
     _type: 'vyuh.action.navigation',
-    path: '/details'
-  }
-};
+    path: '/details',
+  },
+}
 
 // Render with content plugin
-plugins.content.render(cardContent);
+plugins.content.render(cardContent)
 ```
 
 ### Group
@@ -90,17 +94,18 @@ const groupContent = {
     // Array of content items
   ],
   layout: {
-    _type: 'vyuh.group.layout.carousel'
-  }
-};
+    _type: 'vyuh.group.layout.carousel',
+  },
+}
 
 // Render with content plugin
-plugins.content.render(groupContent);
+plugins.content.render(groupContent)
 ```
 
 ### Portable Text
 
-Portable Text renders rich text content with embedded blocks.
+Portable Text renders rich text content with embedded blocks. This follows the
+[Portable Text](https://github.com/portabletext/portabletext) specification.
 
 ```tsx
 // Portable Text content object
@@ -110,15 +115,13 @@ const portableTextContent = {
     {
       _type: 'block',
       style: 'normal',
-      children: [
-        { _type: 'span', text: 'This is rich text content' }
-      ]
-    }
-  ]
-};
+      children: [{ _type: 'span', text: 'This is rich text content' }],
+    },
+  ],
+}
 
 // Render with content plugin
-plugins.content.render(portableTextContent);
+plugins.content.render(portableTextContent)
 ```
 
 ### Conditional Content
@@ -133,8 +136,8 @@ const conditionalContent = {
     _type: 'vyuh.condition',
     configuration: {
       _type: 'vyuh.condition.boolean',
-      value: true
-    }
+      value: true,
+    },
   },
   cases: [
     {
@@ -142,23 +145,23 @@ const conditionalContent = {
       item: {
         // Content to show when condition is true
         _type: 'vyuh.card',
-        title: 'Condition is true'
-      }
+        title: 'Condition is true',
+      },
     },
     {
       value: 'false',
       item: {
         // Content to show when condition is false
         _type: 'vyuh.card',
-        title: 'Condition is false'
-      }
-    }
+        title: 'Condition is false',
+      },
+    },
   ],
-  defaultCase: 'false' // Default case if condition evaluation fails
-};
+  defaultCase: 'false', // Default case if condition evaluation fails
+}
 
 // Render with content plugin
-plugins.content.render(conditionalContent);
+plugins.content.render(conditionalContent)
 ```
 
 ### Conditional Route
@@ -173,35 +176,38 @@ const conditionalRoute = {
     _type: 'vyuh.condition',
     configuration: {
       _type: 'vyuh.condition.boolean',
-      value: true
-    }
+      value: true,
+    },
   },
   cases: [
     {
       value: 'true',
       item: {
         // Route to show when condition is true
-        _ref: 'route-123'
-      }
+        _ref: 'route-123',
+      },
     },
     {
       value: 'false',
       item: {
         // Route to show when condition is false
-        _ref: 'route-456'
-      }
-    }
+        _ref: 'route-456',
+      },
+    },
   ],
-  defaultCase: 'false' // Default case if condition evaluation fails
-};
+  defaultCase: 'false', // Default case if condition evaluation fails
+}
 
 // Render with content plugin
-plugins.content.render(conditionalRoute);
+plugins.content.render(conditionalRoute)
 ```
 
 ## Layouts
 
-Each content block can have different layouts that change how it's presented. Layouts are specified through the `layout` property or can be inferred from the content structure. For a comprehensive guide on layouts, see the [Layouts](/react/guides/layouts) documentation.
+Each content block can have different layouts that change how it's presented.
+Layouts are specified through the `layout` property or can be inferred from the
+content structure. For a comprehensive guide on layouts, see the
+[Layouts](/react/guides/layouts) documentation.
 
 ```tsx
 // Card with a specific layout
@@ -212,11 +218,11 @@ const cardWithLayout = {
   layout: {
     _type: 'vyuh.card.layout.button',
     // Layout-specific properties
-  }
-};
+  },
+}
 
 // Render with content plugin
-plugins.content.render(cardWithLayout);
+plugins.content.render(cardWithLayout)
 ```
 
 ### Available Layouts
@@ -224,91 +230,101 @@ plugins.content.render(cardWithLayout);
 Different content types support different layouts:
 
 #### Card Layouts
+
 - `vyuh.card.layout.default`: Standard card with image, title, and description
 - `vyuh.card.layout.button`: Card styled as a button for actions
 - `vyuh.card.layout.listItem`: Compact layout for use in lists
 
 #### Group Layouts
-- `vyuh.group.layout.carousel`: Horizontal scrolling items with navigation controls
+
+- `vyuh.group.layout.carousel`: Horizontal scrolling items with navigation
+  controls
 - `vyuh.group.layout.grid`: Responsive grid layout with configurable columns
 - `vyuh.group.layout.list`: Vertical list of items
 
 #### Route Layouts
+
 - `vyuh.route.layout.default`: Standard page layout
 - `vyuh.route.layout.singleItem`: Focused layout for a single content item
 - `vyuh.route.layout.tabs`: Sectioned content with tab navigation
 
 <Aside type="tip">
-  The same content can be displayed differently by simply changing its layout, without modifying the content itself.
+  The same content can be displayed differently by simply changing its layout,
+  without modifying the content itself.
 </Aside>
 
 ## Actions
 
-Actions add interactivity to content blocks. They define what happens when a user interacts with content. For a comprehensive guide on actions, see the [Actions](/react/guides/actions) documentation.
+Actions add interactivity to content blocks. They define what happens when a
+user interacts with content. For a comprehensive guide on actions, see the
+[Actions](/react/guides/actions) documentation.
 
 ```tsx
 // Navigation action
 const navigateAction = {
   _type: 'vyuh.action.navigation',
   title: 'Go to Details',
-  linkType: 'url',  // Options: 'url' or 'route'
-  url: '/details',  // Used when linkType is 'url'
+  linkType: 'url', // Options: 'url' or 'route'
+  url: '/details', // Used when linkType is 'url'
   // route: { ref: 'route-123' },  // Used when linkType is 'route'
-  navigationType: 'push'  // Options: 'push', 'replace', 'go'
-};
+  navigationType: 'push', // Options: 'push', 'replace', 'go'
+}
 
 // Navigation action using route reference
 const routeNavigateAction = {
   _type: 'vyuh.action.navigation',
   title: 'Go to Product Page',
   linkType: 'route',
-  route: { ref: 'route-123' },  // ObjectReference to a route ID
-  navigationType: 'push'
-};
+  route: { ref: 'route-123' }, // ObjectReference to a route ID
+  navigationType: 'push',
+}
 
 // Open URL action
 const openUrlAction = {
   _type: 'vyuh.action.openUrl',
   title: 'Visit Website',
   url: 'https://example.com',
-  mode: 'platformDefault'  // Options: 'platformDefault', 'inApp', 'externalApp'
-};
+  mode: 'platformDefault', // Options: 'platformDefault', 'inApp', 'externalApp'
+}
 
 // JavaScript action
 const javascriptAction = {
   _type: 'vyuh.action.javascript',
   script: 'console.log("Action triggered")',
-  isAsync: false
-};
+  isAsync: false,
+}
 
 // Card with an action
 const cardWithAction = {
   _type: 'vyuh.card',
   title: 'My Card',
-  action: navigateAction
-};
+  action: navigateAction,
+}
 ```
+
 ## Conditions
 
-Conditions enable dynamic content selection based on various criteria. For a detailed explanation of conditions, see the [Conditions](/react/guides/conditions) documentation.
+Conditions enable dynamic content selection based on various criteria. For a
+detailed explanation of conditions, see the
+[Conditions](/react/guides/conditions) documentation.
 
 ```tsx
 // Boolean condition
 const booleanCondition = {
   _type: 'vyuh.condition.boolean',
-  value: true
-};
+  value: true,
+}
 
 // Authentication condition
 const authCondition = {
-  _type: 'vyuh.condition.authenticated'
-};
+  _type: 'vyuh.condition.authenticated',
+}
 
 // Feature flag condition
 const featureFlagCondition = {
   _type: 'vyuh.condition.featureFlag',
-  flag: 'new-feature'
-};
+  flag: 'new-feature',
+}
 ```
 
 ## Creating Custom Content Blocks
@@ -319,26 +335,5 @@ You can extend the system with your own custom content blocks by creating:
 2. Layout configurations for the content
 3. A content builder to connect the type with its layouts
 
-See the [Custom Content Types](/react/intro/custom-content-type) guide for more information.
-
-## What's Next?
-
-Now that you understand the available content blocks, learn how to:
-
-<LinkCard
-  title="Layouts"
-  description="Learn how to control the visual presentation of content blocks with layouts in your Vyuh application."
-  href="/react/guides/layouts"
-/>
-
-<LinkCard
-  title="Actions"
-  description="Learn how to create interactive experiences with actions in your Vyuh application."
-  href="/react/guides/actions"
-/>
-
-<LinkCard
-  title="Conditions"
-  description="Learn how to use conditions to create dynamic, context-aware content in your Vyuh application."
-  href="/react/guides/conditions"
-/>
+See the [Custom Content Types](/react/intro/custom-content-type) guide for more
+information.

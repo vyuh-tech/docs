@@ -249,8 +249,6 @@ export default defineConfig({
                     'react',
                     'react/intro/get-started',
                     'react/intro/setup-sanity',
-                    'react/intro/rendering-content',
-                    'react/intro/custom-content-type',
                   ],
                 },
                 {
@@ -260,7 +258,17 @@ export default defineConfig({
                     'react/guides/content-blocks',
                     'react/guides/layouts',
                     'react/guides/actions',
-                    'react/guides/conditions'
+                    'react/guides/conditions',
+                    'react/guides/feature-descriptors',
+                    'react/guides/rendering-content',
+                    'react/guides/custom-content-type',
+                  ],
+                },
+                {
+                  label: 'Examples',
+                  items: [
+                    'react/examples/marketing',
+                    'react/examples/blog',
                   ],
                 },
               ],

@@ -1,18 +1,21 @@
 ---
 title: Conditions
-description: Understanding the structure and usage of conditions in the Vyuh React feature system
+description:
+  Understanding the structure and usage of conditions in the Vyuh React feature
+  system
 ---
 
-import { Aside, LinkCard } from '@astrojs/starlight/components'
-import { NpmBadge } from '@/components/NpmBadge'
-
-<NpmBadge name="@vyuh/react-feature-system" />
+import { Aside } from '@astrojs/starlight/components'
 
 ## Introduction to Conditions
 
-Conditions in the Vyuh framework provide a powerful way to create dynamic, context-aware [content](/react/guides/content-blocks) and interactions. They allow your application to make decisions based on various factors such as user state, device characteristics, time, or any custom logic you define.
+Conditions in the Vyuh framework provide a powerful way to create dynamic,
+context-aware [content](/react/guides/content-blocks) and interactions. They
+allow your application to make decisions based on various factors such as user
+state, device characteristics, time, or any custom logic you define.
 
 Conditions are used to:
+
 - Show or hide content based on user authentication
 - Display different layouts based on screen size
 - Enable or disable features based on feature flags
@@ -21,99 +24,108 @@ Conditions are used to:
 
 ## Condition Object Structure
 
-A condition object in Vyuh has a simple structure focused on a single configuration:
+A condition object in Vyuh has a simple structure focused on a single
+configuration:
 
 ```typescript
 const condition = {
-  _type: "vyuh.condition",
+  _type: 'vyuh.condition',
   configuration: {
-    _type: "vyuh.condition.boolean",
-    value: true
+    _type: 'vyuh.condition.boolean',
+    value: true,
     // Additional properties specific to the condition type
-  }
-};
+  },
+}
 ```
 
-Unlike actions which can have multiple configurations, a condition has a single configuration that defines its evaluation logic. This design ensures that conditions have clear, predictable outcomes.
+Unlike actions which can have multiple configurations, a condition has a single
+configuration that defines its evaluation logic. This design ensures that
+conditions have clear, predictable outcomes.
 
 ## Condition Configurations
 
-Each condition configuration represents a specific evaluation logic. The configuration includes:
+Each condition configuration represents a specific evaluation logic. The
+configuration includes:
 
-- **_type** - Identifies the type of condition
+- **\_type** - Identifies the type of condition
 - **Additional properties** - Specific to each condition type
 
-The Vyuh framework includes several built-in condition configurations. Here's the most basic one:
+The Vyuh framework includes several built-in condition configurations. Here's
+the most basic one:
 
 ```typescript
 // Boolean condition
 const booleanCondition = {
-  _type: "vyuh.condition",
+  _type: 'vyuh.condition',
   configuration: {
-    _type: "vyuh.condition.boolean",
-    value: true
-  }
-};
+    _type: 'vyuh.condition.boolean',
+    value: true,
+  },
+}
 ```
 
 ## Condition Evaluation Process
 
-When a condition is evaluated, it returns a string value that represents the outcome. This string value is then used to select the appropriate content or action.
+When a condition is evaluated, it returns a string value that represents the
+outcome. This string value is then used to select the appropriate content or
+action.
 
 For example, a boolean condition returns either "true" or "false" as a string:
 
 ```typescript
 // Boolean condition evaluation
 const booleanCondition = {
-  _type: "vyuh.condition",
+  _type: 'vyuh.condition',
   configuration: {
-    _type: "vyuh.condition.boolean",
-    value: true
-  }
-};
+    _type: 'vyuh.condition.boolean',
+    value: true,
+  },
+}
 
 // Evaluates to "true" (as a string)
-const result = await executeCondition(booleanCondition);
+const result = await executeCondition(booleanCondition)
 ```
-
 
 ## Using Conditions with Content
 
-Conditions are most commonly used with [conditional content blocks](/react/guides/content-blocks#conditional-content) to dynamically select which content to display:
+Conditions are most commonly used with
+[conditional content blocks](/react/guides/content-blocks#conditional-content)
+to dynamically select which content to display:
 
 ```typescript
 const conditionalContent = {
-  _type: "vyuh.conditional",
+  _type: 'vyuh.conditional',
   condition: {
-    _type: "vyuh.condition",
+    _type: 'vyuh.condition',
     configuration: {
-      _type: "vyuh.condition.boolean",
-      value: true
-    }
+      _type: 'vyuh.condition.boolean',
+      value: true,
+    },
   },
   cases: [
     {
-      value: "true",
+      value: 'true',
       item: {
         // Content to show when condition is true
-        _type: "vyuh.card",
-        title: "Condition is true"
-      }
+        _type: 'vyuh.card',
+        title: 'Condition is true',
+      },
     },
     {
-      value: "false",
+      value: 'false',
       item: {
         // Content to show when condition is false
-        _type: "vyuh.card",
-        title: "Condition is false"
-      }
-    }
+        _type: 'vyuh.card',
+        title: 'Condition is false',
+      },
+    },
   ],
-  defaultCase: "false" // Fallback if condition evaluation fails
-};
+  defaultCase: 'false', // Fallback if condition evaluation fails
+}
 ```
 
 In this example:
+
 1. The condition is a simple boolean condition set to true
 2. If the condition evaluates to "true", it displays the first case content
 3. If the condition evaluates to "false", it displays the second case content
@@ -121,51 +133,54 @@ In this example:
 
 ## Using Conditions with Actions
 
-Conditions can also be used with [conditional actions](/react/guides/actions#conditional-actions) to dynamically select which action to execute:
+Conditions can also be used with
+[conditional actions](/react/guides/actions#conditional-actions) to dynamically
+select which action to execute:
 
 ```typescript
 const conditionalAction = {
-  _type: "vyuh.action.conditional",
+  _type: 'vyuh.action.conditional',
   condition: {
-    _type: "vyuh.condition",
+    _type: 'vyuh.condition',
     configuration: {
-      _type: "vyuh.condition.boolean",
-      value: true
-    }
+      _type: 'vyuh.condition.boolean',
+      value: true,
+    },
   },
   cases: [
     {
-      value: "true",
+      value: 'true',
       action: {
         // Action for true condition
-        _type: "vyuh.action",
+        _type: 'vyuh.action',
         configurations: [
           {
-            _type: "vyuh.action.navigate",
-            url: "/dashboard"
-          }
-        ]
-      }
+            _type: 'vyuh.action.navigate',
+            url: '/dashboard',
+          },
+        ],
+      },
     },
     {
-      value: "false",
+      value: 'false',
       action: {
         // Action for false condition
-        _type: "vyuh.action",
+        _type: 'vyuh.action',
         configurations: [
           {
-            _type: "vyuh.action.navigate",
-            url: "/login"
-          }
-        ]
-      }
-    }
+            _type: 'vyuh.action.navigate',
+            url: '/login',
+          },
+        ],
+      },
+    },
   ],
-  defaultCase: "false" // Fallback if condition evaluation fails
-};
+  defaultCase: 'false', // Fallback if condition evaluation fails
+}
 ```
 
 In this example:
+
 1. The condition is a simple boolean condition set to true
 2. If the condition evaluates to "true", it navigates to the dashboard
 3. If the condition evaluates to "false", it navigates to the login page
@@ -193,49 +208,51 @@ A simple condition that returns a fixed boolean value:
 
 ## Condition Selection Pattern
 
-When a condition is defined in the CMS, it appears as an array with a maximum of one item. The system selects the first (and only) configuration in this array:
+When a condition is defined in the CMS, it appears as an array with a maximum of
+one item. The system selects the first (and only) configuration in this array:
 
 ```typescript
 // In the React implementation
 const config = Array.isArray(data?.configuration)
   ? data?.configuration[0]
-  : data?.configuration;
+  : data?.configuration
 ```
 
-This approach allows for a consistent schema structure while enforcing the single-configuration rule for conditions.
+This approach allows for a consistent schema structure while enforcing the
+single-configuration rule for conditions.
 
 <Aside type="caution">
-  Unlike actions which can have multiple configurations, a condition must have exactly one configuration. This is enforced in the schema with a validation rule: `Rule.max(1)`.
+  Unlike actions which can have multiple configurations, a condition must have
+  exactly one configuration. This is enforced in the schema with a validation
+  rule: `Rule.max(1)`.
 </Aside>
 
 ## Creating Custom Conditions
 
-You can extend the Vyuh framework with your own custom conditions by creating a new condition configuration class:
+You can extend the Vyuh framework with your own custom conditions by creating a
+new condition configuration class:
 
 ```typescript
 // Custom condition for checking user preferences
 export class UserPreferenceCondition extends ConditionConfiguration {
-  static readonly schemaType = "app.condition.userPreference";
+  static readonly schemaType = 'app.condition.userPreference'
 
-  readonly preferenceName: string;
-  readonly preferenceValue: string;
+  readonly preferenceName: string
+  readonly preferenceValue: string
 
-  constructor(data: {
-    preferenceName: string;
-    preferenceValue: string;
-  }) {
-    super(UserPreferenceCondition.schemaType);
-    this.preferenceName = data.preferenceName;
-    this.preferenceValue = data.preferenceValue;
+  constructor(data: { preferenceName: string; preferenceValue: string }) {
+    super(UserPreferenceCondition.schemaType)
+    this.preferenceName = data.preferenceName
+    this.preferenceValue = data.preferenceValue
   }
 
   async execute(context: any): Promise<string> {
     // Get user preferences from your app's state
-    const userPreferences = getUserPreferences();
+    const userPreferences = getUserPreferences()
 
     // Check if the preference matches
-    const actualValue = userPreferences[this.preferenceName];
-    return (actualValue === this.preferenceValue).toString();
+    const actualValue = userPreferences[this.preferenceName]
+    return (actualValue === this.preferenceValue).toString()
   }
 }
 ```
@@ -243,36 +260,24 @@ export class UserPreferenceCondition extends ConditionConfiguration {
 Then register your custom condition with the Vyuh content system:
 
 ```typescript
-import { registerCondition } from '@vyuh/react-feature-system';
-import { UserPreferenceCondition } from './conditions/user-preference';
+import { registerCondition } from '@vyuh/react-feature-system'
+import { UserPreferenceCondition } from './conditions/user-preference'
 
 // Register your custom condition
-registerCondition(UserPreferenceCondition);
+registerCondition(UserPreferenceCondition)
 ```
 
 ## Best Practices
 
 When working with conditions in Vyuh, consider these best practices:
 
-1. **Keep conditions focused** - Each condition should evaluate a single aspect of the application state
-2. **Use meaningful condition names** - Choose descriptive names for your custom conditions
-3. **Handle default cases** - Always provide a defaultCase for conditional content and actions
+1. **Keep conditions focused** - Each condition should evaluate a single aspect
+   of the application state
+2. **Use meaningful condition names** - Choose descriptive names for your custom
+   conditions
+3. **Handle default cases** - Always provide a defaultCase for conditional
+   content and actions
 4. **Consider performance** - Avoid expensive operations in condition evaluation
 5. **Test all branches** - Ensure all possible condition outcomes are tested
-6. **Use composition** - Combine conditions with conditional content and actions for dynamic experiences
-
-## What's Next?
-
-Now that you understand conditions in Vyuh, learn about:
-
-<LinkCard
-  title="Actions"
-  description="Learn how to create interactive experiences with actions in your Vyuh application."
-  href="/react/actions"
-/>
-
-<LinkCard
-  title="Content Blocks"
-  description="Explore the various content blocks available in the Vyuh React feature system."
-  href="/react/content-blocks"
-/>
+6. **Use composition** - Combine conditions with conditional content and actions
+   for dynamic experiences

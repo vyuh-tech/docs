@@ -1,0 +1,713 @@
+---
+title: Feature Descriptors
+description:
+  Understanding feature descriptors and plugin descriptors in the Vyuh framework
+---
+
+## Introduction to Feature Descriptors
+
+Feature descriptors are the backbone of the Vyuh framework's extensibility and
+composability model. They define how features contribute components, schemas,
+and functionality to your application.
+
+The Vyuh framework uses feature descriptors in two distinct environments:
+
+1. **Sanity Studio** - Where content is created and managed
+2. **React Application** - Where content is rendered and interacted with
+
+Each environment has its own feature descriptor API, tailored to its specific
+needs. This dual-descriptor approach allows for a clean separation of concerns
+while maintaining a consistent conceptual model.
+
+Feature descriptors enable a modular approach where features can be developed
+independently and then composed together to create complex applications.
+
+## Feature Descriptors in Sanity Studio
+
+In Sanity Studio, feature descriptors define the schema and structure of your
+content types. They are the blueprint for how content is created, edited, and
+organized in the CMS.
+
+### Structure and API
+
+The Sanity feature descriptor API is provided by the `@vyuh/sanity-schema-core`
+package:
+
+```typescript
+import { FeatureDescriptor } from '@vyuh/sanity-schema-core'
+
+export const blogFeature = new FeatureDescriptor({
+  name: 'blog',
+  title: 'Blog',
+  description: 'Schema for Blog components including posts and post groups',
+
+  // Content descriptors define the structure of content types
+  contents: [
+    new BlogGroupDescriptor({
+      layouts: [defaultBlogGroupLayout],
+    }),
+    new RouteDescriptor({
+      regionItems: [
+        { type: BlogGroupDescriptor.schemaName },
+        { type: BlogPostSummaryDescriptor.schemaName },
+      ],
+    }),
+  ],
+
+  // Schema builders generate Sanity schemas for content types
+  contentSchemaBuilders: [
+    new BlogPostSchemaBuilder(),
+    new BlogGroupSchemaBuilder(),
+  ],
+})
+```
+
+The key properties of a Sanity feature descriptor are:
+
+- **name**: Unique identifier for the feature
+- **title**: Human-readable name for the feature
+- **description**: Description of what the feature provides
+- **contents**: Array of content descriptors that define content types
+- **contentSchemaBuilders**: Array of schema builders that generate Sanity
+  schemas
+
+### Content Descriptors
+
+Content descriptors define the structure of content types in Sanity Studio. They
+specify what layouts are available for a content type:
+
+```typescript
+export class BlogGroupDescriptor extends ContentDescriptor {
+  static readonly schemaName = 'blog.group'
+
+  constructor(props?: Partial<BlogGroupDescriptor>) {
+    super(BlogGroupDescriptor.schemaName, props || {})
+  }
+}
+```
+
+### Schema Builders
+
+Schema builders generate the actual Sanity schema definitions for content types.
+They transform the abstract content descriptors into concrete schema definitions
+that Sanity Studio can understand:
+
+```typescript
+export class BlogGroupSchemaBuilder extends ContentSchemaBuilder {
+  private schema = defineType({
+    name: BlogGroupDescriptor.schemaName,
+    title: 'Blog Group',
+    type: 'object',
+    icon: Icon,
+    fields: [
+      defineField({
+        name: 'title',
+        title: 'Title',
+        type: 'string',
+        validation: (Rule) => Rule.required(),
+      }),
+      defineField({
+        name: 'posts',
+        title: 'Posts',
+        type: 'array',
+        of: [{ type: 'blog.post.summary' }],
+        validation: (Rule) => Rule.required().min(1),
+      }),
+      // More fields...
+    ],
+  })
+
+  constructor() {
+    super(BlogGroupDescriptor.schemaName)
+  }
+
+  build(descriptors: ContentDescriptor[]) {
+    return this.schema
+  }
+}
+```
+
+## Feature Descriptors in React
+
+In the React application, feature descriptors define how content is rendered and
+interacted with. They map content types from Sanity to React components and
+provide the logic for rendering and interaction.
+
+### Structure and API
+
+The React feature descriptor API is provided by the `@vyuh/react-core` and
+`@vyuh/react-extension-content` packages:
+
+```typescript
+import { FeatureDescriptor } from '@vyuh/react-core';
+import { ContentExtensionDescriptor } from '@vyuh/react-extension-content';
+
+export const blogFeature = new FeatureDescriptor({
+  name: 'blog',
+  title: 'Blog',
+  description: 'Blog components for building Blog pages',
+  icon: <Icon />,
+
+  // Extensions define what the feature provides
+  extensions: [
+    new ContentExtensionDescriptor({
+      // Content builders know how to render content types
+      contentBuilders: [
+        new BlogGroupContentBuilder(),
+        new BlogPostSummaryContentBuilder(),
+      ],
+    }),
+  ],
+});
+```
+
+The key properties of a React feature descriptor are:
+
+- **name**: Unique identifier for the feature (should match the Sanity feature
+  name)
+- **title**: Human-readable name for the feature
+- **description**: Description of what the feature provides
+- **icon**: Optional icon for the feature
+- **extensions**: Array of extension descriptors that define what the feature
+  provides
+
+### Content Builders
+
+Content builders define how content types are rendered in the React application.
+They map content types from Sanity to React components:
+
+```typescript
+export class BlogGroupContentBuilder extends ContentBuilder<BlogGroup> {
+  constructor() {
+    super({
+      schemaType: BLOG_GROUP_SCHEMA_TYPE,
+      defaultLayout: new DefaultBlogGroupLayout(),
+      defaultLayoutDescriptor: DefaultBlogGroupLayout.typeDescriptor,
+    })
+  }
+}
+```
+
+## Extensibility and Composability
+
+The dual feature descriptor approach enables true extensibility by allowing any
+feature to contribute components to both Sanity Studio and the React
+application.
+
+This approach allows teams to:
+
+1. **Develop features independently** - Each feature can be developed and tested
+   in isolation
+2. **Compose features together** - Features can be combined to create complex
+   applications
+3. **Reuse components across projects** - Features can be shared across multiple
+   applications
+4. **Extend existing functionality** - Features can build upon and enhance other
+   features
+
+### Cross-Feature Extension
+
+One of the most powerful aspects of the Vyuh framework is the ability for
+features to extend components from other features. This means that a feature
+can:
+
+- Add new layouts to content types defined in another feature
+- Provide new actions that work with existing content types
+- Define conditions that can be used with any content
+- Enhance existing functionality without modifying the original code
+
+#### Adding Layouts to Existing Content Items
+
+A common extension pattern is adding new layouts to existing content items. This
+allows you to create new visual presentations for content types defined in other
+features without modifying their original code.
+
+##### In Sanity Studio:
+
+```typescript
+// Adding a new layout to an existing content type in Sanity
+import { FeatureDescriptor } from '@vyuh/sanity-schema-core'
+import { defineType, defineField } from 'sanity'
+
+// Define the new layout schema
+const customBlogPostLayout = defineType({
+  name: 'blog.post.summary.layout.custom',
+  title: 'Custom Blog Post Layout',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'showImage',
+      title: 'Show Image',
+      type: 'boolean',
+      initialValue: true,
+    }),
+  ],
+})
+
+// Create a feature that extends the blog feature
+export const blogExtension = new FeatureDescriptor({
+  name: 'blog-extension',
+  title: 'Blog Extension',
+
+  // Extend the existing BlogPostSummaryDescriptor
+  contents: [
+    new BlogPostSummaryDescriptor({
+      // Add the new layout to the existing content type
+      layouts: [customBlogPostLayout],
+    }),
+  ],
+})
+```
+
+##### In React:
+
+```typescript
+// Adding a new layout to an existing content type in React
+import { FeatureDescriptor } from '@vyuh/react-core';
+import { ContentExtensionDescriptor } from '@vyuh/react-extension-content';
+
+// Define the new layout class
+class CustomBlogPostLayout extends LayoutConfiguration<BlogPostSummary> {
+  static readonly schemaName = 'blog.post.summary.layout.custom';
+
+  static readonly typeDescriptor = new TypeDescriptor(
+    CustomBlogPostLayout.schemaName,
+    CustomBlogPostLayout
+  );
+
+  constructor(data?: Partial<CustomBlogPostLayout>) {
+    super({
+      schemaType: CustomBlogPostLayout.schemaName,
+      title: 'Custom Blog Post Layout'
+    });
+  }
+
+  render(content: BlogPostSummary): React.ReactNode {
+    // Custom rendering logic
+    return (
+      <div className="custom-blog-post">
+        <h2>{content.title}</h2>
+        <p>{content.excerpt}</p>
+      </div>
+    );
+  }
+}
+
+// Create a feature that extends the blog feature
+export const blogExtension = new FeatureDescriptor({
+  name: 'blog-extension',
+  title: 'Blog Extension',
+
+  extensions: [
+    new ContentExtensionDescriptor({
+      // Register the new layout with the content system
+      contents: [
+        new BlogPostSummaryDescriptor({
+          layouts: [CustomBlogPostLayout.typeDescriptor],
+        }),
+      ],
+    }),
+  ],
+});
+```
+
+This approach allows you to:
+
+1. **Extend existing content types** without modifying their original code
+2. **Add new layouts** that provide alternative visual presentations
+3. **Maintain separation of concerns** between features
+4. **Create specialized presentations** for specific use cases
+
+This cross-feature extension capability enables a truly composable architecture
+where features can build upon each other without tight coupling.
+
+## Connecting Sanity Studio and React
+
+The Vyuh framework creates a seamless connection between Sanity Studio and your
+React application through the dual feature descriptor system.
+
+### Schema Generation in Sanity Studio
+
+The Vyuh framework combines all feature descriptors to create the final schema
+for Sanity Studio through the `vyuh` plugin from
+`@vyuh/sanity-plugin-structure`. This plugin handles:
+
+1. **Collecting all feature descriptors** - Gathers all registered feature
+   descriptors
+2. **Extracting schema builders** - Pulls out all schema builders from the
+   feature descriptors
+3. **Building the schemas** - Calls each schema builder to generate schema
+   definitions
+4. **Combining the schemas** - Merges all schema definitions into a single
+   schema
+5. **Registering with Sanity** - Provides the combined schema to Sanity Studio
+
+Here's how to configure Sanity Studio with the Vyuh plugin:
+
+```typescript
+// sanity.config.ts
+import { defineConfig } from 'sanity'
+import { vyuh } from '@vyuh/sanity-plugin-structure'
+import { system } from '@vyuh/sanity-schema-system'
+import { blog } from '@vyuh/sanity-schema-blog'
+import { marketing } from '@vyuh/sanity-schema-marketing'
+
+export default defineConfig({
+  name: 'default',
+  title: 'My Vyuh Studio',
+
+  projectId: 'your-project-id',
+  dataset: 'production',
+
+  plugins: [
+    vyuh({
+      features: [
+        system, // The system feature is required
+        blog,
+        marketing,
+        // More features...
+      ],
+    }),
+  ],
+})
+```
+
+The `vyuh` plugin takes care of bootstrapping the schema from all your features.
+It also includes other useful plugins like the structure tool, vision tool, and
+media plugin.
+
+### Content Rendering in React
+
+The React application renders content from Sanity using the content plugin's
+`render` method, which handles the entire process of transforming content data
+into React components.
+
+#### The Content Rendering Process
+
+When you call `plugins.content.render(contentData)`, the following happens:
+
+1. **Content Type Identification**: The content plugin identifies the content
+   type using the `_type` property in the content data
+2. **Content Builder Selection**: The plugin finds the appropriate content
+   builder registered for that content type
+3. **Layout Resolution**: The content builder determines which layout to use by:
+   - Checking if a layout is specified in the content data via the `layout`
+     property
+   - If multiple layouts are specified, selecting the first one (topmost)
+   - Falling back to the default layout if no layout is specified
+4. **Layout Rendering**: The selected layout's `render` method is called with
+   the content data
+5. **Action and Condition Attachment**: Any actions and conditions associated
+   with the content are processed and attached to the rendered component
+
+Here's how this looks in code:
+
+```typescript
+// Rendering content in a React component
+import { useVyuh } from '@vyuh/react-core'
+
+function ContentRenderer({ contentData }) {
+  const { plugins } = useVyuh()
+
+  // Basic rendering with default layout
+  return plugins.content.render(contentData)
+
+  // Or with a layout override
+  return plugins.content.render(contentData, {
+    layout: new CustomLayout(),
+  })
+}
+```
+
+#### Layout Selection Example
+
+Consider a blog post content item with multiple layouts:
+
+```typescript
+const blogPost = {
+  _type: 'blog.post.summary',
+  title: 'Understanding Feature Descriptors',
+  excerpt: 'Learn about the backbone of the Vyuh framework...',
+  date: '2023-06-15',
+  // Layout specified in the content
+  layout: {
+    _type: 'blog.post.summary.layout.featured',
+  },
+}
+```
+
+When rendering this content:
+
+1. The content plugin identifies the type as `blog.post.summary`
+2. It finds the `BlogPostSummaryContentBuilder` registered for this type
+3. The builder sees the `layout` property with type
+   `blog.post.summary.layout.featured`
+4. It uses the `FeaturedBlogPostSummaryLayout` to render the content
+5. If the layout wasn't specified, it would fall back to
+   `DefaultBlogPostSummaryLayout`
+
+## Real-World Example: Blog Feature
+
+Let's look at a real-world example of how a blog feature is defined in both
+Sanity Studio and React.
+
+### Blog Feature in Sanity Studio
+
+```typescript
+// features/blog/sanity-schema-blog/src/feature.ts
+import { FeatureDescriptor } from '@vyuh/sanity-schema-core'
+import { RouteDescriptor } from '@vyuh/sanity-schema-system'
+import {
+  BlogGroupDescriptor,
+  BlogGroupSchemaBuilder,
+  defaultBlogGroupLayout,
+} from './content/blog-group'
+import {
+  BlogPostSchemaBuilder,
+  BlogPostSummaryDescriptor,
+} from './content/blog-post-summary'
+
+export const blog = new FeatureDescriptor({
+  name: 'blog',
+  title: 'Blog',
+  description:
+    'Schema for Blog components including blog posts, blog post summaries, and blog post groups',
+  contents: [
+    new BlogGroupDescriptor({
+      layouts: [defaultBlogGroupLayout],
+    }),
+    new RouteDescriptor({
+      regionItems: [
+        { type: BlogGroupDescriptor.schemaName },
+        { type: BlogPostSummaryDescriptor.schemaName },
+      ],
+    }),
+  ],
+  contentSchemaBuilders: [
+    new BlogPostSchemaBuilder(),
+    new BlogGroupSchemaBuilder(),
+  ],
+})
+```
+
+### Blog Post Schema Builder
+
+```typescript
+// features/blog/sanity-schema-blog/src/content/blog-post-summary.tsx
+export class BlogPostSchemaBuilder extends ContentSchemaBuilder {
+  private schema = defineType({
+    name: 'blog.post.summary',
+    title: 'Blog Post Summary',
+    type: 'object',
+    icon: Icon,
+    fields: [
+      defineField({
+        name: 'title',
+        title: 'Post Title',
+        type: 'string',
+        validation: (Rule) => Rule.required(),
+      }),
+      defineField({
+        name: 'excerpt',
+        title: 'Excerpt',
+        type: 'text',
+        description: 'A short summary of the post',
+      }),
+      defineField({
+        name: 'image',
+        title: 'Featured Image',
+        type: 'image',
+        options: {
+          hotspot: true,
+        },
+      }),
+      defineField({
+        name: 'date',
+        title: 'Publication Date',
+        type: 'date',
+        validation: (Rule) => Rule.required(),
+      }),
+      // More fields...
+    ],
+  })
+
+  constructor() {
+    super(BlogPostSummaryDescriptor.schemaName)
+  }
+
+  build(descriptors: ContentDescriptor[]) {
+    return this.schema
+  }
+}
+```
+
+### Blog Feature in React
+
+```typescript
+// features/blog/react-feature-blog/src/feature.tsx
+import { FeatureDescriptor } from '@vyuh/react-core';
+import { ContentExtensionDescriptor } from '@vyuh/react-extension-content';
+import { FaPagelines as Icon } from 'react-icons/fa6';
+import { BlogGroupContentBuilder } from './content/blog-group/blog-group-builder';
+import { BlogPostSummaryContentBuilder } from './content/blog-post-summary/blog-post-summary-builder';
+
+export const blog = new FeatureDescriptor({
+  name: 'blog',
+  title: 'Blog',
+  description: 'Blog components for building Blog pages',
+  icon: <Icon />,
+  extensions: [
+    new ContentExtensionDescriptor({
+      contentBuilders: [
+        new BlogGroupContentBuilder(),
+        new BlogPostSummaryContentBuilder(),
+      ],
+    }),
+  ],
+});
+```
+
+### Blog Post Content Builder
+
+```typescript
+// features/blog/react-feature-blog/src/content/blog-post-summary/blog-post-summary-builder.tsx
+import { ContentBuilder } from '@vyuh/react-extension-content'
+import {
+  BLOG_POST_SUMMARY_SCHEMA_TYPE,
+  BlogPostSummary,
+} from './blog-post-summary'
+import { DefaultBlogPostSummaryLayout } from './default-blog-post-summary-layout'
+
+/**
+ * Content builder for Blog Post Summary content items
+ */
+export class BlogPostSummaryContentBuilder extends ContentBuilder<BlogPostSummary> {
+  constructor() {
+    super({
+      schemaType: BLOG_POST_SUMMARY_SCHEMA_TYPE,
+      defaultLayout: new DefaultBlogPostSummaryLayout(),
+      defaultLayoutDescriptor: DefaultBlogPostSummaryLayout.typeDescriptor,
+    })
+  }
+}
+```
+
+This example demonstrates how the blog feature is defined in both Sanity Studio
+and React, with a clear separation of concerns between content definition (in
+Sanity) and content rendering (in React).
+
+## Plugin Descriptors
+
+While feature descriptors define what a feature provides, plugin descriptors
+define how those features are integrated into the React application. Plugins
+extend the core functionality of the Vyuh framework with specific capabilities.
+
+### Plugin Structure and API
+
+Plugin descriptors are created using the `PluginDescriptor` class from
+`@vyuh/react-core`:
+
+```typescript
+import { PluginDescriptor } from '@vyuh/react-core'
+import { ContentPlugin } from './content-plugin'
+
+export const contentPluginDescriptor = new PluginDescriptor({
+  name: 'content',
+  plugin: ContentPlugin,
+})
+```
+
+The plugin implementation is typically a class that implements the plugin's
+functionality:
+
+```typescript
+export class ContentPlugin {
+  private contentBuilders: Map<string, ContentBuilder> = new Map()
+
+  constructor(private context: PluginContext) {
+    // Initialize the plugin
+    this.registerContentBuilders()
+  }
+
+  // Register content builders from all features
+  private registerContentBuilders() {
+    // Implementation...
+  }
+
+  // Public API methods
+  render(content: any, options?: RenderOptions): React.ReactNode {
+    // Find the appropriate content builder
+    const contentType = content._type
+    const builder = this.contentBuilders.get(contentType)
+
+    if (!builder) {
+      console.warn(`No content builder found for type: ${contentType}`)
+      return null
+    }
+
+    // Use the builder to render the content
+    return builder.render(content, options)
+  }
+}
+```
+
+### Common Plugins
+
+The Vyuh framework includes several core plugins:
+
+1. **Content Plugin** - Handles content rendering and management
+2. **Navigation Plugin** - Manages application routing and navigation
+3. **Authentication Plugin** - Handles user authentication and authorization
+4. **Theme Plugin** - Manages application theming and styling
+
+### Using Plugins
+
+Plugins are registered with the Vyuh core and are available throughout the
+application via the `useVyuh` hook:
+
+```typescript
+import { useVyuh } from '@vyuh/react-core'
+
+function MyComponent() {
+  const { plugins } = useVyuh()
+
+  // Use the content plugin to render content
+  const renderContent = (content) => {
+    // Render with default layout
+    return plugins.content.render(content)
+
+    // Or with a layout override
+    // return plugins.content.render(content, { layout: new CustomLayout() });
+  }
+
+  // Use the navigation plugin to navigate
+  const handleClick = () => {
+    plugins.navigation.navigate('/some-path')
+  }
+
+  // Component implementation
+}
+```
+
+## The Complete Picture
+
+The Vyuh framework creates a complete system for building content-driven
+applications:
+
+1. **Sanity Studio Feature Descriptors** define the schema and structure of
+   content types
+2. **React Feature Descriptors** define how content is rendered and interacted
+   with
+3. **Plugin Descriptors** define core functionality that integrates features
+
+This architecture enables:
+
+1. **Modular development** - Features can be developed independently
+2. **Composition** - Features can be combined to create complex applications
+3. **Extension** - Features can extend and enhance other features
+4. **Reusability** - Components can be shared across features and applications
+
+By separating content definition (in Sanity) from content rendering (in React),
+the Vyuh framework creates a powerful ecosystem where teams can build
+sophisticated content-driven applications with a high degree of flexibility and
+maintainability.

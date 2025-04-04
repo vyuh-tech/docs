@@ -40,19 +40,19 @@ Define a TypeScript interface for your content type:
 
 ```tsx
 // content/blog-post.ts
-import {ImageReference} from '@vyuh/react-core';
-import {ContentItem} from '@vyuh/react-extension-content';
-import {PortableText} from '@vyuh/react-feature-system';
+import { ImageReference } from '@vyuh/react-core'
+import { ContentItem } from '@vyuh/react-extension-content'
+import { PortableText } from '@vyuh/react-feature-system'
 
-export const BLOG_POST_SCHEMA_TYPE = 'blog.post';
+export const BLOG_POST_SCHEMA_TYPE = 'blog.post'
 
 export interface BlogPost extends ContentItem {
-  title: string;
-  publishDate: string;
-  author: string;
-  content: PortableText;
-  featuredImage?: ImageReference;
-  tags?: string[];
+  title: string
+  publishDate: string
+  author: string
+  content: PortableText
+  featuredImage?: ImageReference
+  tags?: string[]
 }
 ```
 
@@ -62,9 +62,9 @@ Create a React component that will render your content type:
 
 ```tsx
 // content/blog-post-layout.tsx
-import {LayoutConfiguration, TypeDescriptor} from '@vyuh/react-core'
+import { LayoutConfiguration, TypeDescriptor } from '@vyuh/react-core'
 import React from 'react'
-import {BLOG_POST_SCHEMA_TYPE, BlogPost} from './blog-post'
+import { BLOG_POST_SCHEMA_TYPE, BlogPost } from './blog-post'
 
 export class DefaultBlogPostLayout extends LayoutConfiguration<BlogPost> {
   static readonly schemaName = `${BLOG_POST_SCHEMA_TYPE}.layout.default`
@@ -124,7 +124,6 @@ const BlogPostContent: React.FC<{ content: BlogPost }> = ({ content }) => {
     </article>
   )
 }
-
 ```
 
 ## 4. Create a content builder
@@ -181,7 +180,7 @@ import { VyuhProvider, PluginDescriptor } from '@vyuh/react-core'
 import { systemFeature } from '@vyuh/react-feature-system'
 import { blogFeature } from './features/blog'
 import { DefaultContentPlugin } from '@vyuh/react-extension-content'
-import {SanityContentProvider} from '@vyuh/react-plugin-content-provider-sanity';
+import { SanityContentProvider } from '@vyuh/react-plugin-content-provider-sanity'
 
 const plugins = new PluginDescriptor({
   content: new DefaultContentPlugin(

@@ -3,48 +3,65 @@ title: Framework Overview
 description: An overview of the core elements of the Vyuh React feature system
 ---
 
-import { Aside, LinkCard } from '@astrojs/starlight/components'
-import { NpmBadge } from '@/components/NpmBadge'
-
-<NpmBadge name="@vyuh/react-feature-system" />
-
 ## Introduction to the Vyuh Framework
 
-The Vyuh React feature system is a comprehensive framework for building dynamic, content-driven applications. It provides a structured approach to defining content, layouts, actions, and conditions, allowing you to create rich, interactive experiences with minimal code.
+The Vyuh React feature system is a comprehensive framework for building dynamic,
+content-driven applications. It provides a structured approach to defining
+content, layouts, actions, and conditions, allowing you to create rich,
+interactive experiences with minimal code.
 
-This overview introduces the core elements of the framework and how they work together.
+This overview introduces the core elements of the framework and how they work
+together.
 
 ## Core Elements
 
 ### Content Blocks
 
-Content blocks are the fundamental building blocks of your application. They define the structure and data of your UI components, such as cards, groups, and routes.
+Content blocks are the fundamental building blocks of your application. They
+define the structure and data of your UI components, such as cards, groups, and
+routes.
 
-Content blocks are composable, allowing you to build complex UIs from simple components. Each content block can have its own layout, actions, and conditions, making them highly flexible and reusable.
+Content blocks are composable, allowing you to build complex UIs from simple
+components. Each content block can have its own layout, actions, and conditions,
+making them highly flexible and reusable.
 
 [Learn more about Content Blocks →](/react/guides/content-blocks)
 
 ### Layouts
 
-Layouts control the visual presentation of content blocks. They separate the content structure from its visual representation, allowing you to change how content appears without modifying the underlying data.
+Layouts control the visual presentation of content blocks. They separate the
+content structure from its visual representation, allowing you to change how
+content appears without modifying the underlying data.
 
-A key feature of the layout system is that content blocks can have multiple layouts assigned, but only the first one is picked for rendering. This makes it easy to switch between different visual presentations for rapid prototyping and testing.
+A key feature of the layout system is that content blocks can have multiple
+layouts assigned, but only the first one is picked for rendering. This makes it
+easy to switch between different visual presentations for rapid prototyping and
+testing.
 
 [Learn more about Layouts →](/react/guides/layouts)
 
 ### Actions
 
-Actions define what happens when users interact with content blocks. They enable interactivity by connecting user events (like clicks) to operations such as navigation, data submission, or UI updates.
+Actions define what happens when users interact with content blocks. They enable
+interactivity by connecting user events (like clicks) to operations such as
+navigation, data submission, or UI updates.
 
-Actions can contain multiple operations that execute in sequence, allowing you to create complex workflows from a single user interaction. They can also be conditional, executing different operations based on the current state of your application.
+Actions can contain multiple operations that execute in sequence, allowing you
+to create complex workflows from a single user interaction. They can also be
+conditional, executing different operations based on the current state of your
+application.
 
 [Learn more about Actions →](/react/guides/actions)
 
 ### Conditions
 
-Conditions allow your application to make decisions based on various factors such as user state, device characteristics, or custom logic. They enable dynamic, context-aware content and interactions.
+Conditions allow your application to make decisions based on various factors
+such as user state, device characteristics, or custom logic. They enable
+dynamic, context-aware content and interactions.
 
-Conditions are used to show or hide content, enable or disable features, and customize user experiences based on specific criteria. They can be combined with content blocks, layouts, and actions to create highly adaptive UIs.
+Conditions are used to show or hide content, enable or disable features, and
+customize user experiences based on specific criteria. They can be combined with
+content blocks, layouts, and actions to create highly adaptive UIs.
 
 [Learn more about Conditions →](/react/guides/conditions)
 
@@ -57,37 +74,10 @@ The power of the Vyuh framework comes from how these elements work together:
 3. **Actions** define what happens when users interact with it
 4. **Conditions** define when and where to show it
 
-This separation of concerns makes your code more maintainable and your application more flexible. For example:
+This separation of concerns makes your code more maintainable and your
+application more flexible. For example:
 
 - Content creators can focus on content without worrying about presentation
 - Designers can iterate on layouts without changing content
 - Developers can implement new actions without modifying existing content
 - Product managers can use conditions to implement feature flags and A/B testing
-
-## Getting Started
-
-To start building with the Vyuh React feature system, explore these guides:
-
-<LinkCard
-  title="Content Blocks"
-  description="Learn about the fundamental building blocks of your application."
-  href="/react/guides/content-blocks"
-/>
-
-<LinkCard
-  title="Layouts"
-  description="Discover how to control the visual presentation of content blocks."
-  href="/react/guides/layouts"
-/>
-
-<LinkCard
-  title="Actions"
-  description="Create interactive experiences with action configurations."
-  href="/react/guides/actions"
-/>
-
-<LinkCard
-  title="Conditions"
-  description="Build dynamic, context-aware content and interactions."
-  href="/react/guides/conditions"
-/>

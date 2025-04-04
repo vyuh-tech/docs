@@ -1,104 +1,121 @@
 ---
 title: Actions
-description: Understanding the structure and usage of actions in the Vyuh React feature system
+description:
+  Understanding the structure and usage of actions in the Vyuh React feature
+  system
 ---
 
-import { Aside, LinkCard } from '@astrojs/starlight/components'
-import { NpmBadge } from '@/components/NpmBadge'
-
-<NpmBadge name="@vyuh/react-feature-system" />
+import { Aside } from '@astrojs/starlight/components'
 
 ## Introduction to Actions
 
-Actions in the Vyuh framework provide a powerful way to add interactivity to your application. They define what happens when users interact with [content blocks](/react/guides/content-blocks), such as clicking a button, submitting a form, or navigating between screens.
+Actions in the Vyuh framework provide a powerful way to add interactivity to
+your application. They define what happens when users interact with
+[content blocks](/react/guides/content-blocks), such as clicking a button,
+submitting a form, or navigating between screens.
 
-Actions are designed with a composable architecture that allows for multiple operations to be executed in sequence from a single user interaction.
+Actions are designed with a composable architecture that allows for multiple
+operations to be executed in sequence from a single user interaction.
 
 ## Action Object Structure
 
 An action object consists of:
 
 1. **Title** - An optional descriptive name for the action
-2. **Configurations** - A list of action configurations that define what happens when the action is triggered
+2. **Configurations** - A list of action configurations that define what happens
+   when the action is triggered
 
 ```typescript
 const action = {
-  _type: "vyuh.action",
-  title: "Submit Form",
+  _type: 'vyuh.action',
+  title: 'Submit Form',
   configurations: [
     // List of action configurations to execute
-    { _type: "vyuh.action.navigate", url: "/success", isAwaited: false },
-    { _type: "vyuh.action.openUrl", url: "https://example.com", isAwaited: true }
-  ]
-};
+    { _type: 'vyuh.action.navigate', url: '/success', isAwaited: false },
+    {
+      _type: 'vyuh.action.openUrl',
+      url: 'https://example.com',
+      isAwaited: true,
+    },
+  ],
+}
 ```
 
-This structure allows you to create complex workflows by chaining multiple operations together in a single action.
+This structure allows you to create complex workflows by chaining multiple
+operations together in a single action.
 
 ## Action Configurations
 
-Each action configuration represents a specific operation that can be performed. The configuration includes:
+Each action configuration represents a specific operation that can be performed.
+The configuration includes:
 
-- **_type** - Identifies the type of operation (e.g., navigation, opening URLs)
-- **isAwaited** - Determines whether to wait for this operation to complete before proceeding
+- **\_type** - Identifies the type of operation (e.g., navigation, opening URLs)
+- **isAwaited** - Determines whether to wait for this operation to complete
+  before proceeding
 - **Additional properties** - Specific to each operation type
 
-The Vyuh framework includes several built-in action configurations. Here are the most commonly used ones:
+The Vyuh framework includes several built-in action configurations. Here are the
+most commonly used ones:
 
 ```typescript
 // Navigation action
 const navigateAction = {
-  _type: "vyuh.action.navigation",
-  title: "Go to Details",
-  url: "/details",
-  navigationType: "push",
-  isAwaited: false
-};
+  _type: 'vyuh.action.navigation',
+  title: 'Go to Details',
+  url: '/details',
+  navigationType: 'push',
+  isAwaited: false,
+}
 
 // Open URL action
 const openUrlAction = {
-  _type: "vyuh.action.openUrl",
-  title: "Visit Website",
-  url: "https://example.com",
-  mode: "platformDefault",
-  isAwaited: true
-};
+  _type: 'vyuh.action.openUrl',
+  title: 'Visit Website',
+  url: 'https://example.com',
+  mode: 'platformDefault',
+  isAwaited: true,
+}
 ```
 
 ## Multiple Operations in a Single Action
 
-One of the most powerful features of Vyuh actions is the ability to execute multiple operations in sequence. This allows you to create complex workflows from a single user interaction.
+One of the most powerful features of Vyuh actions is the ability to execute
+multiple operations in sequence. This allows you to create complex workflows
+from a single user interaction.
 
 ```typescript
 const submitFormAction = {
-  _type: "vyuh.action",
-  title: "Submit Form",
+  _type: 'vyuh.action',
+  title: 'Submit Form',
   configurations: [
     // 1. Navigate to success page
     {
-      _type: "vyuh.action.navigation",
-      url: "/success",
-      navigationType: "push",
-      isAwaited: false
+      _type: 'vyuh.action.navigation',
+      url: '/success',
+      navigationType: 'push',
+      isAwaited: false,
     },
     // 2. Open documentation in browser
     {
-      _type: "vyuh.action.openUrl",
-      url: "https://docs.example.com/success",
-      mode: "platformDefault",
-      isAwaited: true // Wait for browser to open
-    }
-  ]
-};
+      _type: 'vyuh.action.openUrl',
+      url: 'https://docs.example.com/success',
+      mode: 'platformDefault',
+      isAwaited: true, // Wait for browser to open
+    },
+  ],
+}
 ```
 
-In this example, a single "Submit Form" action performs two operations in sequence:
+In this example, a single "Submit Form" action performs two operations in
+sequence:
+
 1. Navigates to a success page
 2. Opens documentation in the browser (and waits for completion)
 
 ## Awaited vs Non-Awaited Execution
 
-Each action configuration can specify whether it should be awaited before proceeding to the next configuration:
+Each action configuration can specify whether it should be awaited before
+proceeding to the next configuration:
 
 ```typescript
 {
@@ -112,18 +129,26 @@ When an action is executed:
 
 1. The system iterates through each configuration in the `configurations` array
 2. For each configuration:
-   - If `isAwaited` is true, it waits for that configuration to complete before moving to the next one
-   - If `isAwaited` is false, it executes the configuration and immediately proceeds to the next one
+   - If `isAwaited` is true, it waits for that configuration to complete before
+     moving to the next one
+   - If `isAwaited` is false, it executes the configuration and immediately
+     proceeds to the next one
 
-This allows you to control the flow of operations, ensuring that dependent operations only execute after their prerequisites have completed.
+This allows you to control the flow of operations, ensuring that dependent
+operations only execute after their prerequisites have completed.
 
 <Aside type="tip">
-  Use `isAwaited: true` for operations that must complete before subsequent operations can proceed, such as data validation or saving. Use `isAwaited: false` for operations that can run independently, such as analytics tracking or UI updates.
+  Use `isAwaited: true` for operations that must complete before subsequent
+  operations can proceed, such as data validation or saving. Use `isAwaited:
+  false` for operations that can run independently, such as analytics tracking
+  or UI updates.
 </Aside>
 
 ## Conditional Actions
 
-The Vyuh framework also supports conditional actions, which allow you to dynamically choose which action to execute based on a [condition](/react/guides/conditions):
+The Vyuh framework also supports conditional actions, which allow you to
+dynamically choose which action to execute based on a
+[condition](/react/guides/conditions):
 
 ```typescript
 {
@@ -161,6 +186,7 @@ The Vyuh framework also supports conditional actions, which allow you to dynamic
 ```
 
 In this example:
+
 1. The condition is a simple boolean condition set to true
 2. If the condition evaluates to "true", it navigates to the dashboard
 3. If the condition evaluates to "false", it navigates to the login page
@@ -168,7 +194,8 @@ In this example:
 
 ## Common Action Types
 
-The Vyuh framework includes several common action types. Here are the two most frequently used:
+The Vyuh framework includes several common action types. Here are the two most
+frequently used:
 
 ### Navigation Actions
 
@@ -206,46 +233,34 @@ Actions can be attached to content blocks to make them interactive:
 ```typescript
 // Card with a navigation action
 const cardWithAction = {
-  _type: "vyuh.card",
-  title: "My Card",
-  description: "Click to view details",
+  _type: 'vyuh.card',
+  title: 'My Card',
+  description: 'Click to view details',
   action: {
-    _type: "vyuh.action",
-    title: "View Details",
+    _type: 'vyuh.action',
+    title: 'View Details',
     configurations: [
       {
-        _type: "vyuh.action.navigation",
-        url: "/details/123",
-        navigationType: "push"
-      }
-    ]
-  }
-};
+        _type: 'vyuh.action.navigation',
+        url: '/details/123',
+        navigationType: 'push',
+      },
+    ],
+  },
+}
 ```
 
 ## Best Practices
 
 When working with actions in Vyuh, consider these best practices:
 
-1. **Use descriptive titles** - Give your actions meaningful names that describe their purpose
-2. **Chain related operations** - Group related operations in a single action for better organization
-3. **Be mindful of awaited operations** - Only use `isAwaited: true` when necessary to avoid blocking the UI
+1. **Use descriptive titles** - Give your actions meaningful names that describe
+   their purpose
+2. **Chain related operations** - Group related operations in a single action
+   for better organization
+3. **Be mindful of awaited operations** - Only use `isAwaited: true` when
+   necessary to avoid blocking the UI
 4. **Handle errors** - Include error handling in your action chains
-5. **Use conditional actions** - Leverage conditional actions to create dynamic user experiences
+5. **Use conditional actions** - Leverage conditional actions to create dynamic
+   user experiences
 6. **Keep actions focused** - Each action should have a clear, specific purpose
-
-## What's Next?
-
-Now that you understand actions in Vyuh, learn about:
-
-<LinkCard
-  title="Conditions"
-  description="Learn how to use conditions to create dynamic, context-aware content in your Vyuh application."
-  href="/react/conditions"
-/>
-
-<LinkCard
-  title="Content Blocks"
-  description="Explore the various content blocks available in the Vyuh React feature system."
-  href="/react/content-blocks"
-/>
