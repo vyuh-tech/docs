@@ -1,0 +1,110 @@
+---
+title: Route
+description: Learn how to use the Route content block in Vyuh
+---
+
+import { Aside } from '@astrojs/starlight/components'
+
+Routes are page-level content containers that organize content into regions. They represent the pages of your application and can contain other content blocks.
+
+## Schema Configuration
+
+### Sanity Schema
+
+```typescript
+// In your feature descriptor
+import { RouteDescriptor } from '@vyuh/sanity-schema-system';
+
+export const myFeature = new FeatureDescriptor({
+  name: 'myFeature',
+  title: 'My Feature',
+  description: 'My feature description',
+
+  contents: [
+    new RouteDescriptor({
+      // Define which content types can be added to route regions
+      regionItems: [
+        { type: 'vyuh.card' },
+        { type: 'vyuh.group' },
+        { type: 'vyuh.portableText' },
+      ],
+      // Define available layouts for routes
+      layouts: [
+        defaultRouteLayout,
+        singleItemRouteLayout,
+        tabsRouteLayout,
+      ],
+    }),
+  ],
+});
+```
+
+### Content Structure
+
+```typescript
+// Route content object structure
+interface Route {
+  _type: 'vyuh.route';
+  title: string;
+  path?: string;
+  regions: {
+    identifier: string;
+    items: ContentItem[];
+  }[];
+  layout?: {
+    _type: string;
+    // Layout-specific properties
+  };
+}
+```
+
+
+
+<Aside type="tip">
+  Routes can have different layouts like default, single item, or tabs. You can switch between layouts without changing the content structure.
+</Aside>
+
+<Aside type="note">
+  When adding custom layouts to a content block, always make sure to include them in the corresponding descriptor's `layouts` property as shown in the schema configuration example above.
+</Aside>
+
+## Extensibility
+
+### Schema Descriptors
+
+The `RouteDescriptor` in the schema system provides the following extensibility points:
+
+- **layouts**: Register custom route layouts that define how the entire route is structured
+- **regionItems**: Define which content types can be used within route regions
+
+```typescript
+// Schema-side descriptor
+new RouteDescriptor({
+  layouts: [myCustomLayout, 'vyuh.route.layout.default'],
+  regionItems: [{ type: 'vyuh.card' }, { type: 'vyuh.group' }]
+})
+```
+
+### React Descriptors
+
+In the React system, route content is configured using the RouteDescriptor:
+
+```typescript
+// React-side registration
+import { RouteDescriptor } from '@vyuh/react-feature-system';
+import { ContentExtensionDescriptor } from '@vyuh/react-extension-content';
+import { FeatureDescriptor } from '@vyuh/react-core';
+
+new FeatureDescriptor({
+  name: 'myFeature',
+  extensions: [
+    new ContentExtensionDescriptor({
+      contents: [
+        new RouteDescriptor({
+          layouts: [MyCustomLayout.typeDescriptor],
+        }),
+      ],
+    }),
+  ],
+});
+```

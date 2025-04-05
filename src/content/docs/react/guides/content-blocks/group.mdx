@@ -1,0 +1,108 @@
+---
+title: Group
+description: Learn how to use the Group content block in Vyuh
+---
+
+import { Aside } from '@astrojs/starlight/components'
+
+Groups organize multiple content items in different arrangements like carousels, grids, or lists. They're perfect for collections of similar content.
+
+## Schema Configuration
+
+### Sanity Schema
+
+```typescript
+// In your feature descriptor
+import { GroupDescriptor } from '@vyuh/sanity-schema-system';
+
+export const myFeature = new FeatureDescriptor({
+  name: 'myFeature',
+  title: 'My Feature',
+
+  contents: [
+    new GroupDescriptor({
+      // Define which content types can be added to groups
+      items: [
+        { type: 'vyuh.card' },
+        { type: 'myFeature.customCard' },
+      ],
+      // Optional: Define available layouts
+      layouts: [
+        carouselLayoutConfiguration,
+        gridLayoutConfiguration,
+        listLayoutConfiguration,
+      ],
+    }),
+  ],
+});
+```
+
+### Content Structure
+
+```typescript
+// Group content object structure
+interface Group {
+  _type: 'vyuh.group';
+  title?: string;
+  description?: string;
+  items: ContentItem[];
+  layout?: {
+    _type: string;
+    // Layout-specific properties
+  };
+}
+```
+
+
+
+<Aside type="tip">
+  Groups can have different layouts like carousel, grid, or list. You can switch between layouts to change how the collection is displayed without changing the content items.
+</Aside>
+
+<Aside type="note">
+  When adding custom layouts to a content block, always make sure to include them in the corresponding descriptor's `layouts` property as shown in the schema configuration example above.
+</Aside>
+
+## Extensibility
+
+### Schema Descriptors
+
+The `GroupDescriptor` in the schema system provides the following extensibility points:
+
+- **layouts**: Register custom group layouts that define how collections are displayed
+- **items**: Define which content types can be included in the group
+
+```typescript
+// Schema-side descriptor
+new GroupDescriptor({
+  layouts: [masonryLayout, 'vyuh.group.layout.carousel'],
+  items: [{ type: 'vyuh.card' }, { type: 'vyuh.portableText' }]
+})
+```
+
+### React Descriptors
+
+In the React system, group content is configured using the GroupDescriptor:
+
+```typescript
+// React-side registration
+import { GroupDescriptor } from '@vyuh/react-feature-system';
+import { ContentExtensionDescriptor } from '@vyuh/react-extension-content';
+import { FeatureDescriptor } from '@vyuh/react-core';
+
+new FeatureDescriptor({
+  name: 'myFeature',
+  extensions: [
+    new ContentExtensionDescriptor({
+      contents: [
+        new GroupDescriptor({
+          layouts: [
+            MasonryLayout.typeDescriptor,
+            CarouselGroupLayout.typeDescriptor,
+          ],
+        }),
+      ],
+    }),
+  ],
+});
+```

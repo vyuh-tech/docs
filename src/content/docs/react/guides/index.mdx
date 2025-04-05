@@ -3,6 +3,8 @@ title: Framework Overview
 description: An overview of the core elements of the Vyuh React feature system
 ---
 
+import { Aside } from '@astrojs/starlight/components'
+
 ## Introduction to the Vyuh Framework
 
 The Vyuh React feature system is a comprehensive framework for building dynamic,
@@ -21,11 +23,21 @@ Content blocks are the fundamental building blocks of your application. They
 define the structure and data of your UI components, such as cards, groups, and
 routes.
 
+<Aside title={'The Route content block'}>
+Route is a special type of content block that acts as a **container** as well,
+which hosts a set of content blocks.
+
+Routes are typically used as pages in your application, organizing other content
+blocks into **regions**. Typical regions in your pages could be body, header,
+footer, etc.
+
+</Aside>
+
 Content blocks are composable, allowing you to build complex UIs from simple
 components. Each content block can have its own layout, actions, and conditions,
 making them highly flexible and reusable.
 
-[Learn more about Content Blocks →](/react/guides/content-blocks)
+[Learn more about Content Blocks →](/react/guides/content-blocks/)
 
 ### Layouts
 

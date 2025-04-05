@@ -262,7 +262,19 @@ export default defineConfig({
                   label: 'Guides',
                   items: [
                     'react/guides',
-                    'react/guides/content-blocks',
+                    {
+                      label: 'Content Blocks',
+                      items: [
+                        'react/guides/content-blocks',
+                        'react/guides/content-blocks/route',
+                        'react/guides/content-blocks/card',
+                        'react/guides/content-blocks/group',
+                        'react/guides/content-blocks/portable-text',
+                        'react/guides/content-blocks/conditional',
+                        'react/guides/content-blocks/conditional-route',
+                        'react/guides/content-blocks/api-content',
+                      ],
+                    },
                     'react/guides/layouts',
                     'react/guides/actions',
                     'react/guides/conditions',
