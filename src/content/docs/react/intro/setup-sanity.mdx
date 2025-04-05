@@ -24,18 +24,17 @@ Vyuh works well with Sanity because:
 - **Real-time updates**: Content changes appear instantly in your app
 - **Powerful query language**: GROQ lets you fetch exactly the data you need
 
-## Getting Started with Sanity
-
 ## 1. Create a Sanity project
 
-Install the Sanity CLI and create a new project:
+If you're using the Vyuh React Workspace template repository, you'll need to
+create a Sanity project inside the `apps/studio` folder:
 
 ```bash
-# Install the Sanity CLI globally
-pnpm add -g @sanity/cli
+# Navigate to the studio folder
+cd apps/studio
 
-# Create a new Sanity project
-pnpx create-sanity@latest
+# Initialize a new Sanity project
+pnpx sanity@latest init
 ```
 
 During setup:
@@ -45,27 +44,32 @@ During setup:
 - Use the default dataset configuration
 - Select "Clean project with no predefined schemas" as your template
 
-## 2. Install Vyuh Sanity plugins
+## 2. Install Vyuh Sanity packages and configure your project
 
-Add the Vyuh Sanity packages to your project:
+If you're using the Vyuh React Workspace template, the miscellaneous feature is
+already included. You'll need to install the Vyuh Sanity packages and update
+your `sanity.config.ts` file:
 
 ```bash
-# Navigate to your Sanity project directory
-cd your-sanity-project
+# Navigate to your Sanity project directory (if not already there)
+cd apps/studio
 
 # Install Vyuh Sanity packages
 pnpm add @vyuh/sanity-plugin-structure @vyuh/sanity-schema-core @vyuh/sanity-schema-system
+
+# Add the miscellaneous schema package as a workspace dependency (it's already in the workspace)
+pnpm add -w sanity-schema-misc
 ```
 
-## 3. Configure Sanity for Vyuh
+Then update your `sanity.config.ts` file to use the Vyuh structure plugin and
+include the miscellaneous feature:
 
-Update your `sanity.config.ts` file to use the Vyuh structure plugin:
-
-```typescript
-// sanity.config.ts
+```typescript {5,18}
+// apps/studio/sanity.config.ts
 import { defineConfig } from 'sanity'
 import { vyuh } from '@vyuh/sanity-plugin-structure'
 import { system } from '@vyuh/sanity-schema-system'
+import { misc } from 'sanity-schema-misc' // Import the miscellaneous feature
 
 export default defineConfig({
   name: 'default',
@@ -78,175 +82,61 @@ export default defineConfig({
     vyuh({
       features: [
         system,
-        // You'll add your custom features here later
+        misc, // The miscellaneous feature from the template
       ],
     }),
   ],
 })
 ```
 
-## 4. Create a blog feature
+<Aside type="note" title="Vyuh Sanity Plugin">
+  The Vyuh structure plugin (`@vyuh/sanity-plugin-structure`) automatically
+  organizes your schemas by feature in the Sanity Studio, making it easier to
+  manage complex content models as your application grows.
+</Aside>
 
-Create a new directory for your blog feature:
+## 3. Start your Sanity Studio
 
-```bash
-mkdir -p features/blog
-```
-
-Create a blog post schema file:
-
-```typescript
-// features/blog/post.ts
-import { defineType, defineField } from 'sanity'
-
-export const blogPost = defineType({
-  name: 'blog.post',
-  title: 'Blog Post',
-  type: 'object',
-  fields: [
-    defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'publishDate',
-      title: 'Publish Date',
-      type: 'datetime',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'author',
-      title: 'Author',
-      type: 'string',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'featuredImage',
-      title: 'Featured Image',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
-    }),
-    defineField({
-      name: 'tags',
-      title: 'Tags',
-      type: 'array',
-      of: [{ type: 'string' }],
-    }),
-    defineField({
-      name: 'content',
-      title: 'Content',
-      type: 'vyuh.portableText',
-    }),
-  ],
-  preview: {
-    select: {
-      title: 'title',
-      author: 'author',
-      date: 'publishDate',
-      media: 'featuredImage',
-      tags: 'tags',
-    },
-    prepare({ title, author, date, media, tags }) {
-      const formattedDate = date
-        ? new Date(date).toLocaleDateString()
-        : 'No date'
-      const tagList = tags && tags.length > 0 ? tags.join(', ') : 'No tags'
-
-      return {
-        title: title || 'Untitled Post',
-        subtitle: `By ${author || 'Unknown'} • ${formattedDate} • ${tagList}`,
-        media: media,
-      }
-    },
-  },
-})
-```
-
-## 5. Create a blog feature descriptor
-
-Create a feature descriptor file to organize your blog schemas:
-
-```typescript
-// features/blog/index.ts
-import { FeatureDescriptor } from '@vyuh/sanity-schema-core'
-import { BuiltContentSchemaBuilder } from '@vyuh/sanity-schema-core'
-import { blogPost } from './post'
-
-export const blog = new FeatureDescriptor({
-  name: 'blog',
-  title: 'Blog Feature',
-  description: 'Blog content types and schemas',
-  contentSchemaBuilders: [new BuiltContentSchemaBuilder(blogPost)],
-})
-```
-
-## 6. Register your blog feature
-
-Update your `sanity.config.ts` file to include your blog feature:
-
-```typescript
-// sanity.config.ts
-import { defineConfig } from 'sanity'
-import { vyuh } from '@vyuh/sanity-plugin-structure'
-import { system } from '@vyuh/sanity-schema-system'
-import { blog } from './features/blog'
-
-export default defineConfig({
-  name: 'default',
-  title: 'Your Project Name',
-
-  projectId: 'your-project-id',
-  dataset: 'production',
-
-  plugins: [
-    vyuh({
-      features: [
-        system,
-        blog, // Add your blog feature here
-      ],
-    }),
-  ],
-})
-```
-
-## 7. Start your Sanity Studio
-
-Run your Sanity Studio to see your new schemas in action:
+Run your Sanity Studio to see your schemas in action:
 
 ```bash
-npm run dev
+cd apps/studio
+pnpm run dev
 ```
 
 Your Sanity Studio should now be running at **`http://localhost:3333`** with
-your blog schemas available.
+your schemas available.
 
-## 8. Create API tokens
+## 4. Configure API access
 
-To connect your React app to Sanity, you'll need API tokens:
+To connect your Next.js app to Sanity, you'll need to configure API access:
 
 1. Go to [manage.sanity.io](https://manage.sanity.io)
 2. Select your project
 3. Navigate to API > Tokens
-4. Create a new token with "Read" permissions for your frontend
+4. Create a new token with "Viewer" permissions for your frontend
 5. Save this token securely - you'll need it for your React app
+
+### Configure CORS origins
+
+You also need to configure CORS to allow your Next.js app to access the Sanity
+API:
+
+1. In the Sanity management console, go to API > CORS origins
+2. Click "Add CORS origin"
+3. Enter `http://localhost:*`
+4. Check "Allow credentials" if you need authenticated requests
+5. Save the configuration
+
+![Sanity Console](./sanity-manage-console.png)
 
 ## Next Steps
 
-Now that you have Sanity set up with your blog schemas, you're ready to:
+Now that you have Sanity set up with your schemas, you're ready to:
 
-1. Create some sample blog posts in your Sanity Studio
-2. Connect your React app to Sanity using the Vyuh content provider
-3. Render your blog content in your React application
+1. Create some sample content in your Sanity Studio
+2. Connect your Next.js app to Sanity using the Vyuh content provider
+3. Render your content in your React application
 
 Continue to [Rendering Content with Vyuh React](/react/guides/rendering-content)
 to learn how to display your Sanity content in your React app.
-
-<Aside type="note">
-  The Vyuh structure plugin automatically organizes your schemas by feature in
-  the Sanity Studio, making it easier to manage complex content models as your
-  application grows.
-</Aside>
