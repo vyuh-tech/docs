@@ -202,6 +202,114 @@ const conditionalRoute = {
 plugins.content.render(conditionalRoute)
 ```
 
+### API Content
+
+API Content fetches and displays data from external APIs.
+
+```tsx
+// API Content object
+const apiContent = {
+  _type: 'vyuh.apiContent',
+  showPending: true,  // Show visual feedback during loading
+  showError: true,    // Show visual feedback for errors
+  configuration: [
+    {
+      _type: 'your-api-configuration-type', // Custom API configuration type
+      // Configuration properties specific to your API implementation
+    }
+  ]
+}
+
+// Render with content plugin
+plugins.content.render(apiContent)
+```
+
+<Aside type="note">
+  API Content requires a custom API configuration implementation that extends the `APIConfiguration` class. This allows you to define how to fetch data and render the results.
+</Aside>
+
+### Divider
+
+Dividers create visual separation between content sections.
+
+```tsx
+// Divider content object
+const dividerContent = {
+  _type: 'vyuh.divider',
+  thickness: 1,     // Thickness in pixels
+  indent: 16        // Indent from edges in pixels or CSS units
+}
+
+// Render with content plugin
+plugins.content.render(dividerContent)
+```
+
+### Document
+
+Document content blocks represent structured documents with content items.
+
+```tsx
+// Document content object
+const documentContent = {
+  _type: 'vyuh.document',
+  title: 'Documentation',
+  description: 'A comprehensive guide',
+  items: [
+    // Array of content items that make up the document
+    {
+      _type: 'vyuh.portableText',
+      blocks: [/* Portable text content */]
+    },
+    {
+      _type: 'vyuh.card',
+      title: 'Example Card'
+    }
+  ]
+}
+
+// Render with content plugin
+plugins.content.render(documentContent)
+```
+
+### Document View
+
+Document View loads and displays a document by reference or query.
+
+```tsx
+// Document View content object
+const documentViewContent = {
+  _type: 'vyuh.document.view',
+  title: 'Product Documentation',
+  loadStrategy: 'reference',  // 'reference' or 'query'
+  reference: { _ref: 'document-123' },  // Used when loadStrategy is 'reference'
+  // query: { ... }  // Used when loadStrategy is 'query'
+}
+
+// Render with content plugin
+plugins.content.render(documentViewContent)
+```
+
+### Video Player
+
+Video Player renders video content with playback controls.
+
+```tsx
+// Video Player content object
+const videoPlayerContent = {
+  _type: 'vyuh.videoPlayer',
+  title: 'Product Demo',
+  linkType: 'url',  // 'url' or 'file'
+  url: 'https://example.com/videos/demo.mp4',  // Used when linkType is 'url'
+  // file: { _ref: 'file-123' },  // Used when linkType is 'file'
+  loop: false,
+  autoplay: false,
+  muted: false
+}
+
+// Render with content plugin
+plugins.content.render(videoPlayerContent)
+```
+
 ## Layouts
 
 Each content block can have different layouts that change how it's presented.
