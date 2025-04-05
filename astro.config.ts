@@ -273,7 +273,7 @@ export default defineConfig({
                 },
                 {
                   label: 'Examples',
-                  items: ['react/examples/marketing', 'react/examples/blog'],
+                  items: ['react/examples', 'react/examples/marketing', 'react/examples/blog'],
                 },
               ],
             },

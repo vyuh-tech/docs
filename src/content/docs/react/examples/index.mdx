@@ -1,0 +1,90 @@
+---
+title: Overview
+description: Explore example features built with the Vyuh React framework
+---
+
+import { Card, CardGrid, LinkButton } from '@astrojs/starlight/components'
+import { Aside } from '@astrojs/starlight/components'
+
+The Vyuh React framework includes several example features that demonstrate how
+to build modular, CMS-driven applications. These examples showcase the power and
+flexibility of the Vyuh approach to content management and component
+architecture.
+
+## Featured Examples
+
+<CardGrid>
+  <Card title="Blog Feature" icon="document" href="/react/examples/blog">
+    ![Blog Feature](./blog-feature.png)
+
+    A complete blog system with post summaries, groups, and layouts.
+
+    <LinkButton
+      href="/react/examples/blog"
+    >Read More</LinkButton>
+
+  </Card>
+  
+  <Card title="Marketing Feature" icon="rocket">
+    ![Marketing Feature](./marketing-feature.png)
+    
+    Components for building marketing websites and landing pages.
+    
+    <LinkButton
+      href="/react/examples/marketing"
+    >Read More</LinkButton>
+  </Card>
+</CardGrid>
+
+## Blog Feature
+
+The blog feature provides content types and components for building blog
+sections and displaying blog posts. It's designed to work seamlessly with the
+Vyuh framework's content system, allowing you to create rich, interactive blog
+experiences.
+
+### Key Components
+
+- **Blog Post Summary**: Individual blog post previews with metadata
+- **Blog Group**: Collections of blog posts for display
+- **Blog Layouts**: Various ways to present blog content
+- **Category and Tag Support**: Organize and filter blog content
+
+<Aside type="tip">
+  The blog feature is perfect for content-heavy applications where regular
+  updates are needed. Content editors can manage blog posts in Sanity Studio
+  while developers control the presentation through React components.
+</Aside>
+
+## Marketing Feature
+
+The marketing feature provides a comprehensive set of content blocks designed
+for building marketing websites and landing pages. It includes components for
+common marketing sections like heroes, features, testimonials, and more.
+
+### Key Components
+
+- **Hero Sections**: Impactful page headers with calls to action
+- **Feature Sections**: Showcase product or service features
+- **Banners**: Attention-grabbing notification bars
+- **CTAs**: Conversion-focused action blocks
+- **Testimonials**: Customer testimonial displays
+- **Pricing Tables**: Display pricing plans and options
+
+<Aside type="tip">
+  The marketing feature works well with the blog feature for creating complete
+  websites with both marketing pages and blog content.
+</Aside>
+
+## Getting Started with Examples
+
+To use these examples in your own project:
+
+1. Follow the [Get Started](/react/intro/get-started) guide to set up your Vyuh
+   React project
+2. Install the specific feature packages you want to use
+3. Configure your Sanity Studio to include the feature schemas
+4. Import the feature components in your React application
+
+Each example includes detailed documentation on implementation and customization
+options.
