@@ -256,6 +256,7 @@ export default defineConfig({
                     'react',
                     'react/intro/get-started',
                     'react/intro/setup-sanity',
+                    'react/intro/first-route',
                   ],
                 },
                 {
