@@ -75,7 +75,7 @@ export default defineConfig({
   name: 'default',
   title: 'Your Project Name',
 
-  projectId: 'your-project-id',
+  projectId: '<your-project-id>', // Replace with your projectId from sanity.cli.ts
   dataset: 'production',
 
   plugins: [
@@ -88,6 +88,10 @@ export default defineConfig({
   ],
 })
 ```
+
+> Replace `<your-project-id>` with your actual Sanity project ID from
+> `sanity.cli.ts`. You can also give a nice **title** to your project, while you
+> are at it.
 
 <Aside type="note" title="Vyuh Sanity Plugin">
   The Vyuh structure plugin (`@vyuh/sanity-plugin-structure`) automatically
@@ -129,6 +133,17 @@ API:
 5. Save the configuration
 
 ![Sanity Console](./sanity-manage-console.png)
+
+## 5. Configure Environment Variables for Next.js
+
+In your Next.js app, set the following environment variables in your
+`.env.local` file:
+
+```bash
+NEXT_PUBLIC_SANITY_PROJECT_ID=<your-project-id>
+NEXT_PUBLIC_SANITY_DATASET=production
+NEXT_PUBLIC_SANITY_TOKEN=<your-token>
+```
 
 ## Next Steps
 
