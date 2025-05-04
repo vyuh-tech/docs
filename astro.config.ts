@@ -45,13 +45,29 @@ export default defineConfig({
         light: './src/assets/logo-light.png',
         dark: './src/assets/logo-dark.png',
       },
-      social: {
-        github: 'https://github.com/vyuh-tech/vyuh',
-        'x.com': 'https://x.com/vyuh_tech',
-        discord: 'https://discord.gg/b49sbjqszG',
-        youtube: 'https://youtube.com/@vyuh_tech',
-        linkedin: 'https://www.linkedin.com/company/vyuh-tech',
-      },
+      social: [
+        {
+          icon: 'github',
+          label: 'Github',
+          href: 'https://github.com/vyuh-tech/vyuh',
+        },
+        { icon: 'x.com', label: 'X/Twitter', href: 'https://x.com/vyuh_tech' },
+        {
+          icon: 'discord',
+          label: 'Discord',
+          href: 'https://discord.gg/b49sbjqszG',
+        },
+        {
+          icon: 'youtube',
+          label: 'YouTube',
+          href: 'https://youtube.com/@vyuh_tech',
+        },
+        {
+          icon: 'linkedin',
+          label: 'LinkedIn',
+          href: 'https://www.linkedin.com/company/vyuh-tech',
+        },
+      ],
       // Add Open Graph images.
       head: [
         {
@@ -83,7 +99,7 @@ export default defineConfig({
         Footer: './src/components/starlight/Footer.astro',
         SkipLink: './src/components/starlight/SkipLink.astro',
       },
-      customCss: ['./src/tailwind.css'],
+      customCss: ['./src/styles/global.css'],
       expressiveCode: {
         themes: ['dracula'],
         plugins: [pluginLineNumbers()],
@@ -286,7 +302,11 @@ export default defineConfig({
                 },
                 {
                   label: 'Examples',
-                  items: ['react/examples', 'react/examples/marketing', 'react/examples/blog'],
+                  items: [
+                    'react/examples',
+                    'react/examples/marketing',
+                    'react/examples/blog',
+                  ],
                 },
               ],
             },
