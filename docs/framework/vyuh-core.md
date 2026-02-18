@@ -1,0 +1,224 @@
+---
+title: Vyuh Core
+description: The main runtime package that provides the default platform and bootstrapping capability for Vyuh
+---
+
+# Vyuh Core
+
+<PubBadge package="vyuh_core" />
+
+The Vyuh Core package provides the foundation for building Vyuh applications. It includes the core runtime, plugin system, and extension mechanisms that power the framework.
+
+## Core Components
+
+### runApp()
+
+The main entry point for bootstrapping a Vyuh application. It initializes the platform, sets up the plugin system, and starts the application with the specified features. The function handles the initialization sequence, ensuring plugins are loaded in the correct order and features are properly registered before the application starts.
+
+```dart
+void runApp({
+  required FeaturesBuilder features,
+  PluginDescriptor? plugins,
+  PlatformWidgetBuilder? platformWidgetBuilder,
+  String? initialLocation,
+})
+```
+
+- `features`: A builder function that returns a Features object configuring app features
+- `plugins`: Optional PluginDescriptor specifying plugins (defaults to `PluginDescriptor.defaultPlugins`)
+- `platformWidgetBuilder`: Optional builder for platform-specific widgets
+- `initialLocation`: Optional initial route location
+
+### Feature System
+
+#### FeatureDescriptor
+
+A comprehensive descriptor for defining features in a Vyuh application. It encapsulates all aspects of a feature including its metadata, initialization logic, routing, and extensions. Features are the primary building blocks of a Vyuh application, providing modular and reusable functionality that can be composed together.
+
+```dart
+final class FeatureDescriptor {
+  final String name;
+  final String title;
+  final String? description;
+  final IconData? icon;
+  final VoidFutureFunction? init;
+  final VoidFutureFunction? dispose;
+  final List<ExtensionDescriptor>? extensions;
+  final List<ExtensionBuilder>? extensionBuilders;
+  final RouteBuilderFunction? routes;
+
+  FeatureDescriptor({
+    required this.name,
+    required this.title,
+    this.description,
+    this.icon,
+    this.init,
+    this.dispose,
+    required RouteBuilderFunction routes,
+    this.extensions,
+    this.extensionBuilders,
+  });
+}
+```
+
+## Plugin System
+
+Vyuh uses a plugin architecture to provide core functionality and enable extensibility. Each plugin follows a common interface pattern and can be configured through the `PluginDescriptor`.
+
+### Core Plugins
+
+#### Content Plugin
+
+The backbone of Vyuh's content management system. It provides a standardized interface for content retrieval, caching, and updates. This plugin is essential for applications that need to manage and display structured content from CMS systems like Sanity.io.
+
+#### Authentication Plugin
+
+Manages user authentication and session state. Provides a unified interface for different authentication providers while handling common authentication flows, session persistence, and user state management. Supports anonymous authentication, email/password, phone OTP, and OAuth providers.
+
+#### Navigation Plugin
+
+Powers Vyuh's routing and navigation system. Provides a declarative way to define routes, handle deep linking, and manage navigation state. Includes a default implementation using GoRouter.
+
+#### Analytics Plugin
+
+Enables comprehensive user interaction tracking and analytics. Provides a flexible interface for logging events and user properties, supporting multiple analytics providers.
+
+#### Network Plugin
+
+Handles all network communication. Provides a standardized interface for making HTTP requests while supporting features like request interceptors, response caching, and error handling. Includes a default HTTP implementation.
+
+#### Environment Plugin
+
+Manages environment-specific configuration and feature flags. Provides a type-safe way to access environment variables and configuration values, supporting different environments (development, staging, production).
+
+#### Telemetry Plugin
+
+Provides comprehensive logging and monitoring capabilities. Supports multiple telemetry providers and log levels, enabling detailed application monitoring and debugging.
+
+#### Dependency Injection Plugin
+
+Manages dependency injection throughout the application. Provides a clean way to register and resolve dependencies. Includes a default implementation using the GetIt service locator.
+
+#### Event Plugin
+
+Provides a type-safe event bus for application-wide communication. Supports both synchronous and asynchronous event handling with a pub/sub pattern.
+
+```dart
+abstract class EventPlugin extends Plugin {
+  DisposeFunction on<T extends VyuhEvent>(VyuhEventListener<T> listener);
+  void once<T extends VyuhEvent>(VyuhEventListener<T> listener);
+  void emit<T extends VyuhEvent>(T event);
+}
+```
+
+#### Storage Plugin
+
+Manages data persistence with both regular and secure storage options. Provides a consistent interface for key-value storage operations.
+
+```dart
+abstract class StoragePlugin extends Plugin {
+  Future<dynamic> read(String key);
+  Future<dynamic> write(String key, dynamic value);
+  Future<bool> has(String key);
+  Future<bool> delete(String key);
+}
+
+abstract class SecureStoragePlugin extends Plugin {
+  Future<dynamic> read(String key);
+  Future<dynamic> write(String key, dynamic value);
+  Future<bool> has(String key);
+  Future<bool> delete(String key);
+}
+```
+
+### Plugin Providers
+
+Each plugin can have multiple providers that implement the actual functionality:
+
+- **Content Providers**: Implement content fetching and manipulation for different backends
+- **Analytics Providers**: Implement analytics tracking for different services
+- **Telemetry Providers**: Implement logging for different logging systems
+- **Auth Providers**: Implement authentication for different auth services
+
+### Default Implementations
+
+Vyuh provides default implementations for most plugins:
+
+- `NoOpContentPlugin`: A no-op implementation of the content plugin
+- `DefaultNavigationPlugin`: Default implementation using GoRouter
+- `HttpNetworkPlugin`: Default HTTP-based network implementation
+- `DefaultEnvPlugin`: Basic environment variable management
+- `GetItDIPlugin`: Default dependency injection using GetIt
+- `NoOpTelemetryProvider`: No-op implementation for telemetry
+
+## Platform Widgets
+
+Vyuh provides a set of customizable platform widgets for common UI patterns:
+
+### Custom Platform Widgets
+
+You can customize the platform widgets by implementing the `PlatformWidgetBuilder`:
+
+```dart
+final class PlatformWidgetBuilder {
+  PlatformWidgetBuilder({
+    required this.appBuilder,
+    required this.appLoader,
+    required this.contentLoader,
+    required this.routeLoader,
+    required this.errorView,
+    required this.routeErrorView,
+    required this.imagePlaceholder,
+  });
+
+  final AppBuilder appBuilder;
+  final Loader appLoader;
+  final Loader contentLoader;
+  final RouteLoader routeLoader;
+  final ErrorViewBuilder errorView;
+  final RouteErrorViewBuilder routeErrorView;
+  final ImagePlaceholderBuilder imagePlaceholder;
+}
+```
+
+## Usage Example
+
+```dart
+void main() {
+  runApp(
+    initialLocation: '/',
+    plugins: PluginDescriptor(
+      content: DefaultContentPlugin(
+        provider: SanityContentProvider.withConfig(
+          config: SanityConfig(
+            projectId: '<your-project-id>',
+            dataset: 'production',
+            perspective: Perspective.previewDrafts,
+            useCdn: false,
+            token: '<your-token>',
+          ),
+          cacheDuration: const Duration(seconds: 5),
+        ),
+      ),
+      env: DefaultEnvPlugin(),
+      auth: MyCustomAuthPlugin(),
+      telemetry: TelemetryPlugin(
+        providers: [],
+      ),
+    ),
+    features: () => [
+      system.feature,
+      developer.feature,
+      root.feature,
+      counter.feature,
+      onboarding.feature,
+      auth.feature(),
+    ],
+  );
+}
+```
+
+## Links
+
+- [pub.dev](https://pub.dev/packages/vyuh_core)
+- [GitHub Source](https://github.com/vyuh-tech/vyuh/tree/main/packages/system/vyuh_core)

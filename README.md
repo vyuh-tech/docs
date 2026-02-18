@@ -17,11 +17,10 @@
 
 The main documentation for the Vyuh Framework.
 
-## Built with Astro
+## Built with VitePress
 
 This documentation has been created with
-[Starlight](https://starlight.astro.build), an Astro-powered documentation site
-generator.
+[VitePress](https://vitepress.dev), a Vite & Vue powered static site generator.
 
 ## Analytics
 
@@ -29,4 +28,4 @@ generator.
 
 ## License
 
-The documentation is [FSL Licensed](LICENSE).
+The documentation is FSL Licensed.
