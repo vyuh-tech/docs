@@ -8,7 +8,7 @@ In return, we will reciprocate that respect by addressing your issue, assessing 
 
 ## Quicklinks
 
-* [Code of Conduct]([#code-of-conduct])
+* [Code of Conduct](#code-of-conduct)
 * [Getting Started](#getting-started)
     * [Issues](#issues)
     * [Pull Requests](#pull-requests)

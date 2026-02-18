@@ -1,0 +1,227 @@
+/* Vyuh Docs - Global Tailwind CSS Styles */
+
+/* Fonts are loaded via <link> tags in config.ts head for non-blocking loading */
+@import "tailwindcss";
+
+/* Configure Tailwind to use class-based dark mode (VitePress uses .dark class) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ===================================================================
+   CSS CUSTOM PROPERTIES
+   These are values that Tailwind can't handle directly
+   =================================================================== */
+
+:root {
+  /* Typography - system font stacks as fallbacks for FOUT prevention */
+  --vyuh-font-display: 'Montserrat', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --vyuh-font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+
+  /* Animation */
+  --vyuh-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Glow effects (complex shadows Tailwind can't do) */
+  --glow-blue: 0 0 20px rgba(37, 99, 235, 0.4), inset 0 0 20px rgba(37, 99, 235, 0.05);
+  --glow-purple: 0 0 20px rgba(139, 92, 246, 0.4), inset 0 0 20px rgba(139, 92, 246, 0.05);
+  --glow-teal: 0 0 20px rgba(20, 184, 166, 0.4), inset 0 0 20px rgba(20, 184, 166, 0.05);
+  --glow-amber: 0 0 20px rgba(245, 158, 11, 0.4), inset 0 0 20px rgba(245, 158, 11, 0.05);
+}
+
+.dark {
+  --glow-blue: 0 0 25px rgba(96, 165, 250, 0.5), inset 0 0 20px rgba(96, 165, 250, 0.08);
+  --glow-purple: 0 0 25px rgba(167, 139, 250, 0.5), inset 0 0 20px rgba(167, 139, 250, 0.08);
+  --glow-teal: 0 0 25px rgba(45, 212, 191, 0.5), inset 0 0 20px rgba(45, 212, 191, 0.08);
+  --glow-amber: 0 0 25px rgba(251, 191, 36, 0.5), inset 0 0 20px rgba(251, 191, 36, 0.08);
+}
+
+/* ===================================================================
+   VITEPRESS COLOR OVERRIDES
+   Violet brand colors for light and dark modes
+   =================================================================== */
+
+:root {
+  --vp-c-bg: theme('colors.slate.50');
+  --vp-c-bg-soft: theme('colors.white');
+  --vp-c-bg-mute: theme('colors.slate.100');
+  --vp-c-brand-1: theme('colors.violet.600');
+  --vp-c-brand-2: theme('colors.violet.500');
+  --vp-c-brand-3: theme('colors.violet.400');
+  --vp-c-text-1: theme('colors.slate.900');
+  --vp-c-text-2: theme('colors.slate.600');
+}
+
+.dark {
+  --vp-c-bg: theme('colors.zinc.800');
+  --vp-c-bg-soft: theme('colors.zinc.700');
+  --vp-c-bg-mute: theme('colors.zinc.700');
+  --vp-c-brand-1: theme('colors.violet.400');
+  --vp-c-brand-2: theme('colors.violet.300');
+  --vp-c-brand-3: theme('colors.violet.200');
+  --vp-c-text-1: theme('colors.zinc.100');
+  --vp-c-text-2: theme('colors.zinc.400');
+}
+
+/* ===================================================================
+   GLOBAL BASE STYLES
+   =================================================================== */
+
+html {
+  scroll-behavior: smooth;
+  background: theme('colors.slate.50');
+}
+
+.dark html,
+html.dark {
+  background: theme('colors.zinc.900');
+}
+
+body {
+  font-family: var(--vyuh-font-display);
+}
+
+/* Hide VitePress defaults on custom pages */
+.home-page + .VPHome,
+.home-page ~ .VPFooter {
+  display: none !important;
+}
+
+/* ===================================================================
+   DESIGN SYSTEM — Shared component tokens and utility classes
+   Extracted from repeated patterns across 10+ components.
+
+   USAGE: Apply these classes directly in Vue templates (class="vyuh-card").
+   NOTE: Tailwind 4 does NOT allow @apply with custom classes from other
+   files. These classes work in HTML templates but NOT via @apply in
+   component <style> blocks.
+   =================================================================== */
+
+/* --- Typography utilities --- */
+.font-display {
+  font-family: var(--vyuh-font-display);
+}
+
+.font-mono {
+  font-family: var(--vyuh-font-mono);
+}
+
+/* --- Shared transition --- */
+.vyuh-transition {
+  transition: all 0.3s var(--vyuh-ease-out);
+}
+
+/* --- Card base (used by ProductBand, PathCard, AI cards) --- */
+.vyuh-card {
+  @apply rounded-2xl border p-8;
+  @apply bg-white/60 dark:bg-zinc-800/40;
+  @apply border-slate-200/60 dark:border-zinc-700/50;
+  transition: all 0.3s var(--vyuh-ease-out);
+}
+
+.vyuh-card-solid {
+  @apply rounded-2xl border p-6;
+  @apply bg-white dark:bg-zinc-800;
+  @apply border-slate-200/60 dark:border-zinc-700/50;
+  transition: all 0.3s var(--vyuh-ease-out);
+}
+
+/* --- Hover lift (cards + buttons) --- */
+.vyuh-hover-lift:hover {
+  @apply -translate-y-1;
+}
+
+/* --- Color-coded hover shadows --- */
+.vyuh-shadow-violet:hover { box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.15); }
+.vyuh-shadow-teal:hover { box-shadow: 0 20px 40px -10px rgba(20, 184, 166, 0.15); }
+.vyuh-shadow-amber:hover { box-shadow: 0 20px 40px -10px rgba(245, 158, 11, 0.15); }
+.vyuh-shadow-blue:hover { box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.15); }
+
+/* --- Accent text colors (icon, label, link) --- */
+.vyuh-accent-violet { @apply text-violet-600 dark:text-violet-400; }
+.vyuh-accent-teal { @apply text-teal-600 dark:text-teal-400; }
+.vyuh-accent-amber { @apply text-amber-600 dark:text-amber-400; }
+.vyuh-accent-blue { @apply text-blue-600 dark:text-blue-400; }
+
+/* --- Accent icon backgrounds --- */
+.vyuh-icon-bg-violet { @apply bg-violet-100 text-violet-600 dark:bg-violet-900/40 dark:text-violet-400; }
+.vyuh-icon-bg-teal { @apply bg-teal-100 text-teal-600 dark:bg-teal-900/40 dark:text-teal-400; }
+.vyuh-icon-bg-amber { @apply bg-amber-100 text-amber-600 dark:bg-amber-900/40 dark:text-amber-400; }
+.vyuh-icon-bg-blue { @apply bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400; }
+
+/* --- Section heading (consistent across all sections) --- */
+.vyuh-heading {
+  @apply text-4xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-tight;
+  @apply text-slate-900 dark:text-zinc-100;
+  font-family: var(--vyuh-font-display);
+}
+
+.vyuh-subheading {
+  @apply text-lg font-medium text-slate-600 dark:text-zinc-400 leading-relaxed;
+}
+
+/* --- Body text --- */
+.vyuh-body {
+  @apply text-sm text-slate-600 dark:text-zinc-400 leading-relaxed;
+}
+
+/* --- Shared keyframes --- */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===================================================================
+   MOBILE PERFORMANCE OPTIMIZATIONS
+   Reduce expensive effects on mobile devices for better performance
+   =================================================================== */
+
+@media (max-width: 768px) {
+  /* Reduce blur intensity on floating orbs */
+  .hero-blur,
+  .cta-blur {
+    filter: blur(30px) !important;
+    opacity: 0.06 !important;
+  }
+
+  /* Reduce backdrop-blur intensity on mobile */
+  .backdrop-blur-md {
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+  }
+
+  .backdrop-blur-sm {
+    backdrop-filter: blur(2px) !important;
+    -webkit-backdrop-filter: blur(2px) !important;
+  }
+
+  /* Simplify box-shadows to single shadow on mobile */
+  .feature-video,
+  .feature-image {
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  /* Disable fade-slide animations on mobile for faster LCP */
+  .hero-text,
+  .hero-title,
+  .hero-subtitle,
+  .hero-actions,
+  .hero-visual {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Respect user's reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
