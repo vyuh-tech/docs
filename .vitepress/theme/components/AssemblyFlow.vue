@@ -1,204 +1,219 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
 import { Icon } from '@iconify/vue';
-import PackagePill from './PackagePill.vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
-const flowRef = ref<HTMLElement | null>(null);
-const isVisible = ref(false);
+const activeFlow = ref(-1);
 
-let observer: IntersectionObserver | null = null;
+const frameworks = [
+  { id: 'vyuh_core', label: 'vyuh_core', group: 'framework', color: 'bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300' },
+  { id: 'vyuh_feature_system', label: 'vyuh_feature_system', group: 'framework', color: 'bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300' },
+  { id: 'auth', label: 'auth', group: 'framework', color: 'bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300' },
+  { id: 'storage', label: 'storage', group: 'framework', color: 'bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300' },
+  { id: 'telemetry', label: 'telemetry', group: 'framework', color: 'bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300' },
+  { id: 'analytics', label: 'analytics', group: 'framework', color: 'bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300' },
 
-onMounted(() => {
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReducedMotion) {
-    isVisible.value = true;
-    return;
-  }
-
-  observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        isVisible.value = true;
-        observer?.disconnect();
-      }
-    },
-    { threshold: 0.2 }
-  );
-  if (flowRef.value) observer.observe(flowRef.value);
-});
-
-onUnmounted(() => observer?.disconnect());
-
-const primitives = [
-  { label: 'Framework', color: 'violet' as const, packages: ['vyuh_core', 'vyuh_feature_system', 'sanity_client'] },
-  { label: 'CDX', color: 'teal' as const, packages: ['vyuh_form_editor', 'vyuh_dashboard_editor', 'vyuh_entity_system'] },
-  { label: 'Node Flow', color: 'amber' as const, packages: ['vyuh_node_flow', 'vyuh_workflow_editor', 'vyuh_workflow_engine'] },
-  { label: 'Plugins', color: 'blue' as const, packages: ['auth', 'storage', 'telemetry', 'analytics'] },
+  { id: 'sanity_client', label: 'sanity_client', group: 'cms', color: 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300' },
+  { id: 'flutter_sanity_portable_text', label: 'flutter_sanity_portable_text', group: 'cms', color: 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300' },
+  
+  { id: 'vyuh_form_editor', label: 'vyuh_form_editor', group: 'cdx', color: 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300' },
+  { id: 'vyuh_dashboard_editor', label: 'vyuh_dashboard_editor', group: 'cdx', color: 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300' },
+  { id: 'vyuh_entity_system', label: 'vyuh_entity_system', group: 'cdx', color: 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300' },
+  
+  { id: 'vyuh_node_flow', label: 'vyuh_node_flow', group: 'flow', color: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300' },
+  { id: 'vyuh_workflow_editor', label: 'vyuh_workflow_editor', group: 'flow', color: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300' },
+  { id: 'vyuh_workflow_engine', label: 'vyuh_workflow_engine', group: 'flow', color: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300' }
 ];
 
 const experiences = [
-  { icon: 'mdi:cellphone', label: 'Modular Flutter Apps' },
-  { icon: 'mdi:view-dashboard-outline', label: 'Enterprise Dashboards' },
-  { icon: 'mdi:sitemap-outline', label: 'Visual Workflows' },
-  { icon: 'mdi:file-document-outline', label: 'CMS-Driven Content' },
+  { id: 'mobile', label: 'Modular Flutter Apps', icon: 'mdi:cellphone' },
+  { id: 'dashboards', label: 'Enterprise Dashboards', icon: 'mdi:view-dashboard-outline' },
+  { id: 'workflows', label: 'Visual Workflows', icon: 'mdi:sitemap-outline' },
+  { id: 'cms', label: 'CMS-Driven Content', icon: 'mdi:file-document-outline' }
 ];
+
+// Helper to get pills by group
+const getGroup = (groupName: string) => frameworks.filter(f => f.group === groupName);
+
+// Map experiences to their primitive groups
+const isGroupActive = (groupName: string) => {
+  if (activeFlow.value === -1) return false;
+  if (activeFlow.value === 0) return ['framework'].includes(groupName); // Mobile
+  if (activeFlow.value === 1) return ['framework', 'cdx'].includes(groupName); // Dashboards
+  if (activeFlow.value === 2) return ['framework', 'flow'].includes(groupName); // Workflows
+  if (activeFlow.value === 3) return ['framework', 'cms'].includes(groupName); // CMS
+  return false;
+};
+
+let interval: number;
+
+onMounted(() => {
+  // Simple random highlight cycle
+  interval = setInterval(() => {
+    activeFlow.value = Math.floor(Math.random() * 4);
+    setTimeout(() => {
+      activeFlow.value = -1;
+    }, 1500);
+  }, 3000) as unknown as number;
+});
+
+onUnmounted(() => {
+  clearInterval(interval);
+});
 </script>
 
 <template>
-  <div ref="flowRef" class="assembly-flow" :class="{ 'assembly-flow-visible': isVisible }">
-    <!-- Left: Primitives -->
-    <div class="assembly-col assembly-primitives">
-      <h4 class="assembly-col-label">Primitives</h4>
-      <div v-for="group in primitives" :key="group.label" class="assembly-group">
-        <span class="assembly-group-label" :class="`assembly-group-label-${group.color}`">{{ group.label }}</span>
-        <div class="assembly-group-pills">
-          <PackagePill v-for="pkg in group.packages" :key="pkg" :name="pkg" :color="group.color" />
+  <div class="assembly-flow-container max-w-6xl mx-auto py-12 px-4 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 min-h-[500px]">
+    
+    <!-- Background Speed Lines Layer (Z-0) -->
+    <div class="absolute inset-0 pointer-events-none z-0 hidden md:block overflow-hidden">
+      <!-- Lines flowing from left edge towards center -->
+      <div class="speed-line-left top-[20%] h-[2px]"></div>
+      <div class="speed-line-left top-[35%] h-[3px] animation-delay-1"></div>
+      <div class="speed-line-left top-[45%] h-[2px] animation-delay-2"></div>
+      <div class="speed-line-left top-[65%] h-[3px] animation-delay-3"></div>
+      <div class="speed-line-left top-[80%] h-[2px] animation-delay-1"></div>
+      
+      <!-- Lines diverging from center towards right edge -->
+      <div class="speed-line-right top-[25%] h-[3px] animation-delay-2"></div>
+      <div class="speed-line-right top-[40%] h-[2px] animation-delay-3"></div>
+      <div class="speed-line-right top-[60%] h-[3px] animation-delay-1"></div>
+      <div class="speed-line-right top-[75%] h-[2px] animation-delay-2"></div>
+    </div>
+
+    <!-- Left Side: Primitives (Pills) -->
+    <div class="primitives-section w-full md:w-[40%] flex flex-col gap-6 relative z-10 bg-white/30 dark:bg-zinc-900/30 backdrop-blur-[2px] p-6 rounded-2xl border border-white/50 dark:border-white/10">
+      <h3 class="text-xs font-semibold tracking-widest text-slate-400 dark:text-zinc-500 uppercase text-center mb-2">Primitives</h3>
+      
+      <!-- Framework -->
+      <div class="pill-group">
+        <h4 class="group-title text-violet-500">Framework</h4>
+        <div class="flex flex-wrap justify-center gap-4">
+          <span v-for="pill in getGroup('framework')" :key="pill.id" class="code-pill" :class="[pill.color, isGroupActive('framework') ? 'ring-2 ring-violet-500 scale-105 shadow-md' : '']">
+            {{ pill.label }}
+          </span>
+        </div>
+      </div>
+
+      <!-- CMS -->
+      <div class="pill-group">
+        <h4 class="group-title text-rose-500">CMS</h4>
+        <div class="flex flex-wrap justify-center gap-4">
+          <span v-for="pill in getGroup('cms')" :key="pill.id" class="code-pill" :class="[pill.color, isGroupActive('cms') ? 'ring-2 ring-rose-500 scale-105 shadow-md' : '']">
+            {{ pill.label }}
+          </span>
+        </div>
+      </div>
+
+      <!-- CDX -->
+      <div class="pill-group">
+        <h4 class="group-title text-teal-500">CDX</h4>
+        <div class="flex flex-wrap justify-center gap-4">
+          <span v-for="pill in getGroup('cdx')" :key="pill.id" class="code-pill" :class="[pill.color, isGroupActive('cdx') ? 'ring-2 ring-teal-500 scale-105 shadow-md' : '']">
+            {{ pill.label }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Node Flow -->
+      <div class="pill-group">
+        <h4 class="group-title text-amber-500">Node Flow</h4>
+        <div class="flex flex-wrap justify-center gap-4">
+          <span v-for="pill in getGroup('flow')" :key="pill.id" class="code-pill" :class="[pill.color, isGroupActive('flow') ? 'ring-2 ring-amber-500 scale-105 shadow-md' : '']">
+            {{ pill.label }}
+          </span>
         </div>
       </div>
     </div>
 
-    <!-- Center: Coin -->
-    <div class="assembly-col assembly-center">
-      <div class="assembly-coin">
-        <span class="assembly-coin-text">Configure<br/>Compose<br/>Ship</span>
+    <!-- Center: The Core -->
+    <div class="core-section w-full md:w-[20%] flex justify-center items-center relative min-h-[200px] z-10">
+      <!-- The Core Circle -->
+      <div class="core-circle relative flex flex-col items-center justify-center bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md border-2 border-violet-200 dark:border-violet-900/50 rounded-full w-40 h-40 shadow-[0_0_40px_-10px_rgba(139,92,246,0.3)] transition-all duration-500"
+           :class="{ 'scale-110 shadow-[0_0_60px_-10px_rgba(139,92,246,0.6)] border-violet-400': activeFlow !== -1 }">
+        <div class="absolute inset-0 rounded-full border-4 border-transparent border-t-violet-400 opacity-50 animate-spin-slow"></div>
+        <div class="absolute inset-2 rounded-full border-2 border-transparent border-b-fuchsia-400 opacity-30 animate-spin-reverse-slow"></div>
+        
+        <span class="text-[10px] font-bold tracking-widest text-violet-600 dark:text-violet-400 uppercase leading-loose text-center">
+          Configure<br>Compose<br>Ship
+        </span>
       </div>
     </div>
 
-    <!-- Right: Experiences -->
-    <div class="assembly-col assembly-experiences">
-      <h4 class="assembly-col-label">Experiences</h4>
-      <div v-for="exp in experiences" :key="exp.label" class="assembly-experience">
-        <Icon :icon="exp.icon" class="assembly-experience-icon" />
-        <span class="assembly-experience-label">{{ exp.label }}</span>
+    <!-- Right Side: Experiences -->
+    <div class="experiences-section w-full md:w-[40%] flex flex-col gap-4 relative z-10 bg-white/30 dark:bg-zinc-900/30 backdrop-blur-[2px] p-6 rounded-2xl border border-white/50 dark:border-white/10">
+      <h3 class="text-xs font-semibold tracking-widest text-slate-400 dark:text-zinc-500 uppercase text-center mb-2 md:text-left md:pl-4">Experiences</h3>
+      
+      <div v-for="(exp, index) in experiences" :key="exp.id" 
+           class="experience-card flex items-center gap-4 p-4 rounded-xl border bg-white/60 dark:bg-zinc-800/40 backdrop-blur-sm transition-all duration-500"
+           :class="[
+             activeFlow === index 
+              ? 'border-violet-400 shadow-lg shadow-violet-500/20 scale-[1.02] bg-white dark:bg-zinc-800' 
+              : 'border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20'
+           ]">
+        <Icon :icon="exp.icon" class="text-2xl text-violet-500 dark:text-violet-400 shrink-0" />
+        <span class="font-medium text-slate-800 dark:text-zinc-200">{{ exp.label }}</span>
       </div>
     </div>
+
   </div>
 </template>
 
-<style>
+<style scoped>
 @reference "../style.css";
 
-.assembly-flow {
-  @apply grid grid-cols-[1fr_auto_1fr] gap-12 items-center max-w-5xl mx-auto;
+.pill-group {
+  @apply flex flex-col items-center gap-2;
+}
+.group-title {
+  @apply text-[10px] font-bold tracking-widest uppercase mb-1;
+}
+.code-pill {
+  @apply px-3 py-1.5 rounded-full text-[11px] font-mono tracking-tight transition-all duration-300 border border-current/20;
 }
 
-@media (max-width: 768px) {
-  .assembly-flow {
-    @apply grid-cols-1 gap-10;
-  }
-  .assembly-center {
-    @apply hidden;
-  }
-}
-
-/* Animation: staggered fade-in */
-.assembly-primitives,
-.assembly-center,
-.assembly-experiences {
+/* Speed Lines Animation System */
+.speed-line-left {
+  position: absolute;
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.8), transparent);
+  width: 50%;
+  left: 0;
   opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.6s var(--vyuh-ease-out);
+  transform: translateX(-100%);
+  animation: sweepLeft 3s infinite linear;
 }
 
-.assembly-flow-visible .assembly-primitives {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0s;
+.speed-line-right {
+  position: absolute;
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.8), transparent);
+  width: 50%;
+  left: 50%;
+  opacity: 0;
+  transform: translateX(-50%);
+  animation: sweepRight 3s infinite linear;
 }
 
-.assembly-flow-visible .assembly-center {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.3s;
+@keyframes sweepLeft {
+  0% { transform: translateX(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; } /* Reaches center */
 }
 
-.assembly-flow-visible .assembly-experiences {
-  opacity: 1;
-  transform: translateY(0);
-  transition-delay: 0.6s;
+@keyframes sweepRight {
+  0% { transform: translateX(-50%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateX(150%); opacity: 0; } /* Reaches right edge */
 }
 
-.assembly-col {
-  @apply flex flex-col gap-6;
+.animation-delay-1 { animation-delay: 0.8s; }
+.animation-delay-2 { animation-delay: 1.6s; }
+.animation-delay-3 { animation-delay: 2.4s; }
+
+.animate-spin-slow {
+  animation: spin 8s linear infinite;
 }
-
-.assembly-col-label {
-  @apply text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-zinc-500 mb-2;
-  font-family: var(--vyuh-font-mono);
-}
-
-/* Primitive groups */
-.assembly-group {
-  @apply flex flex-col gap-2;
-}
-
-.assembly-group-label {
-  @apply text-xs font-semibold uppercase tracking-wider;
-  font-family: var(--vyuh-font-mono);
-}
-
-.assembly-group-label-violet { @apply text-violet-500 dark:text-violet-400; }
-.assembly-group-label-teal { @apply text-teal-500 dark:text-teal-400; }
-.assembly-group-label-amber { @apply text-amber-500 dark:text-amber-400; }
-.assembly-group-label-blue { @apply text-blue-500 dark:text-blue-400; }
-
-.assembly-group-pills {
-  @apply flex flex-wrap gap-1.5;
-}
-
-/* Center: Coin */
-.assembly-center {
-  @apply items-center justify-center;
-}
-
-.assembly-coin {
-  @apply flex items-center justify-center rounded-full;
-  width: 140px;
-  height: 140px;
-  /* White background */
-  @apply bg-white dark:bg-zinc-800;
-  /* Double border: inner solid + outer via outline */
-  border: 2px solid rgba(139, 92, 246, 0.35);
-  outline: 2px solid rgba(139, 92, 246, 0.15);
-  outline-offset: 5px;
-  /* Gradient shadow */
-  box-shadow:
-    0 8px 30px rgba(139, 92, 246, 0.2),
-    0 0 60px rgba(139, 92, 246, 0.08);
-}
-
-.dark .assembly-coin {
-  border-color: rgba(167, 139, 250, 0.4);
-  outline-color: rgba(167, 139, 250, 0.2);
-  box-shadow:
-    0 8px 30px rgba(167, 139, 250, 0.25),
-    0 0 60px rgba(167, 139, 250, 0.1);
-}
-
-.assembly-coin-text {
-  @apply text-center text-xs font-bold uppercase tracking-widest leading-loose;
-  @apply text-violet-600 dark:text-violet-300;
-  font-family: var(--vyuh-font-mono);
-}
-
-/* Experience cards */
-.assembly-experience {
-  @apply flex items-center gap-3 px-4 py-3 rounded-xl border;
-  @apply bg-white dark:bg-zinc-800;
-  @apply border-slate-200/60 dark:border-zinc-700/50;
-  transition: all 0.3s var(--vyuh-ease-out);
-}
-
-.assembly-experience:hover {
-  @apply border-violet-300 dark:border-violet-600;
-  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1);
-}
-
-.assembly-experience-icon {
-  @apply text-xl text-violet-500 dark:text-violet-400;
-}
-
-.assembly-experience-label {
-  @apply text-sm font-medium text-slate-700 dark:text-zinc-300;
+.animate-spin-reverse-slow {
+  animation: spin 12s linear infinite reverse;
 }
 </style>

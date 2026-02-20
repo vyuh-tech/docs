@@ -42,7 +42,7 @@ import { Icon } from '@iconify/vue';
           <a href="https://vyuh.tech" target="_blank" class="footer-link">
             <Icon icon="ph:globe-fill" /> Vyuh Technologies
           </a>
-          <a href="mailto:hello@vyuh.tech" class="footer-link">
+          <a href="mailto:ask@vyuh.tech" class="footer-link">
             <Icon icon="ph:envelope-fill" /> Partner with Us
           </a>
         </div>

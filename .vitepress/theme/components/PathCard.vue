@@ -27,9 +27,9 @@ defineProps<{
 @reference "../style.css";
 
 .path-card {
-  @apply block p-6 rounded-2xl border no-underline;
-  @apply bg-white dark:bg-zinc-800;
-  @apply border-slate-200/60 dark:border-zinc-700/50;
+  @apply block md:grid md:grid-rows-subgrid md:row-span-4 p-6 rounded-xl border no-underline backdrop-blur-xl relative overflow-hidden text-left items-start justify-items-start;
+  @apply bg-white/40 dark:bg-zinc-800/30;
+  @apply border-white/50 dark:border-white/10;
   transition: all 0.3s var(--vyuh-ease-out);
 }
 
@@ -42,7 +42,7 @@ defineProps<{
 .path-card-blue:hover { box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.2); }
 
 .path-card-icon {
-  @apply text-2xl mb-4;
+  @apply text-2xl md:mb-0 mb-4;
 }
 
 .path-card-violet .path-card-icon { @apply text-violet-500 dark:text-violet-400; }
@@ -50,12 +50,12 @@ defineProps<{
 .path-card-blue .path-card-icon { @apply text-blue-500 dark:text-blue-400; }
 
 .path-card-title {
-  @apply text-lg font-bold text-slate-900 dark:text-zinc-100 mb-2;
+  @apply text-lg font-bold text-slate-900 dark:text-zinc-100 md:mb-0 mb-2;
   font-family: var(--vyuh-font-display);
 }
 
 .path-card-description {
-  @apply text-sm text-slate-600 dark:text-zinc-400 leading-relaxed mb-4;
+  @apply text-sm text-slate-600 dark:text-zinc-400 leading-relaxed md:mb-0 mb-4;
 }
 
 .path-card-link {

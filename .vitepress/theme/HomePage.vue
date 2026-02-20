@@ -6,6 +6,7 @@ import CtaButton from './components/CtaButton.vue';
 import CtaSection from './components/CtaSection.vue';
 import HeroSection from './components/HeroSection.vue';
 import PathCard from './components/PathCard.vue';
+import ProductStack from './components/ProductStack.vue';
 import Section from './components/Section.vue';
 import SectionHeader from './components/SectionHeader.vue';
 import SiteFooter from './components/SiteFooter.vue';
@@ -61,7 +62,7 @@ import SiteFooter from './components/SiteFooter.vue';
     </Section>
 
     <!-- ═══════════════════════════════════════════════════════════════
-         Section 3: Product Lines — Bento Grid
+         Section 3: Product Lines — Product Stack
          ═══════════════════════════════════════════════════════════════ -->
     <Section background border-top centered>
       <SectionHeader
@@ -72,58 +73,7 @@ import SiteFooter from './components/SiteFooter.vue';
         subtitle="Each package focuses on a different dimension of the development experience."
         centered
       />
-      <div class="bento-grid">
-        <!-- Row 1: 3 items -->
-        <a href="/docs/framework/" class="bento-item vyuh-hover-lift vyuh-shadow-violet">
-          <div class="bento-icon vyuh-icon-bg-violet">
-            <Icon icon="mdi:puzzle-outline" />
-          </div>
-          <h3 class="bento-title">Vyuh Framework</h3>
-          <p class="bento-desc">The foundation for modular, feature-rich Flutter applications. Composable features, plugins, and a scalable architecture for building large-scale apps.</p>
-          <span class="bento-link vyuh-accent-violet">Explore Framework <Icon icon="ph:arrow-right-bold" /></span>
-        </a>
-        <a href="/docs/framework/" class="bento-item vyuh-hover-lift vyuh-shadow-violet">
-          <div class="bento-icon vyuh-icon-bg-violet">
-            <Icon icon="mdi:server-outline" />
-          </div>
-          <h3 class="bento-title">CMS-Driven UI</h3>
-          <p class="bento-desc">Server-driven UI powered by live CMS content. Dynamically change experiences, layouts, and content without app updates.</p>
-          <span class="bento-link vyuh-accent-violet">Learn More <Icon icon="ph:arrow-right-bold" /></span>
-        </a>
-        <a href="https://pub.dev/packages/mobx" target="_blank" rel="noopener noreferrer" class="bento-item vyuh-hover-lift vyuh-shadow-blue">
-          <div class="bento-icon vyuh-icon-bg-blue">
-            <Icon icon="mdi:atom-variant" />
-          </div>
-          <h3 class="bento-title">MobX</h3>
-          <p class="bento-desc">A functional reactive state management system for Dart and Flutter. A Flutter favorite in the community — powering transparent reactivity with observables, actions, and reactions.</p>
-          <span class="bento-link vyuh-accent-blue">View on pub.dev <Icon icon="ph:arrow-right-bold" /></span>
-        </a>
-        <!-- Row 2: 3 items -->
-        <a href="#" class="bento-item vyuh-hover-lift vyuh-shadow-teal">
-          <div class="bento-icon vyuh-icon-bg-teal">
-            <Icon icon="mdi:form-select" />
-          </div>
-          <h3 class="bento-title">CDX</h3>
-          <p class="bento-desc">Entity management, form editors, dashboard builders, and property systems for enterprise-grade configuration interfaces.</p>
-          <span class="bento-link vyuh-accent-teal">Coming Soon</span>
-        </a>
-        <a href="https://flow.vyuh.tech" target="_blank" rel="noopener noreferrer" class="bento-item vyuh-hover-lift vyuh-shadow-amber">
-          <div class="bento-icon vyuh-icon-bg-amber">
-            <Icon icon="mdi:sitemap-outline" />
-          </div>
-          <h3 class="bento-title">Node Flow</h3>
-          <p class="bento-desc">Visual node editors, workflow editors, and workflow engines for building complex visual programming interfaces.</p>
-          <span class="bento-link vyuh-accent-amber">Visit flow.vyuh.tech <Icon icon="ph:arrow-right-bold" /></span>
-        </a>
-        <a href="https://pub.dev/packages/sanity_client" target="_blank" rel="noopener noreferrer" class="bento-item vyuh-hover-lift vyuh-shadow-violet">
-          <div class="bento-icon vyuh-icon-bg-violet">
-            <Icon icon="mdi:cloud-outline" />
-          </div>
-          <h3 class="bento-title">Sanity Client</h3>
-          <p class="bento-desc">First-class Sanity.io CMS integration for Dart. GROQ queries, asset pipelines, and a feature-rich Portable Text renderer for Flutter.</p>
-          <span class="bento-link vyuh-accent-violet">View on pub.dev <Icon icon="ph:arrow-right-bold" /></span>
-        </a>
-      </div>
+      <ProductStack />
     </Section>
 
     <!-- ═══════════════════════════════════════════════════════════════
@@ -163,7 +113,7 @@ import SiteFooter from './components/SiteFooter.vue';
         </div>
       </div>
       <p class="text-sm text-slate-500 dark:text-zinc-400 mt-10 text-center">
-        <a href="mailto:hello@vyuh.tech" class="text-violet-600 dark:text-violet-400 font-semibold hover:underline">Partner with us for your AI-driven digital transformation &rarr;</a>
+        <a href="mailto:ask@vyuh.tech" class="text-violet-600 dark:text-violet-400 font-semibold hover:underline">Partner with us for your AI-driven digital transformation &rarr;</a>
       </p>
     </Section>
 
@@ -174,7 +124,7 @@ import SiteFooter from './components/SiteFooter.vue';
       <Badge icon="mdi:rocket-launch-outline" color="purple">Get Started</Badge>
       <h2 class="cta-title">Ready to Build?</h2>
       <p class="cta-subtitle">Dive into the docs and start assembling.</p>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 max-w-4xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 md:grid-rows-[repeat(4,auto)] gap-x-6 gap-y-6 md:gap-y-2 mt-8 max-w-4xl mx-auto">
         <PathCard
           icon="mdi:book-open-outline"
           title="Learn the Concepts"
@@ -214,7 +164,7 @@ import SiteFooter from './components/SiteFooter.vue';
    ═══════════════════════════════════════════════════════════════ */
 
 .hero-title {
-  @apply text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-0 text-slate-900 dark:text-zinc-100 tracking-tight;
+  @apply text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-0 text-transparent bg-clip-text bg-gradient-to-r from-violet-600 via-fuchsia-500 to-indigo-600 dark:from-violet-400 dark:via-fuchsia-400 dark:to-indigo-400 tracking-tight;
   font-family: var(--vyuh-font-display);
 }
 
@@ -227,45 +177,15 @@ import SiteFooter from './components/SiteFooter.vue';
 .hero-animate-3 { animation: fadeSlideUp 0.8s var(--vyuh-ease-out) 0.3s forwards; }
 .hero-animate-4 { animation: fadeSlideUp 0.8s var(--vyuh-ease-out) 0.4s forwards; }
 
-/* ═══════════════════════════════════════════════════════════════
-   BENTO GRID — Product ecosystem (3×2 even grid)
-   ═══════════════════════════════════════════════════════════════ */
-
-.bento-grid {
-  @apply grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto;
-}
-
-.bento-item {
-  @apply rounded-2xl border p-8 no-underline flex flex-col gap-3;
-  @apply bg-white/60 dark:bg-zinc-800/40;
-  @apply border-slate-200/60 dark:border-zinc-700/50;
-  transition: all 0.3s var(--vyuh-ease-out);
-}
-
-.bento-icon {
-  @apply flex items-center justify-center w-12 h-12 rounded-xl shrink-0 text-xl;
-}
-
-.bento-title {
-  @apply text-lg font-bold text-slate-900 dark:text-zinc-100 tracking-tight;
-  font-family: var(--vyuh-font-display);
-}
-
-.bento-desc {
-  @apply text-sm text-slate-600 dark:text-zinc-400 leading-relaxed flex-1;
-}
-
-.bento-link {
-  @apply inline-flex items-center gap-1 text-sm font-semibold mt-auto;
-}
 
 /* ═══════════════════════════════════════════════════════════════
    AI-FIRST SECTION
    ═══════════════════════════════════════════════════════════════ */
 
 .ai-card {
-  @apply rounded-2xl border border-slate-200/60 dark:border-zinc-700/50 p-8;
-  @apply bg-white/60 dark:bg-zinc-800/40;
+  @apply rounded-xl border p-8 backdrop-blur-xl relative overflow-hidden;
+  @apply bg-white/40 dark:bg-zinc-800/30;
+  @apply border-white/50 dark:border-white/10;
 }
 
 .ai-card-title {

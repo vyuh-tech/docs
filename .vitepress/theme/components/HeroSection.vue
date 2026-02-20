@@ -18,10 +18,10 @@ defineProps<{
     ]"
   >
     <!-- Blur effects background -->
-    <div class="absolute inset-0 z-0">
-      <div class="hero-blur bg-blue-500 -top-48 -left-24 w-[600px] h-[600px] opacity-15 dark:opacity-25" />
-      <div class="hero-blur bg-violet-500 top-24 -right-36 w-[500px] h-[500px] opacity-12 dark:opacity-20" />
-      <div class="hero-blur bg-teal-500 -bottom-24 left-1/3 w-[400px] h-[400px] opacity-10 dark:opacity-18" />
+    <div class="absolute inset-0 z-0 overflow-hidden">
+      <div class="hero-blur bg-blue-500 -top-48 -left-24 w-[600px] h-[600px] opacity-15 dark:opacity-25" style="animation: mesh 15s ease-in-out infinite" />
+      <div class="hero-blur bg-violet-500 top-24 -right-36 w-[500px] h-[500px] opacity-12 dark:opacity-20" style="animation: float 12s ease-in-out infinite reverse" />
+      <div class="hero-blur bg-teal-500 -bottom-24 left-1/3 w-[400px] h-[400px] opacity-10 dark:opacity-18" style="animation: mesh 18s ease-in-out infinite" />
     </div>
 
     <!-- Split layout (default) - two columns -->
