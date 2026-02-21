@@ -115,7 +115,7 @@ const products = [
     <!-- Right Side: Details -->
     <div class="product-details w-full md:w-2/3 relative z-10">
       <transition name="fade-slide" mode="out-in">
-        <div :key="activeTab" class="details-card p-8 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50/50 dark:bg-zinc-900/50 h-full flex flex-col justify-center min-h-[350px]">
+        <div :key="activeTab" class="details-card p-8 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50/50 dark:bg-zinc-900/50 h-full flex flex-col justify-center min-h-[350px] text-left">
           <div class="flex items-center gap-4 mb-6">
             <div 
               class="p-4 rounded-xl"
